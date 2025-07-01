@@ -54,7 +54,7 @@ st.write("""
 ### ✅ Conclusion et tableau de synthèse
 Nette amélioration par rapport aux modèles de machine learning classiques : **F1-score global > 98 %** pour la classification 3 classes (hors LeNet qui est à 90 %).
 """)
-st.image("../images/DeepSynthese.png", caption="Synthèse des performances des modèles CNN", width=750)
+st.image("src/images/DeepSynthese.png", caption="Synthèse des performances des modèles CNN", width=750)
 
 st.markdown("---")
 st.subheader("🔧 Optimisation des modèles deep learning")
@@ -74,7 +74,7 @@ with st.expander("🚫 Impact de la classe d’opacité pulmonaire"):
     En retirant cette classe, la classification (3 classes) gagne en précision (souvent >95 %).  
     **➡️ Décision : retirer la classe d’opacité pulmonaire pour améliorer la clarté du modèle.**
     """)
-    st.image("../images/umap_sans.png", caption="Représentation UMAP sans la classe d’opacité", width=700)
+    st.image("src/images/umap_sans.png", caption="Représentation UMAP sans la classe d’opacité", width=700)
 
 with st.expander("🔍 Optimisation des hyperparamètres avec Optuna / Keras Tuner"):
     st.write("""
