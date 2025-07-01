@@ -9,7 +9,7 @@ st.set_page_config(
 
 col1, col2 = st.columns([1, 20])
 with col1:
-    st.image("../images/Normal-2.png", width=170)
+    st.image("src/images/Normal-2.png", width=170)
 with col2:
     st.title("Détection de pathologies pulmonaires à partir de radiographies thoraciques")
 
