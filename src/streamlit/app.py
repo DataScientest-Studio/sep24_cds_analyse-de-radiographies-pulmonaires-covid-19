@@ -5,7 +5,12 @@ from PIL import Image
 import pandas as pd  
 import plotly.express as px
 import plotly.graph_objects as go
+import os
 
+
+st.write("Répertoire courant :", os.getcwd())
+st.write("Contenu du répertoire :", os.listdir())
+st.write("Contenu de ../images :", os.listdir("../images") if os.path.exists("../images") else "Dossier 'images' non trouvé")
 
 # Configuration de la page
 st.set_page_config(page_title="Analyse COVID-19 Radiographies", layout="wide")
