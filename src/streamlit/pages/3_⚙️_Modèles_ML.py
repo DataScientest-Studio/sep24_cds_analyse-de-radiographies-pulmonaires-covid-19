@@ -38,7 +38,7 @@ st.markdown(model_info[selected_model]["metrics"])
 st.markdown("---")
 
 st.write("Conclusion et tableau de synthèse")
-st.image("../images/TablaModelos.png", caption="exemple", width=750)
+st.image("src/images/TablaModelos.png", caption="exemple", width=750)
 
 st.title("Optimisation des modèles ML")
 
