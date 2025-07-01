@@ -10,7 +10,7 @@ import os
 
 st.write("Répertoire courant :", os.getcwd())
 st.write("Contenu du répertoire :", os.listdir())
-st.write("Contenu de ../images :", os.listdir("../images") if os.path.exists("../images") else "Dossier 'images' non trouvé")
+st.write("Contenu de src/images :", os.listdir("src/images") if os.path.exists("src/images") else "Dossier 'images' non trouvé")
 
 # Configuration de la page
 st.set_page_config(page_title="Analyse COVID-19 Radiographies", layout="wide")
