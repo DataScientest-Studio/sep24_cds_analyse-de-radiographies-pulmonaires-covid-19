@@ -13,7 +13,7 @@ st.subheader("Exploration visuelle")
 st.write("""
 Inspection visuelle de quelques images : l’inspection visuelle met en évidence que les radios sont dans l’ensemble de très bonne qualité.
 """)
-interactive_image("../images/InspectionVisuelle.png", "exemple")
+interactive_image("src/images/InspectionVisuelle.png", "exemple")
 
 
 st.subheader("Description du jeu de données")
@@ -52,16 +52,16 @@ PCA, UMAP, autoencodeurs et histogrammes ont permis de visualiser la structure l
 
 La distribution est inégale, avec 48% de radios normales et seulement 6% de pneumonies virales, ce qui peut poser des défis pour l'apprentissage automatique.
 """)
-interactive_image("../images/DistributionClasses.png", "exemple")
+interactive_image("src/images/DistributionClasses.png", "exemple")
 
 st.write("""
 Visualisation statistique : variance de l’intensité, projections UMAP, et examen manuel sur quelques images.
 Variance : ci-dessous une visualisation de la variance par classe
 """)
-interactive_image("../images/Variance.png", "exemple")
+interactive_image("src/images/Variance.png", "exemple")
 
 st.write("Intensité vs. écart-type : ci-dessous une visualisation de la répartition de l’intensité en fonction de l’écart-type sur les radios après normalisation :")
-interactive_image("../images/Intensite-ecart.png", "exemple")
+interactive_image("src/images/Intensite-ecart.png", "exemple")
 
 
 
@@ -75,25 +75,25 @@ if selection == "PCA" :
     st.write("""
              Projection 2D après réduction de dimension via PCA (linéaire) et normalisation préalable
              """)
-    interactive_image("../images/Projection2d.png", "exemple")
+    interactive_image("src/images/Projection2d.png", "exemple")
 elif selection == "UMAP" :
     st.write("#### UMAP : Uniform Manifold Approximation and Projection")
     st.write("""
     Projection 2D après réduction de dimension via UMAP non linéaire (High Performance Dimension Reduction) et normalisation préalable:
     """)
-    interactive_image("../images/UMAP.png", "exemple")
+    interactive_image("src/images/UMAP.png", "exemple")
 elif selection == "AE" :
     st.write("#### Auto-Encoder (AE)")
     st.write("""
     Projection 2D après encodage / décodage par auto-encodeur (AE) et normalisation préalable
     """)
-    interactive_image("../images/Autoencoder.png", "exemple")
+    interactive_image("src/images/Autoencoder.png", "exemple")
 if selection == "NMF" :
     st.write("#### NMF : Non-negative Matrix Factorization")
     st.write("""
     Projection 2D après encodage / décodage par NMF (à ajouter) et normalisation préalable
     """)
-    interactive_image("../images/Autoencoder.png", "exemple")
+    interactive_image("src/images/Autoencoder.png", "exemple")
 
 
 
@@ -103,4 +103,4 @@ Les images ont été redimensionnées à 240x240 pixels, normalisées, et enrich
 
 Il a été constaté que 7 radiographies sur 10 ne sont pas normalisées. Voici la représentation en fonction des diverses sources de données initiales :            
 """)
-interactive_image("../images/Normalisation.png", "exemple")
+interactive_image("src/images/Normalisation.png", "exemple")
