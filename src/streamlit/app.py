@@ -12,7 +12,7 @@ st.set_page_config(page_title="Analyse COVID-19 Radiographies", layout="wide")
 
 col1, col2 = st.columns([1, 10])  # Puedes ajustar la proporción
 with col1:
-    st.image("./images/Normal-2.png", width=170)
+    st.image("src/images/Normal-2.png", width=170)
 with col2:
     st.title("Détection de pathologies pulmonaires à partir de radiographies thoraciques")
 
@@ -111,36 +111,36 @@ elif section == "2. Analyse des données":
 
     La distribution est inégale, avec 48% de radios normales et seulement 6% de pneumonies virales, ce qui peut poser des défis pour l'apprentissage automatique.
     """)
-    interactive_image("./images/DistributionClasses.png", "exemple")
+    interactive_image("src/images/DistributionClasses.png", "exemple")
 
     st.write("""
     Visualisation statistique : variance de l’intensité, projections UMAP, et examen manuel sur quelques images.
     Variance : ci-dessous une visualisation de la variance par classe
     """)
-    interactive_image("./images/Variance.png", "exemple")
+    interactive_image("src/images/Variance.png", "exemple")
 
     st.write("Intensité vs. écart-type : ci-dessous une visualisation de la répartition de l’intensité en fonction de l’écart-type sur les radios après normalisation :")
-    interactive_image("./images/Intensite-ecart.png", "exemple")
+    interactive_image("src/images/Intensite-ecart.png", "exemple")
 
     st.write("""
     Projection 2D après réduction de dimension via PCA (linéaire) et normalisation préalable :
     """)
-    interactive_image("./images/Projection2d.png", "exemple")
+    interactive_image("src/images/Projection2d.png", "exemple")
 
     st.write("""
     Projection 2D après réduction de dimension via UMAP non linéaire (High Performance Dimension Reduction) et normalisation préalable:
     """)
-    interactive_image("./images/UMAP.png", "exemple")
+    interactive_image("src/images/UMAP.png", "exemple")
 
     st.write("""
     Projection 2D après encodage / décodage par auto-encodeur (AE) et: normalisation préalable
     """)
-    interactive_image("./images/Autoencoder.png", "exemple")
+    interactive_image("src/images/Autoencoder.png", "exemple")
 
     st.write("""
     Inspection visuelle de quelques images : l’inspection visuelle met en évidence que les radios sont dans l’ensemble de très bonne qualité.
     """)
-    interactive_image("./images/InspectionVisuelle.png", "exemple")
+    interactive_image("src/images/InspectionVisuelle.png", "exemple")
 
     st.subheader("Prétraitement")
     st.write("""
@@ -148,7 +148,7 @@ elif section == "2. Analyse des données":
 
     Il a été constaté que 7 radiographies sur 10 ne sont pas normalisées. Voici la représentation en fonction des diverses sources de données initiales :            
     """)
-    interactive_image("./images/Normalisation.png", "exemple")
+    interactive_image("src/images/Normalisation.png", "exemple")
     
 
 elif section == "3. Méthodologie":
@@ -205,7 +205,7 @@ elif section == "4. Modelisation":
     st.markdown("---")
 
     st.write("Conclusion et tableau de synthèse")
-    st.image("./images/TablaModelos.png", caption="exemple", width=750)
+    st.image("src/images/TablaModelos.png", caption="exemple", width=750)
 
     # Continúa con el resto de las subsecciones como estaban
     st.title("Optimisation des modèles ML")
@@ -281,7 +281,7 @@ Proposé en 2017 par Gao Huang, DenseNet se distingue par sa **connectivité den
 ### ✅ Conclusion et tableau de synthèse
 Nette amélioration par rapport aux modèles de machine learning classiques : **F1-score global > 98 %** pour la classification 3 classes (hors LeNet qui est à 90 %).
 """)
-    st.image("./images/DeepSynthese.png", caption="Synthèse des performances des modèles CNN", width=750)
+    st.image("src/images/DeepSynthese.png", caption="Synthèse des performances des modèles CNN", width=750)
 
     st.markdown("---")
     st.subheader("🔧 Optimisation des modèles deep learning")
@@ -301,7 +301,7 @@ Elle regroupe des pathologies non-COVID très diverses et peu homogènes.
 En retirant cette classe, la classification (3 classes) gagne en précision (souvent >95 %).  
 **➡️ Décision : retirer la classe d’opacité pulmonaire pour améliorer la clarté du modèle.**
 """)
-        st.image("./images/umap_sans.png", caption="Représentation UMAP sans la classe d’opacité", width=700)
+        st.image("src/images/umap_sans.png", caption="Représentation UMAP sans la classe d’opacité", width=700)
 
     with st.expander("🔍 Optimisation des hyperparamètres avec Optuna / Keras Tuner"):
         st.write("""
@@ -429,7 +429,7 @@ elif section == "9. Essai avec une radiographie":
 
     @st.cache_resource
     def load_model():
-        return tf.keras.models.load_model("efficientnet_final.h5")
+        return tf.keras.models.load_model("models/efficientnet_final.h5")
 
     model = load_model()
     class_names = ["COVID", "Normal", "Viral Pneumonia"]
