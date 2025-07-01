@@ -2,4 +2,9 @@ streamlit
 pandas
 numpy
 tensorflow
+pillow
 plotly
+
+
+
+
