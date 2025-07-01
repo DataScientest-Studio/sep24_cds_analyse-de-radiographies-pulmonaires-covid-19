@@ -5,8 +5,17 @@ from utils import interactive_image
 
 st.set_page_config(page_title="Analyse des Données", layout="wide")
 
-
 st.title("Analyse des données")
+
+
+st.subheader("Exploration visuelle")
+
+st.write("""
+Inspection visuelle de quelques images : l’inspection visuelle met en évidence que les radios sont dans l’ensemble de très bonne qualité.
+""")
+interactive_image("../images/InspectionVisuelle.png", "exemple")
+
+
 st.subheader("Description du jeu de données")
 st.write("""
 Le jeu de données comprend 21 164 images réparties entre quatre classes : Normal (10192), COVID-19 (3615), Pneumonie virale (1345), Opacité pulmonaire (6012). Les images proviennent de différentes sources médicales internationales.
@@ -54,25 +63,39 @@ interactive_image("../images/Variance.png", "exemple")
 st.write("Intensité vs. écart-type : ci-dessous une visualisation de la répartition de l’intensité en fonction de l’écart-type sur les radios après normalisation :")
 interactive_image("../images/Intensite-ecart.png", "exemple")
 
-st.write("""
-Projection 2D après réduction de dimension via PCA (linéaire) et normalisation préalable :
-""")
-interactive_image("../images/Projection2d.png", "exemple")
 
-st.write("""
-Projection 2D après réduction de dimension via UMAP non linéaire (High Performance Dimension Reduction) et normalisation préalable:
-""")
-interactive_image("../images/UMAP.png", "exemple")
 
-st.write("""
-Projection 2D après encodage / décodage par auto-encodeur (AE) et: normalisation préalable
-""")
-interactive_image("../images/Autoencoder.png", "exemple")
+st.subheader("Réductions de dimensions")
 
-st.write("""
-Inspection visuelle de quelques images : l’inspection visuelle met en évidence que les radios sont dans l’ensemble de très bonne qualité.
-""")
-interactive_image("../images/InspectionVisuelle.png", "exemple")
+options = ["PCA", "UMAP", "AE", "NMF"]
+selection = st.segmented_control("", options, selection_mode="single"
+)
+if selection == "PCA" :
+    st.write("#### Analyse en Composantes Principales (PCA)")
+    st.write("""
+             Projection 2D après réduction de dimension via PCA (linéaire) et normalisation préalable
+             """)
+    interactive_image("../images/Projection2d.png", "exemple")
+elif selection == "UMAP" :
+    st.write("#### UMAP : Uniform Manifold Approximation and Projection")
+    st.write("""
+    Projection 2D après réduction de dimension via UMAP non linéaire (High Performance Dimension Reduction) et normalisation préalable:
+    """)
+    interactive_image("../images/UMAP.png", "exemple")
+elif selection == "AE" :
+    st.write("#### Auto-Encoder (AE)")
+    st.write("""
+    Projection 2D après encodage / décodage par auto-encodeur (AE) et normalisation préalable
+    """)
+    interactive_image("../images/Autoencoder.png", "exemple")
+if selection == "NMF" :
+    st.write("#### NMF : Non-negative Matrix Factorization")
+    st.write("""
+    Projection 2D après encodage / décodage par NMF (à ajouter) et normalisation préalable
+    """)
+    interactive_image("../images/Autoencoder.png", "exemple")
+
+
 
 st.subheader("Prétraitement")
 st.write("""
