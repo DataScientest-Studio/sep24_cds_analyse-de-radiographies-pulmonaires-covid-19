@@ -4,6 +4,7 @@ numpy
 tensorflow
 pillow
 plotly
+os
 
 
 
