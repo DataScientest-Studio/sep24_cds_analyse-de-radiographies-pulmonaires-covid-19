@@ -1,5 +1,6 @@
 import streamlit as st
 import tensorflow as tf
+from PIL import Image
 from utils import interactive_image
 
 
