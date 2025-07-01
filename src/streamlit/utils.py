@@ -1,11 +1,8 @@
-# utils.py
-
 import streamlit as st
 from PIL import Image
 import plotly.graph_objects as go
 
 def interactive_image(path, caption=None):
-    # Cette fonction reste inchangée
     img = Image.open(path)
     width, height = img.size
     fig = go.Figure()
