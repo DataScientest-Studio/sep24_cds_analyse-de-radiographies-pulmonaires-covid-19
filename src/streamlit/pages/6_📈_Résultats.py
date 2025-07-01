@@ -21,4 +21,4 @@ On observe une activation marquée dans la région inférieure gauche du poumon 
 Attention toutefois : l’interprétation de ces cartes d’activation reste complexe dans un contexte médical.
 """)
 
-st.image("../images/gradcam_covid.png", caption="Activation Grad-CAM sur une image classée comme COVID", width=400)
+st.image("src/images/gradcam_covid.png", caption="Activation Grad-CAM sur une image classée comme COVID", width=400)
