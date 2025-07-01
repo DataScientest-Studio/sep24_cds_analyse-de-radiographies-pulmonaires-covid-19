@@ -104,7 +104,7 @@ uploaded_file = st.file_uploader("Téléversez une radiographie", type=["jpg", "
 
 @st.cache_resource
 def load_model():
-    return tf.keras.models.load_model("efficientnet_final.h5")
+    return tf.keras.models.load_model("models/efficientnet_final.h5")
 
 model = load_model()
 class_names = ["COVID", "Normal", "Viral Pneumonia"]
