@@ -8,7 +8,7 @@ import plotly.express as px
 from codecarbon import EmissionsTracker
 
 st.set_page_config(layout="wide")
-st.title("📊 Résultats des modèles deep learning (3 classes)")
+st.title("📊 Résultats des modèles deep learning")
 
 # Méthodologie
 st.header("🔧 Méthodologie")
@@ -30,7 +30,7 @@ data = [
 # Création du DataFrame trié
 df = pd.DataFrame(data).sort_values("Année")
 
-st.header("📋 Performances par modèle")
+st.header("📋 Performances par modèle (3 classes)")
 st.dataframe(df.style.format({
     "Params totaux": "{:,.0f}",
     "Params fine‑tuning": "{:,.0f}",
