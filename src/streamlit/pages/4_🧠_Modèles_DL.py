@@ -5,7 +5,7 @@ import numpy as np
 from PIL import Image
 from utils import interactive_image
 import plotly.express as px
-
+from codecarbon import EmissionsTracker
 
 st.set_page_config(layout="wide")
 st.title("📊 Résultats des modèles deep learning (3 classes)")
@@ -116,7 +116,11 @@ def preprocess_image(image):
 
 if uploaded_file is not None:
     image = Image.open(uploaded_file)
-    st.image(image, caption="Image chargée", use_container_width=True)
+    st.image(image, caption="Image chargée")
+
+    # Initialisation du tracker
+    tracker = EmissionsTracker(project_name="streamlit_inference")
+    tracker.start()
 
     with st.spinner("Prédiction en cours..."):
         input_tensor = preprocess_image(image)
@@ -127,3 +131,7 @@ if uploaded_file is not None:
     st.markdown(f"**Classe prédite :** `{predicted_class}`")
     st.markdown(f"**Confiance :** `{confidence:.2f}%`")
     st.bar_chart(dict(zip(class_names, predictions)))
+
+    # Arrêt du tracker et affichage des émissions
+    tracker.stop()
+    st.write(f"Émissions estimées lors de l'inférence : {tracker.final_emissions*1000:.2e} g CO₂ (Estimation Code Carbone)")
