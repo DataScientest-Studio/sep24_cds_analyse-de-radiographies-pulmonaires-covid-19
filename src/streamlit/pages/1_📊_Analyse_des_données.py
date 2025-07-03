@@ -84,12 +84,12 @@ palette = {
 # TEST AFFICHAGE STREAMLIT 
 script_dir = os.path.dirname(os.path.abspath(__file__))    
 project_root = os.path.dirname(script_dir)    
-input_filename = os.path.join(project_root, 'data', 'pca_3d_data.csv')    
-df_plot = pd.read_csv(input_filename)  
-
-st.dataframe(df_plot, height=300)
-
-st.write(input_filename)
+input_filename = os.path.join(project_root, 'data', 'pca_3d_data.csv')
+with st.spinner("Chargement des données pour la visualisation..."):
+        df_plot = pd.read_csv(input_filename)
+#st.dataframe(df_plot, height=300)
+#st.write(input_filename)
+st.success("Données importées avec succès !")
 fig = px.scatter_3d(
     df_plot,
     x='PCA 1',
@@ -99,6 +99,11 @@ fig = px.scatter_3d(
     title="Visualisation 3D PCA des radiographies pulmonaires",
     color_discrete_map=palette,
 )
+fig.update_traces(marker=dict(size=3, opacity=0.8))
+fig.update_layout(legend_title_text='Classe',margin=dict(l=0, r=0, b=0, t=0))
+fig.update_traces(hoverinfo='none', hovertemplate=None)
+st.plotly_chart(fig, use_container_width=True)
+
 
 
 
