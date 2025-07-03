@@ -71,6 +71,13 @@ st.subheader("Réductions de dimensions")
 options = ["PCA", "UMAP", "AE", "NMF"]
 selection = st.segmented_control("", options, selection_mode="single"
 )
+
+palette = {
+    'Normal': 'green',
+    'COVID': 'red',
+    'Lung_Opacity': 'orange',
+    'Viral Pneumonia': 'blue'}
+
 if selection == "PCA" :
     st.write("#### Analyse en Composantes Principales (PCA)")
     script_dir = os.path.dirname(os.path.abspath(__file__))    
