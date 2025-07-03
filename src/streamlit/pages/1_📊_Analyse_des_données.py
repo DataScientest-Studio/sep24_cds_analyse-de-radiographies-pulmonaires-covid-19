@@ -68,6 +68,8 @@ interactive_image("src/images/Intensite-ecart.png", "exemple")
 
 st.subheader("Réductions de dimensions")
 
+
+
 options = ["PCA", "UMAP", "AE", "NMF"]
 selection = st.segmented_control("", options, selection_mode="single"
 )
@@ -77,6 +79,25 @@ palette = {
     'COVID': 'red',
     'Lung_Opacity': 'orange',
     'Viral Pneumonia': 'blue'}
+
+
+# TEST AFFICHAGE STREAMLIT 
+script_dir = os.path.dirname(os.path.abspath(__file__))    
+project_root = os.path.dirname(script_dir)    
+input_filename = os.path.join(project_root, 'data', 'pca_3d_data.csv')    
+df_plot = pd.read_csv(input_filename)  
+st.write(input_filename)
+fig = px.scatter_3d(
+    df_plot,
+    x='PCA 1',
+    y='PCA 2',
+    z='PCA 3',
+    color='label', 
+    title="Visualisation 3D PCA des radiographies pulmonaires",
+    color_discrete_map=palette,
+)
+
+
 
 if selection == "PCA" :
     st.write("#### Analyse en Composantes Principales (PCA)")
