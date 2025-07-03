@@ -204,9 +204,12 @@ def transform_image_randomly(pil_image):
     normalized_image = transformed_image.astype(np.float32) / 255.0    
     return normalized_image
 
-script_dir = os.path.dirname(os.path.abspath(__file__))
-project_root = os.path.dirname(script_dir) 
+#script_dir = os.path.dirname(os.path.abspath(__file__))
+#project_root = os.path.dirname(script_dir) 
+#IMAGE_DIR = os.path.join(project_root, 'images')
+project_root = os.getcwd() 
 IMAGE_DIR = os.path.join(project_root, 'images')
+
 all_image_paths = get_image_paths(IMAGE_DIR)
 
 st.write("🔬 Démonstration de l'Augmentation de Données")
