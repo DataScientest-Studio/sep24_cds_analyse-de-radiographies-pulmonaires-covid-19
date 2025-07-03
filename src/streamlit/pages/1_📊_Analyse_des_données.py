@@ -86,6 +86,9 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 project_root = os.path.dirname(script_dir)    
 input_filename = os.path.join(project_root, 'data', 'pca_3d_data.csv')    
 df_plot = pd.read_csv(input_filename)  
+
+st.dataframe(df_plot, height=300)
+
 st.write(input_filename)
 fig = px.scatter_3d(
     df_plot,
