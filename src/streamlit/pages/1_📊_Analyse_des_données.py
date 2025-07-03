@@ -224,7 +224,7 @@ with col1:
         original_image = Image.open(st.session_state.current_image_path)
         file_name = os.path.basename(st.session_state.current_image_path)
         st.image(original_image, caption=f"Fichier : {file_name}", use_column_width=True)
-     if original_image:
+    if original_image:
         if st.button("✨ Transformation", use_container_width=True, type="primary"):
             st.session_state.transformed_image = transform_image_randomly(original_image)
 with col2:
