@@ -103,7 +103,7 @@ if selection == "PCA" :
 
 if selection == "UMAP" :
     st.write("#### Uniform Manifold Approximation and Projection (UMAP)")
-    st.write("UMAP est une technique d'apprentissage de variétés (manifold learning). Elle suppose que vos données, même si elles sont dans un grand espace, vivent en réalité sur une surface de plus faible dimension (la variété). UMAP essaie de modéliser cette surface et de la déplier dans un espace plus petit tout en préservant au mieux la structure topologique des données (qui est voisin de qui, localement et globalement).")
+    st.write("UMAP est une technique d'apprentissage de variétés (manifold learning). Elle suppose que les données, même si elles sont dans un grand espace, vivent en réalité sur une surface de plus faible dimension (la variété). UMAP essaie de modéliser cette surface et de la déplier dans un espace plus petit tout en préservant au mieux la structure topologique des données (qui est voisin de qui, localement et globalement).")
     script_dir = os.path.dirname(os.path.abspath(__file__))    
     project_root = os.path.dirname(script_dir)    
     input_filename = os.path.join(project_root, 'data', 'umap_3d_data.csv')    
