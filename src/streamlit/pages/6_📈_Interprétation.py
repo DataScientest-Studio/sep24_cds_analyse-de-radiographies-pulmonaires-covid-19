@@ -1,10 +1,10 @@
 import streamlit as st
 from utils import interactive_image
 
-st.set_page_config(page_title="Résultats", layout="wide")
+st.set_page_config(page_title="Interprétation", layout="wide")
 
 
-st.title("Résultats et Interprétation")
+st.title("Interprétation")
 
 st.subheader("Analyse des erreurs")
 st.write("""
