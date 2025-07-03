@@ -204,34 +204,11 @@ def transform_image_randomly(pil_image):
     normalized_image = transformed_image.astype(np.float32) / 255.0    
     return normalized_image
 
-# DEBUG
-st.warning("--- DÉBUT DU RAPPORT DE DÉBOGAGE DU SYSTÈME DE FICHIERS ---")
-try:
-    start_path = os.getcwd()
-    st.write(f"Répertoire de départ (os.getcwd()): `{start_path}`")
-    
-    file_tree = []
-    for root, dirs, files in os.walk(start_path):
-        # On ignore les dossiers d'environnement virtuel pour ne pas polluer l'affichage
-        if 'venv' in root or '.git' in root:
-            continue
-        level = root.replace(start_path, '').count(os.sep)
-        indent = ' ' * 4 * (level)
-        file_tree.append(f'{indent}{os.path.basename(root)}/')
-        sub_indent = ' ' * 4 * (level + 1)
-        for f in files:
-            file_tree.append(f'{sub_indent}{f}')
-            
-    st.code('\n'.join(file_tree))
 
-except Exception as e:
-    st.error(f"Une erreur est survenue pendant le débogage : {e}")
 
-#script_dir = os.path.dirname(os.path.abspath(__file__))
-#project_root = os.path.dirname(script_dir) 
-#IMAGE_DIR = os.path.join(project_root, 'images')
-project_root = os.getcwd() 
-IMAGE_DIR = os.path.join(project_root, 'images')
+script_dir = os.path.dirname(os.path.abspath(__file__))
+streamlit_dir = os.path.dirname(script_dir) 
+IMAGE_DIR = os.path.join(streamlit_dir, 'images')
 
 all_image_paths = get_image_paths(IMAGE_DIR)
 
