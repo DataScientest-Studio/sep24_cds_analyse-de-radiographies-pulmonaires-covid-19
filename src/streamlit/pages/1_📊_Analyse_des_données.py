@@ -58,8 +58,10 @@ st.write("""
 Des anomalies ont été identifiées, telles que des doublons ou des images de faible qualité.
 """)
 
-st.write("Avec la méthode IQR sur l’intensité et l’écart-type, après normalisation de l’intensité (seuil à 1,5 x IQR) : 285 outliers identifiés.  
-Ci-dessous une visualisation de la répartition de l’intensité en fonction de l’écart-type sur les radios après normalisation :")
+st.write("""
+Avec la méthode IQR sur l’intensité et l’écart-type, après normalisation de l’intensité (seuil à 1,5 x IQR) : 285 outliers identifiés.  
+Ci-dessous une visualisation de la répartition de l’intensité en fonction de l’écart-type sur les radios après normalisation :
+""")
 interactive_image("src/images/Intensite-ecart.png", "exemple")
 
 
