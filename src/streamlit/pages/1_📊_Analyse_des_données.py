@@ -19,7 +19,8 @@ interactive_image("src/images/InspectionVisuelle.png", "exemple")
 
 st.subheader("Description du jeu de données")
 st.write("""
-Le jeu de données comprend 21 164 images réparties entre quatre classes : Normal (10192), COVID-19 (3615), Pneumonie virale (1345), Opacité pulmonaire (6012). Les images proviennent de différentes sources médicales internationales.
+Le jeu de données comprend 21 164 images réparties entre quatre classes : Normal (10192), COVID-19 (3615), Pneumonie virale (1345), Opacité pulmonaire (6012). Les images proviennent de différentes sources médicales internationales.  
+La distribution est inégale, avec 48% de radios normales et seulement 6% de pneumonies virales, ce qui peut poser des défis pour l'apprentissage automatique.
 """)
 
 
@@ -46,20 +47,19 @@ fig.update_layout(
 )
 st.plotly_chart(fig, use_container_width=True)
 
-st.subheader("Analyse exploratoire")
-st.write("""
-PCA, UMAP, autoencodeurs et histogrammes ont permis de visualiser la structure latente du jeu de données. Des anomalies ont été identifiées, telles que des doublons ou des images de faible qualité.
-
-La distribution est inégale, avec 48% de radios normales et seulement 6% de pneumonies virales, ce qui peut poser des défis pour l'apprentissage automatique.
-""")
-
 st.write("""
 Visualisation statistique : variance de l’intensité, projections UMAP, et examen manuel sur quelques images.
 Variance : ci-dessous une visualisation de la variance par classe
 """)
 interactive_image("src/images/Variance.png", "exemple")
 
-st.write("Intensité vs. écart-type : ci-dessous une visualisation de la répartition de l’intensité en fonction de l’écart-type sur les radios après normalisation :")
+st.subheader("Détection d'anomalies")
+st.write("""
+Des anomalies ont été identifiées, telles que des doublons ou des images de faible qualité.
+""")
+
+st.write("Avec la méthode IQR sur l’intensité et l’écart-type, après normalisation de l’intensité (seuil à 1,5 x IQR) : 285 outliers identifiés.  
+Ci-dessous une visualisation de la répartition de l’intensité en fonction de l’écart-type sur les radios après normalisation :")
 interactive_image("src/images/Intensite-ecart.png", "exemple")
 
 
