@@ -226,33 +226,33 @@ else:
         st.error(f"Erreur lors du chargement de l'image : {e}")
         original_image = None 
 
-    col1, col2 = st.columns(2)
-    with col1:
-        st.subheader("Image Originale")
-        
-        if st.button("🔄 Nouvelle image", use_container_width=True):
+    control_col1, control_col2 = st.columns(2)
+    with control_col1:
+        if st.button("🔄 Changer d'image", use_container_width=True):
             st.session_state.current_image_path = random.choice(all_image_paths)
             st.session_state.transformed_image = None
-            st.rerun() 
-        
-        if original_image:
-            if st.button("✨ Transformation", use_container_width=True, type="primary"):
-                st.session_state.transformed_image = transform_image_randomly(original_image)
-        
+            st.rerun()
+
+    with control_col2:
+        is_disabled = (original_image is None)
+        if st.button("✨ Transformation", use_container_width=True, type="primary", disabled=is_disabled):
+            st.session_state.transformed_image = transform_image_randomly(original_image)
+    
+    st.divider() 
+
+    image_col1, image_col2 = st.columns(2)
+
+    with image_col1:
+        st.subheader("Image Originale")
         if original_image:
             file_name = os.path.basename(st.session_state.current_image_path)
-            st.image(original_image, caption=f"Fichier : {file_name}", use_column_width=True)
+            st.image(original_image, caption=f"Fichier : {file_name}", width=400) 
 
-    with col2:
+    with image_col2:
         st.subheader("Image Transformée")
         if st.session_state.transformed_image is not None:
-            st.image(
-                st.session_state.transformed_image,
-                caption="Transformation + Normalisation",
-                use_column_width=True
-            )
+            st.image(st.session_state.transformed_image, caption="Transformation + Normalisation", width=400)
         else:
-             st.info("Cliquez sur 'Transformation' pour générer une version augmentée.")
-
+             st.info("Cliquez sur 'Appliquer une transformation' pour générer une version augmentée.")
 
 interactive_image("src/images/Normalisation.png", "exemple")
