@@ -103,8 +103,6 @@ st.markdown("---")
 st.subheader("🧪 Essai avec une radiographie")
 uploaded_file = st.file_uploader("Chargez une radiographie", type=["jpg", "jpeg", "png"])
 
-"""
-PArtie commentée le temps de mettre à jour le modèle sur github
 @st.cache_resource
 def load_model():
     return tf.keras.models.load_model("models/efficientnet_optimized.h5")
@@ -137,4 +135,3 @@ if uploaded_file is not None:
     # Arrêt du tracker et affichage des émissions
     tracker.stop()
     st.write(f"Émissions estimées lors de l'inférence : {tracker.final_emissions*1000:.2e} g CO₂ (Estimation Code Carbone)")
-"""
