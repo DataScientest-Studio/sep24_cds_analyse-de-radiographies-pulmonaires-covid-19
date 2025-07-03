@@ -213,10 +213,6 @@ if 'current_image_path' not in st.session_state or st.session_state.current_imag
     st.session_state.current_image_path = random.choice(all_image_paths)
     st.session_state.transformed_image = None 
 
-script_dir = os.path.dirname(os.path.abspath(__file__))    
-project_root = os.path.dirname(script_dir)    
-input_image = os.path.join(project_root, 'images', 'ae_3d_data.csv')    
-original_image = Image.open(CHEMIN_IMAGE_EXEMPLE)
 col1, col2 = st.columns(2)
 with col1:
     st.subheader("Image Originale")
