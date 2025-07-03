@@ -5,6 +5,5 @@ tensorflow
 pillow
 plotly
 codecarbon
-opencv-python
-
+opencv-python-headless
 
