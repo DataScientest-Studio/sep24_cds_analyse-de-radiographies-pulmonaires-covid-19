@@ -82,6 +82,7 @@ palette = {
 
 if selection == "PCA" :
     st.write("#### Analyse en Composantes Principales (PCA)")
+    st.write("PCA trouve de nouveaux axes (appelés composantes principales) qui maximisent la variance (la "dispersion") des données. Le premier axe capture le plus de variance possible, le deuxième en capture le plus possible parmi ce qu'il reste, et ainsi de suite. C'est une méthode purement mathématique et linéaire.")
     script_dir = os.path.dirname(os.path.abspath(__file__))    
     project_root = os.path.dirname(script_dir)    
     input_filename = os.path.join(project_root, 'data', 'pca_3d_data.csv')    
@@ -102,6 +103,7 @@ if selection == "PCA" :
 
 if selection == "UMAP" :
     st.write("#### Uniform Manifold Approximation and Projection (UMAP)")
+    st.write("UMAP est une technique d'apprentissage de variétés (manifold learning). Elle suppose que vos données, même si elles sont dans un grand espace, vivent en réalité sur une surface de plus faible dimension (la variété). UMAP essaie de modéliser cette surface et de la déplier dans un espace plus petit tout en préservant au mieux la structure topologique des données (qui est voisin de qui, localement et globalement).")
     script_dir = os.path.dirname(os.path.abspath(__file__))    
     project_root = os.path.dirname(script_dir)    
     input_filename = os.path.join(project_root, 'data', 'umap_3d_data.csv')    
@@ -123,6 +125,7 @@ if selection == "UMAP" :
     
 elif selection == "AE" :
     st.write("#### Auto-Encoder (AE)")
+    st.write("C'est un type de réseau de neurones qui apprend à compresser les données (partie encodeur) en une représentation de faible dimension (le goulot d'étranglement ou bottleneck), puis à les décompresser (partie décodeur) pour reconstruire l'entrée originale. En forçant le réseau à recréer les données à partir d'une version compressée, il apprend les caractéristiques les plus importantes.")
     script_dir = os.path.dirname(os.path.abspath(__file__))    
     project_root = os.path.dirname(script_dir)    
     input_filename = os.path.join(project_root, 'data', 'ae_3d_data.csv')    
@@ -143,7 +146,8 @@ elif selection == "AE" :
 
     
 if selection == "NMF" :
-    st.write("#### NMF : Non-negative Matrix Factorization")
+    st.write("#### Non-negative Matrix Factorization (NMF)")
+    st.write("La NMF décompose une grande matrice de données (par exemple, des images ou des documents) en deux matrices plus petites. La contrainte essentielle est que toutes les valeurs dans les trois matrices doivent être non-négatives. Cela force la décomposition à être additive.")
     script_dir = os.path.dirname(os.path.abspath(__file__))    
     project_root = os.path.dirname(script_dir)    
     input_filename = os.path.join(project_root, 'data', 'nmf_3d_data.csv')    
