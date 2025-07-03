@@ -3,6 +3,10 @@ import pandas as pd
 import plotly.express as px
 from utils import interactive_image
 import os
+from PIL import Image
+import cv2  
+import random
+import numpy as np
 
 st.set_page_config(page_title="Analyse des Données", layout="wide")
 
@@ -175,12 +179,6 @@ Les images ont été redimensionnées à 240x240 pixels, normalisées, et enrich
 Il a été constaté que 7 radiographies sur 10 ne sont pas normalisées. Voici la représentation en fonction des diverses sources de données initiales :            
 """)
 
-
-
-
-from PIL import Image
-import cv2  
-import random
 
 @st.cache_data 
 def get_image_paths(folder):
