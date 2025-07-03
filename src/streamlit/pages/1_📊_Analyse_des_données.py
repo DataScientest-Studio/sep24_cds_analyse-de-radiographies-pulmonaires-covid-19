@@ -182,7 +182,6 @@ from PIL import Image
 import cv2  
 import random
 
-IMAGE_DIR = 'images'
 @st.cache_data 
 def get_image_paths(folder):
     """Scanne un dossier et retourne la liste des chemins des fichiers image valides."""
@@ -190,7 +189,6 @@ def get_image_paths(folder):
         return []
     supported_extensions = ('.png', '.jpg', '.jpeg')
     return [os.path.join(folder, f) for f in os.listdir(folder) if f.lower().endswith(supported_extensions)]
-all_image_paths = get_image_paths(IMAGE_DIR)
 
 def transform_image_randomly(pil_image):
     image_np = np.array(pil_image.convert('L'))
@@ -205,6 +203,11 @@ def transform_image_randomly(pil_image):
     transformed_image = cv2.warpAffine(image_np, M_rot_zoom, (w, h), borderMode=cv2.BORDER_REPLICATE)
     normalized_image = transformed_image.astype(np.float32) / 255.0    
     return normalized_image
+
+script_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.dirname(os.path.dirname(os.path.dirname(script_dir)))
+IMAGE_DIR = os.path.join(project_root, 'images')
+all_image_paths = get_image_paths(IMAGE_DIR)
 
 if 'current_image_path' not in st.session_state or st.session_state.current_image_path not in all_image_paths:
     st.session_state.current_image_path = random.choice(all_image_paths)
