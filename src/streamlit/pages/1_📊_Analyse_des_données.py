@@ -72,7 +72,7 @@ selection = st.segmented_control("", options, selection_mode="single"
 )
 if selection == "PCA" :
     st.write("#### Analyse en Composantes Principales (PCA)")
-    input_filename = 'pca_3d_data.csv'
+    input_filename = '../data/pca_3d_data.csv'
     df_plot = pd.read_csv(input_filename)  
     fig = px.scatter_3d(
         df_plot,
@@ -94,7 +94,7 @@ if selection == "PCA" :
 
 if selection == "PCA" :
     st.write("#### Uniform Manifold Approximation and Projection (UMAP)")
-    input_filename = 'umap_3d_data.csv'
+    input_filename = '../data/umap_3d_data.csv'
     df_plot = pd.read_csv(input_filename)  
     fig = px.scatter_3d(
         df_plot,
@@ -116,7 +116,7 @@ if selection == "PCA" :
     
 elif selection == "AE" :
     st.write("#### Auto-Encoder (AE)")
-    input_filename = 'umap_3d_data.csv'
+    input_filename = '../data/ae_3d_data.csv'
     df_plot = pd.read_csv(input_filename)  
     fig = px.scatter_3d(
         df_plot,
@@ -139,7 +139,7 @@ elif selection == "AE" :
     interactive_image("src/images/Autoencoder.png", "exemple")
 if selection == "NMF" :
     st.write("#### NMF : Non-negative Matrix Factorization")
-   input_filename = 'nmf_3d_data.csv'
+   input_filename = '../data/nmf_3d_data.csv'
     df_plot = pd.read_csv(input_filename)  
     fig = px.scatter_3d(
         df_plot,
