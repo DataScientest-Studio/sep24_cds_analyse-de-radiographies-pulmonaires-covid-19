@@ -102,7 +102,7 @@ if selection == "PCA" :
     fig.update_traces(hoverinfo='none', hovertemplate=None)
     fig.show()
 
-if selection == "PCA" :
+if selection == "UMAP" :
     st.write("#### Uniform Manifold Approximation and Projection (UMAP)")
     script_dir = os.path.dirname(os.path.abspath(__file__))    
     project_root = os.path.dirname(script_dir)    
@@ -148,9 +148,8 @@ elif selection == "AE" :
     fig.update_traces(marker=dict(size=3, opacity=0.8))
     fig.update_layout(legend_title_text='Classe')
     fig.update_traces(hoverinfo='none', hovertemplate=None)
-    fig.show()
+    fig.show()    
     
-    interactive_image("src/images/Autoencoder.png", "exemple")
 if selection == "NMF" :
     st.write("#### NMF : Non-negative Matrix Factorization")
     script_dir = os.path.dirname(os.path.abspath(__file__))    
