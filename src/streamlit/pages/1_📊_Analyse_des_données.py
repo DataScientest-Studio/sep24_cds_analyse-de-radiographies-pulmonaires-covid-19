@@ -174,4 +174,71 @@ Les images ont été redimensionnées à 240x240 pixels, normalisées, et enrich
 
 Il a été constaté que 7 radiographies sur 10 ne sont pas normalisées. Voici la représentation en fonction des diverses sources de données initiales :            
 """)
+
+
+
+
+from PIL import Image
+import cv2  
+import random
+
+IMAGE_DIR = 'images'
+@st.cache_data 
+def get_image_paths(folder):
+    """Scanne un dossier et retourne la liste des chemins des fichiers image valides."""
+    if not os.path.isdir(folder):
+        return []
+    supported_extensions = ('.png', '.jpg', '.jpeg')
+    return [os.path.join(folder, f) for f in os.listdir(folder) if f.lower().endswith(supported_extensions)]
+all_image_paths = get_image_paths(IMAGE_DIR)
+
+def transform_image_randomly(pil_image):
+    image_np = np.array(pil_image.convert('L'))
+    h, w = image_np.shape
+    angle = random.uniform(-10, 10)
+    scale = random.uniform(0.9, 1.1)
+    tx = random.uniform(-w * 0.05, w * 0.05)
+    ty = random.uniform(-h * 0.05, h * 0.05)
+    M_rot_zoom = cv2.getRotationMatrix2D((w // 2, h // 2), angle, scale)    
+    M_rot_zoom[0, 2] += tx
+    M_rot_zoom[1, 2] += ty
+    transformed_image = cv2.warpAffine(image_np, M_rot_zoom, (w, h), borderMode=cv2.BORDER_REPLICATE)
+    normalized_image = transformed_image.astype(np.float32) / 255.0    
+    return normalized_image
+
+if 'current_image_path' not in st.session_state or st.session_state.current_image_path not in all_image_paths:
+    st.session_state.current_image_path = random.choice(all_image_paths)
+    st.session_state.transformed_image = None 
+
+script_dir = os.path.dirname(os.path.abspath(__file__))    
+project_root = os.path.dirname(script_dir)    
+input_image = os.path.join(project_root, 'images', 'ae_3d_data.csv')    
+original_image = Image.open(CHEMIN_IMAGE_EXEMPLE)
+col1, col2 = st.columns(2)
+with col1:
+    st.subheader("Image Originale")
+    if st.button("🔄 Nouvelle image", use_container_width=True):
+        st.session_state.current_image_path = random.choice(all_image_paths)
+        st.session_state.transformed_image = None
+        st.rerun() 
+        original_image = Image.open(st.session_state.current_image_path)
+        file_name = os.path.basename(st.session_state.current_image_path)
+        st.image(original_image, caption=f"Fichier : {file_name}", use_column_width=True)
+     if original_image:
+             if st.button("✨ Transformation", use_container_width=True, type="primary"):
+                st.session_state.transformed_image = transform_image_randomly(original_image)
+with col2:
+    st.subheader("Image Transformée")
+    if st.session_state.transformed_image is not None:
+        st.image(
+            st.session_state.transformed_image,
+            caption="Transformation + Normalisation",
+            use_column_width=True
+        )
+
+
+interactive_image("src/images/Normalisation.png", "exemple")
+
+
+
 interactive_image("src/images/Normalisation.png", "exemple")
