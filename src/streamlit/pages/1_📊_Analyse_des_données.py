@@ -209,35 +209,49 @@ project_root = os.path.dirname(os.path.dirname(os.path.dirname(script_dir)))
 IMAGE_DIR = os.path.join(project_root, 'images')
 all_image_paths = get_image_paths(IMAGE_DIR)
 
-if 'current_image_path' not in st.session_state or st.session_state.current_image_path not in all_image_paths:
-    st.session_state.current_image_path = random.choice(all_image_paths)
-    st.session_state.transformed_image = None 
+st.write("🔬 Démonstration de l'Augmentation de Données")
 
-col1, col2 = st.columns(2)
-with col1:
-    st.subheader("Image Originale")
-    if st.button("🔄 Nouvelle image", use_container_width=True):
+if not all_image_paths:
+    st.error(f"Aucune image trouvée dans le dossier '{IMAGE_DIR}'.")
+    st.warning("Veuillez vérifier que le dossier existe et contient des images.")
+else:
+    if 'current_image_path' not in st.session_state or st.session_state.current_image_path not in all_image_paths:
         st.session_state.current_image_path = random.choice(all_image_paths)
-        st.session_state.transformed_image = None
-        st.rerun() 
+        st.session_state.transformed_image = None   
+
+    try:
         original_image = Image.open(st.session_state.current_image_path)
-        file_name = os.path.basename(st.session_state.current_image_path)
-        st.image(original_image, caption=f"Fichier : {file_name}", use_column_width=True)
-    if original_image:
-        if st.button("✨ Transformation", use_container_width=True, type="primary"):
-            st.session_state.transformed_image = transform_image_randomly(original_image)
-with col2:
-    st.subheader("Image Transformée")
-    if st.session_state.transformed_image is not None:
-        st.image(
-            st.session_state.transformed_image,
-            caption="Transformation + Normalisation",
-            use_column_width=True
-        )
+    except Exception as e:
+        st.error(f"Erreur lors du chargement de l'image : {e}")
+        original_image = None 
 
+    col1, col2 = st.columns(2)
+    with col1:
+        st.subheader("Image Originale")
+        
+        if st.button("🔄 Nouvelle image", use_container_width=True):
+            st.session_state.current_image_path = random.choice(all_image_paths)
+            st.session_state.transformed_image = None
+            st.rerun() 
+        
+        if original_image:
+            if st.button("✨ Transformation", use_container_width=True, type="primary"):
+                st.session_state.transformed_image = transform_image_randomly(original_image)
+        
+        if original_image:
+            file_name = os.path.basename(st.session_state.current_image_path)
+            st.image(original_image, caption=f"Fichier : {file_name}", use_column_width=True)
 
-interactive_image("src/images/Normalisation.png", "exemple")
-
+    with col2:
+        st.subheader("Image Transformée")
+        if st.session_state.transformed_image is not None:
+            st.image(
+                st.session_state.transformed_image,
+                caption="Transformation + Normalisation",
+                use_column_width=True
+            )
+        else:
+             st.info("Cliquez sur 'Transformation' pour générer une version augmentée.")
 
 
 interactive_image("src/images/Normalisation.png", "exemple")
