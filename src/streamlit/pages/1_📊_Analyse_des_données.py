@@ -72,29 +72,92 @@ selection = st.segmented_control("", options, selection_mode="single"
 )
 if selection == "PCA" :
     st.write("#### Analyse en Composantes Principales (PCA)")
-    st.write("""
-             Projection 2D après réduction de dimension via PCA (linéaire) et normalisation préalable
-             """)
-    interactive_image("src/images/Projection2d.png", "exemple")
-elif selection == "UMAP" :
-    st.write("#### UMAP : Uniform Manifold Approximation and Projection")
-    st.write("""
-    Projection 2D après réduction de dimension via UMAP non linéaire (High Performance Dimension Reduction) et normalisation préalable:
-    """)
-    interactive_image("src/images/UMAP.png", "exemple")
+    input_filename = 'pca_3d_data.csv'
+    df_plot = pd.read_csv(input_filename)  
+    fig = px.scatter_3d(
+        df_plot,
+        x='PCA 1',
+        y='PCA 2',
+        z='PCA 3',
+        color='label', 
+        title="Visualisation 3D PCA des radiographies pulmonaires",
+        color_discrete_map=palette,
+    )
+    fig.update_layout(
+        width=1000,
+        height=800
+    )
+    fig.update_traces(marker=dict(size=3, opacity=0.8))
+    fig.update_layout(legend_title_text='Classe')
+    fig.update_traces(hoverinfo='none', hovertemplate=None)
+    fig.show()
+
+if selection == "PCA" :
+    st.write("#### Uniform Manifold Approximation and Projection (UMAP)")
+    input_filename = 'umap_3d_data.csv'
+    df_plot = pd.read_csv(input_filename)  
+    fig = px.scatter_3d(
+        df_plot,
+        x='UMAP 1',
+        y='UMAP 2',
+        z='UMAP 3',
+        color='label', 
+        title="Visualisation 3D UMAP des radiographies pulmonaires",
+        color_discrete_map=palette,
+    )
+    fig.update_layout(
+        width=1000,
+        height=800
+    )
+    fig.update_traces(marker=dict(size=3, opacity=0.8))
+    fig.update_layout(legend_title_text='Classe')
+    fig.update_traces(hoverinfo='none', hovertemplate=None)
+    fig.show()
+    
 elif selection == "AE" :
     st.write("#### Auto-Encoder (AE)")
-    st.write("""
-    Projection 2D après encodage / décodage par auto-encodeur (AE) et normalisation préalable
-    """)
+    input_filename = 'umap_3d_data.csv'
+    df_plot = pd.read_csv(input_filename)  
+    fig = px.scatter_3d(
+        df_plot,
+        x='AE 1',
+        y='AE 2',
+        z='AE 3',
+        color='label', 
+        title="Visualisation 3D AE des radiographies pulmonaires",
+        color_discrete_map=palette,
+    )
+    fig.update_layout(
+        width=1000,
+        height=800
+    )
+    fig.update_traces(marker=dict(size=3, opacity=0.8))
+    fig.update_layout(legend_title_text='Classe')
+    fig.update_traces(hoverinfo='none', hovertemplate=None)
+    fig.show()
+    
     interactive_image("src/images/Autoencoder.png", "exemple")
 if selection == "NMF" :
     st.write("#### NMF : Non-negative Matrix Factorization")
-    st.write("""
-    Projection 2D après encodage / décodage par NMF (à ajouter) et normalisation préalable
-    """)
-    interactive_image("src/images/Autoencoder.png", "exemple")
-
+   input_filename = 'nmf_3d_data.csv'
+    df_plot = pd.read_csv(input_filename)  
+    fig = px.scatter_3d(
+        df_plot,
+        x='NMF 1',
+        y='NMF 2',
+        z='NMF 3',
+        color='label', 
+        title="Visualisation 3D NMF des radiographies pulmonaires",
+        color_discrete_map=palette,
+    )
+    fig.update_layout(
+        width=1000,
+        height=800
+    )
+    fig.update_traces(marker=dict(size=3, opacity=0.8))
+    fig.update_layout(legend_title_text='Classe')
+    fig.update_traces(hoverinfo='none', hovertemplate=None)
+    fig.show()
 
 
 st.subheader("Prétraitement")
