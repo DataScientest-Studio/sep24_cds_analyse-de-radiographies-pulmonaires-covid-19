@@ -82,7 +82,7 @@ palette = {
 
 if selection == "PCA" :
     st.write("#### Analyse en Composantes Principales (PCA)")
-    st.write("PCA trouve de nouveaux axes (appelés composantes principales) qui maximisent la variance (la "dispersion") des données. Le premier axe capture le plus de variance possible, le deuxième en capture le plus possible parmi ce qu'il reste, et ainsi de suite. C'est une méthode purement mathématique et linéaire.")
+    st.write("PCA trouve de nouveaux axes (appelés composantes principales) qui maximisent la variance (la dispersion) des données. Le premier axe capture le plus de variance possible, le deuxième en capture le plus possible parmi ce qu'il reste, et ainsi de suite. C'est une méthode purement mathématique et linéaire.")
     script_dir = os.path.dirname(os.path.abspath(__file__))    
     project_root = os.path.dirname(script_dir)    
     input_filename = os.path.join(project_root, 'data', 'pca_3d_data.csv')    
