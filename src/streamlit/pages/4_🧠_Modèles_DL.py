@@ -7,23 +7,28 @@ from utils import interactive_image
 import plotly.express as px
 from codecarbon import EmissionsTracker
 
+
 st.set_page_config(layout="wide")
 st.title("📊 Résultats des modèles deep learning")
 
 # Méthodologie
 st.header("🔧 Méthodologie")
 st.markdown("""
-- **Transfer learning + fine‑tuning** sur les dernières couches des modèles pré-entraînés ImageNet  
-- **Suppression de la classe** 'opacité pulmonaire' → uniquement **Covid**, **Normal**, **Pneumonie virale**
+- **Transfer learning** sur la base de modèles pré-entraînés ImageNet
+- **Optimisation d'hyper-paramètres** par keras-tuner ou optuna (couches de classification en particulier : nb de couches/neurones)
+- **Fine‑tuning** via dégel des dernières couches de convolution des modèles pré-entraînés
+- **Suppression de la classe 'Opacité pulmonaire'** → uniquement Covid, Normal, Pneumonie virale.  
+        La classe d’opacité pulmonaire est définie comme regroupant des cas d’infections pulmonaires non liées au COVID-19, une définition large et peu spécifique.
+        Il est probable qu’elle contienne un mélange hétérogène de pathologies pulmonaires. Sa détection était moins bonne, avec des résultats globaux de 4% à 5% inférieurs.
 """)
 
 # Données enrichies avec années
 data = [
     {"Année": 1998, "Modèle": "LeNet", "Params totaux": 61111, "Params fine‑tuning": 61111, "Temps/epoch (s)": 25, "Précision (%)": 91.36, "Rappel (%)": 90.60, "F1-score (%)": 90.78},
-    {"Année": 2014, "Modèle": "Inception", "Params totaux": 22328099, "Params fine‑tuning": 22293667, "Temps/epoch (s)": 76, "Précision (%)": 98.09, "Rappel (%)": 97.36, "F1-score (%)": 98.55},
+    {"Année": 2015, "Modèle": "Inception", "Params totaux": 22328099, "Params fine‑tuning": 22293667, "Temps/epoch (s)": 76, "Précision (%)": 98.55, "Rappel (%)": 98.54, "F1-score (%)": 98.55},
     {"Année": 2015, "Modèle": "ResNet", "Params totaux": 29886340, "Params fine‑tuning": 6298628, "Temps/epoch (s)": 150, "Précision (%)": 99.30, "Rappel (%)": 98.85, "F1-score (%)": 99.08},
     {"Année": 2019, "Modèle": "EfficientNetB0", "Params totaux": 5701286, "Params fine‑tuning": 5656703, "Temps/epoch (s)": 66, "Précision (%)": 99.08, "Rappel (%)": 99.08, "F1-score (%)": 99.08},
-    {"Année": 2016, "Modèle": "DenseNet-121", "Params totaux": 6956931, "Params fine‑tuning": 4588035, "Temps/epoch (s)": 115, "Précision (%)": 98.49, "Rappel (%)": 98.48, "F1-score (%)": 98.48},
+    {"Année": 2017, "Modèle": "DenseNet-121", "Params totaux": 6956931, "Params fine‑tuning": 4588035, "Temps/epoch (s)": 115, "Précision (%)": 98.49, "Rappel (%)": 98.48, "F1-score (%)": 98.48},
     {"Année": 2014, "Modèle": "VGG16", "Params totaux": 134272835, "Params fine‑tuning": 126637571, "Temps/epoch (s)": 100, "Précision (%)": 99.31, "Rappel (%)": 99.31, "F1-score (%)": 99.31},
 ]
 
@@ -85,7 +90,6 @@ eff = df[df.Modèle=="EfficientNetB0"].iloc[0]
 st.markdown(f"""
 - **Année** : {eff["Année"]} → modèle récent et optimisé  
 - **Params totaux** : {eff["Params totaux"]:,} (~5.7 M)  
-- **Params fine‑tuning** : {eff["Params fine‑tuning"]:,} (~99 % des paramètres)  
 - **Temps/epoch** : {eff["Temps/epoch (s)"]} s — deux fois plus rapide que ResNet et VGG  
 - **F1‑score** : {eff["F1-score (%)"]:.2f} % → ↑ haute performance tout en restant léger
 
@@ -95,7 +99,7 @@ EfficientNetB0 incarne le compromis idéal **sobriété vs performance**, permet
 st.markdown("""
 **✅ Conclusion :**
 - Tous les modèles surpassent 98 % de F1‑score, EfficientNetB0 se distingue par sa compacité et son efficacité.
-- Utile pour les déploiements contraints en ressources (edge, cloud limité, etc.).
+- Utile pour les déploiements contraints en ressources (cloud limité, mobilité...).
 """)
 
 
@@ -103,9 +107,10 @@ st.markdown("---")
 st.subheader("🧪 Essai avec une radiographie")
 uploaded_file = st.file_uploader("Chargez une radiographie", type=["jpg", "jpeg", "png"])
 
+
 @st.cache_resource
 def load_model():
-    return tf.keras.models.load_model("models/efficientnet.h5")
+    return tf.keras.models.load_model("src/models/efficientnet_optimized.h5")
 
 model = load_model()
 class_names = ["COVID", "Normal", "Viral Pneumonia"]
