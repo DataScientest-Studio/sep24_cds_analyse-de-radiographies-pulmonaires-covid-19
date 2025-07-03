@@ -139,7 +139,7 @@ elif selection == "AE" :
     interactive_image("src/images/Autoencoder.png", "exemple")
 if selection == "NMF" :
     st.write("#### NMF : Non-negative Matrix Factorization")
-   input_filename = '../data/nmf_3d_data.csv'
+    input_filename = '../data/nmf_3d_data.csv'
     df_plot = pd.read_csv(input_filename)  
     fig = px.scatter_3d(
         df_plot,
