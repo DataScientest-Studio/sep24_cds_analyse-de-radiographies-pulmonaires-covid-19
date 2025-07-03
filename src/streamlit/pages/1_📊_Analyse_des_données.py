@@ -238,8 +238,6 @@ else:
         if st.button("✨ Transformation", use_container_width=True, type="primary", disabled=is_disabled):
             st.session_state.transformed_image = transform_image_randomly(original_image)
     
-    st.divider() 
-
     image_col1, image_col2 = st.columns(2)
 
     with image_col1:
