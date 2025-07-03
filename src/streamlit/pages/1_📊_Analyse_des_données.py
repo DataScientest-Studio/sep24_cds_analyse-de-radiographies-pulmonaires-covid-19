@@ -205,7 +205,7 @@ def transform_image_randomly(pil_image):
     return normalized_image
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
-project_root = os.path.dirname(os.path.dirname(os.path.dirname(script_dir)))
+project_root = os.path.dirname(script_dir) 
 IMAGE_DIR = os.path.join(project_root, 'images')
 all_image_paths = get_image_paths(IMAGE_DIR)
 
