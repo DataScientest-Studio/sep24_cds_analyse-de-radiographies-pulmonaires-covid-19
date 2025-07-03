@@ -22,13 +22,12 @@ st.write("""
 Le jeu de données comprend 21 164 images réparties entre quatre classes : Normal (10192), COVID-19 (3615), Pneumonie virale (1345), Opacité pulmonaire (6012). Les images proviennent de différentes sources médicales internationales.
 """)
 
-st.subheader("Distribution des classes")
+
 df_dist = pd.DataFrame({
     'Classe': ['Normal', 'Opacité Pulmonaire', 'COVID-19', 'Pneumonie virale'],
     'Nombre d\'images': [10192, 6012, 3615, 1345]
 })
 
-st.table(df_dist.set_index("Classe"))
 
 fig = px.bar(
     df_dist,
@@ -53,7 +52,6 @@ PCA, UMAP, autoencodeurs et histogrammes ont permis de visualiser la structure l
 
 La distribution est inégale, avec 48% de radios normales et seulement 6% de pneumonies virales, ce qui peut poser des défis pour l'apprentissage automatique.
 """)
-interactive_image("src/images/DistributionClasses.png", "exemple")
 
 st.write("""
 Visualisation statistique : variance de l’intensité, projections UMAP, et examen manuel sur quelques images.
