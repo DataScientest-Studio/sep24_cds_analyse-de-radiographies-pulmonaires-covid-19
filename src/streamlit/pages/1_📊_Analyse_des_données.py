@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 from utils import interactive_image
+import os
 
 st.set_page_config(page_title="Analyse des Données", layout="wide")
 
