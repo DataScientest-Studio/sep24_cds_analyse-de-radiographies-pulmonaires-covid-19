@@ -44,7 +44,7 @@ fig = px.bar(
     x='Classe',
     y="Nombre d'images",
     text="Nombre d'images",
-    color=palette,
+    color_discrete_map=palette,
     title="Répartition des classes dans le jeu de données",
     color_discrete_sequence=px.colors.qualitative.Set2
 )
