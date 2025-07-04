@@ -81,11 +81,11 @@ st.markdown("- **HOG** : (Histogramme de gradient orienté) Extraction de caract
 col1, col2 = st.columns(2)
 with col1:
     st.markdown("**Image originale**")
-    st.image("src/streamlit/images/xray_original.png", use_container_width = True)
+    st.image("src/images/xray_original.png", use_container_width = True)
 
 with col2:
     st.markdown("**HOG appliqué**")
-    st.image("src/streamlit/images/xray_hog.png", use_container_width = True)
+    st.image("src/images/xray_hog.png", use_container_width = True)
 
 st.markdown("""
             
