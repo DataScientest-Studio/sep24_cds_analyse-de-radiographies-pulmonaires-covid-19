@@ -178,19 +178,7 @@ outliers_selection = st.segmented_control("", outliers_options, selection_mode="
 if outliers_selection == "Statistique" :
     st.write("*Statistique*")
     st.write("Cette méthode fondamentale transforme chaque image en un vecteur de trois caractéristiques numériques : la moyenne (luminosité globale), l'écart-type (contraste) et l'entropie (complexité/quantité d'information). Un score d'anomalie est ensuite calculé pour chaque image en mesurant sa distance par rapport au centre de la distribution de toutes les images. Une image très sombre, très blanche ou très simple (peu de détails) obtiendra un score élevé.")
-    """
-    script_dir = os.path.dirname(os.path.abspath(__file__))    
-    project_root = os.path.dirname(script_dir)    
-    input_filename = os.path.join(project_root, 'data', 'outliers_statistique.csv')    
-    plot_df_stat = pd.read_csv(input_filename) 
-    fig_stat = px.scatter_3d(plot_df_stat, x='Moyenne Normalisée', y='Écart-type Normalisé', z='Entropie Normalisée',
-                         color='score', size='score', size_max=20,
-                         color_continuous_scale=px.colors.sequential.Viridis,
-                         title='Anomalies par Caractéristiques Statistiques (Taille & Couleur)',
-                         hover_data={'path': True, 'label': True, 'score': ':.4f'})
-    fig_stat.update_traces(hoverinfo='none', hovertemplate=None)
-    fig_stat.show()
-    """
+
 
 if outliers_selection == "Isolation Forest" :
     st.write("*Isolation Forest*")
