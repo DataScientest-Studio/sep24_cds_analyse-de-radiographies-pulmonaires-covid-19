@@ -117,7 +117,7 @@ options = ["Statistique", "Isolation Forest", "Auto-encoder"]
 selection = st.segmented_control(
     "Choisissez la technique à visualiser",
     options,
-    label_visibility="collapsed"
+    label_visibility="visible"
 )
 
 if selection == "Statistique":
