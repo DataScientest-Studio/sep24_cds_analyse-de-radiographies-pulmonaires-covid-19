@@ -68,11 +68,7 @@ Ci-dessous une visualisation de la répartition de l’intensité en fonction de
 """)
 interactive_image("src/images/Intensite-ecart.png", "exemple")
 
-
-
 st.subheader("Réductions de dimensions")
-
-
 
 options = ["PCA", "AE", "NMF", "UMAP"]
 selection = st.segmented_control("", options, selection_mode="single"
@@ -173,6 +169,36 @@ if selection == "NMF" :
 
 
 st.subheader("Prétraitement")
+
+st.write("### Elimination des anomalies")
+
+outliers_options = ["Statistique", "Isolation Forest", "Auto-Encodeur"]
+outliers_selection = st.segmented_control("", outliers_options, selection_mode="single")
+
+if selection == "Statistique" :
+    st.write("#### Statistique")
+    st.write("Cette méthode fondamentale transforme chaque image en un vecteur de trois caractéristiques numériques : la moyenne (luminosité globale), l'écart-type (contraste) et l'entropie (complexité/quantité d'information). Un score d'anomalie est ensuite calculé pour chaque image en mesurant sa distance par rapport au centre de la distribution de toutes les images. Une image très sombre, très blanche ou très simple (peu de détails) obtiendra un score élevé.")
+    script_dir = os.path.dirname(os.path.abspath(__file__))    
+    project_root = os.path.dirname(script_dir)    
+    input_filename = os.path.join(project_root, 'data', 'outliers_statistique.csv')    
+    plot_df_stat = pd.read_csv(input_filename) 
+    fig_stat = px.scatter_3d(plot_df_stat, x='Moyenne Normalisée', y='Écart-type Normalisé', z='Entropie Normalisée',
+                         color='score', size='score', size_max=20,
+                         color_continuous_scale=px.colors.sequential.Viridis,
+                         title='Anomalies par Caractéristiques Statistiques (Taille & Couleur)',
+                         hover_data={'path': True, 'label': True, 'score': ':.4f'})
+    fig_stat.update_traces(hoverinfo='none', hovertemplate=None)
+    fig_stat.show()
+
+if selection == "Isolation Forest" :
+    st.write("#### Isolation Forest")
+
+
+if selection == "Auto-Encodeur" :
+    st.write("#### Auto-Encodeur")
+
+
+
 st.write("""
 Les images ont été redimensionnées à 240x240 pixels, normalisées, et enrichies par augmentation de données (flip, rotation, zoom). Des méthodes comme Isolation Forest ont été utilisées pour retirer les outliers.
 """)
