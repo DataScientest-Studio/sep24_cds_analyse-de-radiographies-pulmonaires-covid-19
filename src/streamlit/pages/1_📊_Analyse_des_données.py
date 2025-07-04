@@ -136,8 +136,8 @@ fig.update_layout(legend_title="Légende", height=700)
 
 st.plotly_chart(fig, use_container_width=True)
 
-
-interactive_image("src/images/Intensite-ecart.png", "exemple")
+# Remplacé par graphique interactif plotly 
+# interactive_image("src/images/Intensite-ecart.png", "exemple")
 
 
 st.write("#### Elimination des anomalies")
