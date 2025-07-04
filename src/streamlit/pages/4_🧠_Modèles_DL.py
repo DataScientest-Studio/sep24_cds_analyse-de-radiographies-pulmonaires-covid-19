@@ -123,8 +123,9 @@ model = load_model()
 class_names = ["COVID", "Normal", "Viral Pneumonia"]
 
 def preprocess_image(image):
-    image = image.convert("RGB").resize((240, 240))
-    return np.expand_dims(np.array(image) / 255.0, axis=0)
+    image = image.convert("RGB")
+    #return np.expand_dims(np.array(image) / 255.0, axis=0)
+    return np.expand_dims(np.array(image), axis=0)
 
 if uploaded_file is not None:
     image = Image.open(uploaded_file)
