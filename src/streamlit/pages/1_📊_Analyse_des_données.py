@@ -178,7 +178,7 @@ if selection == "Statistique":
     # (supposant que les données normalisées sont entre 0 et 1)
     camera_distance = 2.5
     angles = np.linspace(0, 360, n_frames)
-        frames = []
+    frames = []
     for t in angles:
         # Calcul de la position de la caméra sur un cercle
         camera_eye = dict(
