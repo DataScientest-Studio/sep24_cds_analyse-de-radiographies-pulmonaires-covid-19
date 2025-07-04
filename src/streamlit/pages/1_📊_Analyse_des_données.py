@@ -364,7 +364,7 @@ else:
 
     with control_col2:
         is_disabled = (original_image is None)
-        if st.button("✨ Transformation", use_container_width=True, type="primary", disabled=is_disabled):
+        if st.button("✨ Transformation", use_container_width=True, disabled=is_disabled):
             if original_image:
                 st.session_state.transformed_image = transform_image_randomly(original_image)
                 
@@ -374,13 +374,13 @@ else:
         st.markdown("<h5 style='text-align: center;'>Image Originale</h5>", unsafe_allow_html=True)
         if original_image:
             file_name = os.path.basename(st.session_state.current_image_path)
-            st.image(original_image, caption=f"Fichier : {file_name}", use_container_width=True) 
+            st.image(original_image, caption=f"Fichier : {file_name}", width=300) 
 
     with image_col2:
         st.markdown("<h5 style='text-align: center;'>Image Transformée</h5>", unsafe_allow_html=True)
         if st.session_state.transformed_image is not None:
-            st.image(st.session_state.transformed_image, caption="Résultat de l'augmentation aléatoire", use_container_width=True)
+            st.image(st.session_state.transformed_image, caption="Résultat de l'augmentation aléatoire", width=300)
         else:
-            st.info("Cliquez sur le bouton '✨ Transformation'")
+            st.info("L'image transformée apparaitra ici.")
             st.markdown("<div style='height: 200px;'></div>", unsafe_allow_html=True)
 
