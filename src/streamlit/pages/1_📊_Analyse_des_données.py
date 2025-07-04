@@ -373,13 +373,17 @@ else:
     with image_col1:
         st.markdown("<h5 style='text-align: center;'>Image Originale</h5>", unsafe_allow_html=True)
         if original_image:
-            file_name = os.path.basename(st.session_state.current_image_path)
-            st.image(original_image, caption=f"Fichier : {file_name}", width=300) 
+            left_space, img_container, right_space = st.columns([1, 2, 1])
+            with img_container:
+                file_name = os.path.basename(st.session_state.current_image_path)
+                st.image(original_image, caption=f"Fichier : {file_name}", width=300) 
 
     with image_col2:
         st.markdown("<h5 style='text-align: center;'>Image Transformée</h5>", unsafe_allow_html=True)
         if st.session_state.transformed_image is not None:
-            st.image(st.session_state.transformed_image, caption="Résultat de l'augmentation aléatoire", width=300)
+            left_space, img_container, right_space = st.columns([1, 2, 1])
+            with img_container:
+                st.image(st.session_state.transformed_image, caption="Résultat de l'augmentation", width=300)
         else:
             st.info("L'image transformée apparaitra ici.")
             st.markdown("<div style='height: 200px;'></div>", unsafe_allow_html=True)
