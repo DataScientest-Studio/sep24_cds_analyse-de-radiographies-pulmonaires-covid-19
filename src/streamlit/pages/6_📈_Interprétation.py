@@ -14,11 +14,11 @@ La classe **Opacité pulmonaire** (non-COVID lung infection) pose de véritables
 - Recouvre parfois des cas proches comme **COVID** ou **pneumonie virale**
 - Taux de **confusion élevé** avec les classes voisines (notamment *Normal* et *COVID*)
 
-👉 Elle constitue **la principale source d’erreurs** du modèle, comme le montre la matrice de confusion ci-dessous :
+Elle constitue **la principale source d’erreurs** du modèle, comme le montre la matrice de confusion ci-dessous :
 """)
 
 #st.image("src/images/lung_opcaity_lenet.png")
-st.image("src/images/lung_opcaity_lenet.png")
+st.image("src/images/lung_opacity_lenet.png")
 
 st.subheader("Grad-CAM et interprétabilité")
 st.write("""
