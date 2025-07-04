@@ -60,14 +60,14 @@ st.write("""
 Ci-dessous une réprésentation de la variance par classe :
 """)
 
+st.subheader("Distribution de la variance par classe")
 
 script_dir = os.path.dirname(os.path.abspath(__file__))    
 project_root = os.path.dirname(script_dir)    
 input_filename = os.path.join(project_root, 'data', 'variance.csv')    
 df_plot = pd.read_csv(input_filename)  
 
-
-st.header("Distribution de la variance par classe")
+classes_order = ['Normal', 'Opacité Pulmonaire', 'COVID-19', 'Pneumonie virale']
 
 fig = px.violin(
     df_plot,
@@ -77,6 +77,7 @@ fig = px.violin(
     color_discrete_map=palette_bar,
     box=True,  
     points=False,
+    category_orders={'classe': classes_order},
     labels={
         'classe': 'Classe de la radiographie',
         'variance': 'Variance des pixels'
