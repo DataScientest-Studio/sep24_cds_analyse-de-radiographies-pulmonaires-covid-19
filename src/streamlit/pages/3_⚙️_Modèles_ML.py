@@ -14,11 +14,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 @st.cache_resource
-def load_model_and_scaler():
-    model = joblib.load("models/xgboost_model.pkl")
+def load_model():
+    model = xgb.XGBClassifier()
+    model.load_model("models/xgboost_model.json")
     return model
 
-model = load_model_and_scaler()
+model = load_model()
 
 def extract_features(image_pil):
     image = image_pil.convert("L").resize((128, 128))
