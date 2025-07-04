@@ -177,7 +177,7 @@ DESCRIPTIONS = {
     'Isolation Forest': "Cette approche utilise un réseau expert (VGG16) pour extraire des caractéristiques complexes. L'algorithme Isolation Forest isole ensuite les images qui sont sémantiquement différentes des autres. Efficace pour trouver des textures ou des formes inhabituelles.",
     'Auto-encodeur': "Un réseau de neurones est entraîné à compresser puis reconstruire les images du dataset. Il devient expert des radiographies 'typiques'. Une image qu'il peine à reconstruire (erreur élevée) est considérée comme anormale. C'est l'approche la plus sensible aux anomalies subtiles."
 }
-"""
+
 options = ["Statistique", "Isolation Forest", "Auto-encodeur"]
 selection = st.segmented_control(
     "Choisissez la technique à visualiser",
@@ -191,7 +191,7 @@ if selection == "Statistique":
     
     script_dir = os.path.dirname(os.path.abspath(__file__))    
     project_root = os.path.dirname(script_dir)    
-    input_filename = os.path.join(project_root, 'data', 'outliers_statistique.csv')
+    input_filename = os.path.join(project_root, 'data', 'plot_data_statistique.csv')
     df_plot = pd.read_csv(input_filename)
 
     fig = px.scatter_3d(
@@ -213,7 +213,7 @@ elif selection == "Isolation Forest":
 
     script_dir = os.path.dirname(os.path.abspath(__file__))    
     project_root = os.path.dirname(script_dir)    
-    input_filename = os.path.join(project_root, 'data', 'outliers_isolation_forest.csv')
+    input_filename = os.path.join(project_root, 'data', 'plot_data_isolation_forest.csv')
     df_plot = pd.read_csv(input_filename)
     
     score_values = df_plot['score'].values
@@ -239,7 +239,7 @@ elif selection == "Auto-encodeur":
 
     script_dir = os.path.dirname(os.path.abspath(__file__))    
     project_root = os.path.dirname(script_dir)    
-    input_filename = os.path.join(project_root, 'data', 'outliers_autoencoder.csv')
+    input_filename = os.path.join(project_root, 'data', 'plot_data_autoencoder.csv')
     df_plot = pd.read_csv(input_filename)
 
     fig = px.scatter_3d(
