@@ -177,7 +177,7 @@ DESCRIPTIONS = {
     'Isolation Forest': "Cette approche utilise un réseau expert (VGG16) pour extraire des caractéristiques complexes. L'algorithme Isolation Forest isole ensuite les images qui sont sémantiquement différentes des autres. Efficace pour trouver des textures ou des formes inhabituelles.",
     'Auto-encodeur': "Un réseau de neurones est entraîné à compresser puis reconstruire les images du dataset. Il devient expert des radiographies 'typiques'. Une image qu'il peine à reconstruire (erreur élevée) est considérée comme anormale. C'est l'approche la plus sensible aux anomalies subtiles."
 }
-
+"""
 options = ["Statistique", "Isolation Forest", "Auto-encodeur"]
 selection = st.segmented_control(
     "Choisissez la technique à visualiser",
@@ -255,7 +255,7 @@ elif selection == "Auto-encodeur":
     fig.update_layout(margin=dict(l=0, r=0, b=0, t=40))
     st.plotly_chart(fig, use_container_width=True)
 
-"""
+
 st.write("#### Top 10 des anomalies détectées par cette méthode")
 
 method_key = selection.lower().replace(' ', '_')
