@@ -208,6 +208,23 @@ if selection == "IQR":
     
     st.plotly_chart(fig, use_container_width=True)
 
+    st.write("Exemples d'images anormales trouvées :")
+
+    method_key = selection.lower().replace(' ', '_')  
+    for i in range(3):
+        cols = st.columns(5)
+        for j in range(5):
+            rank = i * 5 + j + 1
+            script_dir = os.path.dirname(os.path.abspath(__file__))    
+            project_root = os.path.dirname(script_dir)    
+            image_path = os.path.join(project_root, 'outliers_images', f"{method_key}_{rank}.png")
+            with cols[j]:
+                try:
+                    st.image(Image.open(image_path), use_container_width=True)
+                except FileNotFoundError:
+                    st.markdown(f"_(Image #{rank} non trouvée)_")    
+
+
 elif selection == "Statistique":
     st.write("#### Approche Statistique")
     st.write(DESCRIPTIONS[selection])
