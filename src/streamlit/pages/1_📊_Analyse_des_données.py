@@ -12,7 +12,7 @@ st.set_page_config(page_title="Analyse des Données", layout="wide")
 
 st.title("Analyse des données")
 
-palette = {
+palette_bar = {
     'Normal': 'green',
     'COVID-19': 'red',
     'Opacité Pulmonaire': 'orange',
@@ -44,9 +44,8 @@ fig = px.bar(
     x='Classe',
     y="Nombre d'images",
     text="Nombre d'images",
-    color_discrete_map=palette,
+    color_discrete_map=palette_bar,
     title="Répartition des classes dans le jeu de données",
-    color_discrete_sequence=px.colors.qualitative.Set2
 )
 fig.update_traces(textposition='outside')
 fig.update_layout(
