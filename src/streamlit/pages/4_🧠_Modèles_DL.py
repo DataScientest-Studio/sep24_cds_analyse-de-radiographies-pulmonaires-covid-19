@@ -7,7 +7,7 @@ from PIL import Image
 from utils import interactive_image
 import plotly.express as px
 from codecarbon import EmissionsTracker
-import gdown
+#import gdown
 import zipfile
 
 
