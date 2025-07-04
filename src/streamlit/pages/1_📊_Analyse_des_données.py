@@ -182,10 +182,12 @@ if outliers_selection == "Statistique" :
 
 if outliers_selection == "Isolation Forest" :
     st.write("*Isolation Forest*")
+    st.write("Cette approche plus avancée utilise un réseau de neurones pré-entraîné (VGG16) comme un "expert" pour extraire des caractéristiques complexes (textures, formes, motifs) de chaque image. Sur ces caractéristiques, l'algorithme Isolation Forest est appliqué. Son principe est d'isoler les observations : les points anormaux, étant différents et peu nombreux, sont plus faciles à isoler que les points normaux. Le score d'anomalie reflète la facilité avec laquelle une image a été isolée.  L'espace des caractéristiques extraites étant de très haute dimension, une Analyse en Composantes Principales (ACP) est utilisée pour le réduire à trois dimensions. Le graphique 3D résultant positionne chaque image dans cet espace sémantique réduit.")
 
 
 if outliers_selection == "Auto-Encodeur" :
     st.write("*Auto-Encodeur*")
+    st.write("C'est l'approche la plus sophistiquée. Un réseau de neurones appelé auto-encodeur est entraîné spécifiquement sur notre jeu de données. Son unique objectif est d'apprendre à compresser (encoder) puis à reconstruire (décoder) chaque image le plus fidèlement possible. Le modèle devient ainsi un expert des radiographies "typiques" du dataset. Lorsqu'il est confronté à une image anormale (contenant un artéfact, une pathologie rare, etc.), il échoue à la reconstruire correctement. L'erreur de reconstruction (la différence entre l'original et la reconstruction) sert de score d'anomalie.Le graphique 3D représente l'espace latent, c'est-à-dire l'ensemble des représentations compressées de toutes les images, réduit à 3 dimensions par ACP. Cet espace montre comment le réseau a appris à organiser et regrouper les images.") 
 
 
 
