@@ -170,6 +170,8 @@ if selection == "NMF" :
 
 st.subheader("Prétraitement")
 
+st.write("Plusieurs techniques de prétraitement ont été appliquées durant le projet. Ces étapes se sont avérées très utiles pour améliorer la performance des modèles de machine learning.")
+
 st.write("#### Elimination des anomalies")
 
 DESCRIPTIONS = {
@@ -302,13 +304,12 @@ elif selection == "Auto-encoder":
                 except FileNotFoundError:
                     st.markdown(f"_(Image #{rank} non trouvée)_")   
 
-st.write("""
-Les images ont été redimensionnées à 240x240 pixels, normalisées, et enrichies par augmentation de données (flip, rotation, zoom). Des méthodes comme Isolation Forest ont été utilisées pour retirer les outliers.
-""")
+st.write("#### redimensionnement et normalisation")
+
+st.write("""Les images ont été redimensionnées à 240 x 240 pixels et normalisées.""")
 
 @st.cache_data 
 def get_image_paths(folder):
-    """Scanne un dossier et retourne la liste des chemins des fichiers image valides."""
     if not os.path.isdir(folder):
         return []
     supported_extensions = ('.png', '.jpg', '.jpeg')
@@ -328,8 +329,6 @@ def transform_image_randomly(pil_image):
     normalized_image = transformed_image.astype(np.float32) / 255.0    
     return normalized_image
 
-
-
 script_dir = os.path.dirname(os.path.abspath(__file__))
 streamlit_dir = os.path.dirname(script_dir) 
 IMAGE_DIR = os.path.join(streamlit_dir, 'images')
@@ -337,6 +336,8 @@ IMAGE_DIR = os.path.join(streamlit_dir, 'images')
 all_image_paths = get_image_paths(IMAGE_DIR)
 
 st.write("#### Augmentation de Données")
+
+st.write("Les images ont été enrichies par augmentation de données (retournements, rotations, zooms, translations aléatoires).")
 
 if not all_image_paths:
     st.error(f"Aucune image trouvée dans le dossier '{IMAGE_DIR}'.")
