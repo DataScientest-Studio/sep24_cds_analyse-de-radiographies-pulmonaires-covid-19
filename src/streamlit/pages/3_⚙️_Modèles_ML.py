@@ -74,7 +74,7 @@ Utiliser des **modèles de Machine Learning classiques** pour détecter automati
 - **Taille des images** : tests en 32×32, 64×64, 128×128
 - **Standardisation** : Mise à l’échelle des données pour éviter les biais
 """)
-st.image("src/streamlit/images/MLP_standard.png", width=700)
+st.image("src/images/MLP_standard.png", width=700)
 
 
 st.markdown("- **HOG** : (Histogramme de gradient orienté) Extraction de caractéristiques visuelles (bords, textures)")
