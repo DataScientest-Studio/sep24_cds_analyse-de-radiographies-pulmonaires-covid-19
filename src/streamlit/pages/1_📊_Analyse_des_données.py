@@ -133,7 +133,7 @@ elif selection == "Analyse statistique":
         text="Nombre d'images",
         color='Classe',
         title="Répartition des classes dans le jeu de données",
-        color_discrete_map=palette
+        color_discrete_map=palette_bar
     )
     fig.update_traces(textposition='outside')
     fig.update_layout(
@@ -157,7 +157,7 @@ elif selection == "Analyse statistique":
     y='norm_intensity_std',          # Valeur numérique à analyser
     color='classification',
     title="Répartition de la variance intra-classe (écart-type de l'intensité après normalisation)",
-    color_discrete_map=palette       # Dictionnaire {'classe': 'couleur'}
+    color_discrete_map=palette_bar       # Dictionnaire {'classe': 'couleur'}
     )
 
     fig.update_layout(
