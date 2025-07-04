@@ -170,7 +170,7 @@ if selection == "NMF" :
 
 st.subheader("Prétraitement")
 
-st.write("### Elimination des anomalies")
+st.write("#### Elimination des anomalies")
 
 outliers_options = ["Statistique", "Isolation Forest", "Auto-Encodeur"]
 outliers_selection = st.segmented_control("", outliers_options, selection_mode="single")
@@ -178,6 +178,7 @@ outliers_selection = st.segmented_control("", outliers_options, selection_mode="
 if selection == "Statistique" :
     st.write("#### Statistique")
     st.write("Cette méthode fondamentale transforme chaque image en un vecteur de trois caractéristiques numériques : la moyenne (luminosité globale), l'écart-type (contraste) et l'entropie (complexité/quantité d'information). Un score d'anomalie est ensuite calculé pour chaque image en mesurant sa distance par rapport au centre de la distribution de toutes les images. Une image très sombre, très blanche ou très simple (peu de détails) obtiendra un score élevé.")
+    """
     script_dir = os.path.dirname(os.path.abspath(__file__))    
     project_root = os.path.dirname(script_dir)    
     input_filename = os.path.join(project_root, 'data', 'outliers_statistique.csv')    
@@ -189,6 +190,7 @@ if selection == "Statistique" :
                          hover_data={'path': True, 'label': True, 'score': ':.4f'})
     fig_stat.update_traces(hoverinfo='none', hovertemplate=None)
     fig_stat.show()
+    """
 
 if selection == "Isolation Forest" :
     st.write("#### Isolation Forest")
@@ -233,7 +235,7 @@ IMAGE_DIR = os.path.join(streamlit_dir, 'images')
 
 all_image_paths = get_image_paths(IMAGE_DIR)
 
-st.write("🔬 Démonstration de l'Augmentation de Données")
+st.write("###€ Augmentation de Données")
 
 if not all_image_paths:
     st.error(f"Aucune image trouvée dans le dossier '{IMAGE_DIR}'.")
@@ -264,13 +266,13 @@ else:
     image_col1, image_col2 = st.columns(2)
 
     with image_col1:
-        st.subheader("Image Originale")
+        st.write("*Image Originale*")
         if original_image:
             file_name = os.path.basename(st.session_state.current_image_path)
             st.image(original_image, caption=f"Fichier : {file_name}", width=400) 
 
     with image_col2:
-        st.subheader("Image Transformée")
+        st.write("*Image Transformée*")
         if st.session_state.transformed_image is not None:
             st.image(st.session_state.transformed_image, caption="Transformation + Normalisation", width=400)
         else:
