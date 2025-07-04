@@ -208,6 +208,12 @@ if selection == "IQR":
     
     st.plotly_chart(fig, use_container_width=True)
 
+    palette = {
+    'Normal': 'green',
+    'COVID': 'red',
+    'Lung_Opacity': 'orange',
+    'Viral Pneumonia': 'blue'}
+
     input_filename = os.path.join(project_root, 'data', 'intensity.csv')
     df_intensity = pd.read_csv(input_filename)   
     fig = px.scatter(
