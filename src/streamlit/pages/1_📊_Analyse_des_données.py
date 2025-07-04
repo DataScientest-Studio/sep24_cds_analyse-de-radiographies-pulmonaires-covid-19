@@ -33,11 +33,12 @@ Le jeu de données comprend 21 164 images réparties entre quatre classes : Norm
 La distribution est inégale, avec 48% de radios normales et seulement 6% de pneumonies virales, ce qui peut poser des défis pour l'apprentissage automatique.
 """)
 
-
 df_dist = pd.DataFrame({
     'Classe': ['Normal', 'Opacité Pulmonaire', 'COVID-19', 'Pneumonie virale'],
     'Nombre d\'images': [10192, 6012, 3615, 1345]
 })
+
+st.write("""Ci-dessous une réprésentation de la répartition des classes dans le jeu de données :""")
 
 fig = px.bar(
     df_dist,
@@ -45,9 +46,7 @@ fig = px.bar(
     y="Nombre d'images",
     text="Nombre d'images",
     color='Classe',
-    color_discrete_map=palette_bar,
-    title="Répartition des classes dans le jeu de données"
-)
+    color_discrete_map=palette_bar)
 fig.update_traces(textposition='outside')
 fig.update_layout(
     xaxis_title="Classe",
@@ -59,9 +58,7 @@ st.plotly_chart(fig, use_container_width=True)
 st.subheader("Distribution de la variance par classe")
 
 
-st.write("""
-Ci-dessous une réprésentation de la variance par classe (plus la variance est élevée, plus l'image est complexe/texturée) :
-""")
+st.write("""Ci-dessous une réprésentation de la variance par classe (plus la variance est élevée, plus l'image est complexe/texturée) :""")
 
 
 script_dir = os.path.dirname(os.path.abspath(__file__))    
