@@ -118,7 +118,7 @@ selection = st.segmented_control(
     "",
     options,
     label_visibility="collapsed", 
-    default=options
+    default="Statistique"
 )
 
 if selection == "Statistique":
