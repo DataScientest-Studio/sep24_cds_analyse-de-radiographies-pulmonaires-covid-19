@@ -14,9 +14,9 @@ st.title("Analyse des données")
 
 palette = {
     'Normal': 'green',
-    'COVID': 'red',
-    'Lung_Opacity': 'orange',
-    'Viral Pneumonia': 'blue'}
+    'COVID-19': 'red',
+    'Opacité Pulmonaire': 'orange',
+    'Pneumonie virale': 'blue'}
 
 st.subheader("Exploration visuelle")
 
@@ -78,6 +78,11 @@ options = ["PCA", "AE", "NMF", "UMAP"]
 selection = st.segmented_control("", options, selection_mode="single"
 )
 
+palette = {
+    'Normal': 'green',
+    'COVID': 'red',
+    'Lung_Opacity': 'orange',
+    'Viral Pneumonia': 'blue'}
 
 
 if selection == "PCA" :
