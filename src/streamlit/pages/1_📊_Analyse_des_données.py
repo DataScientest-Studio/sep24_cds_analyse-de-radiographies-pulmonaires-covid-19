@@ -355,7 +355,7 @@ else:
         st.error(f"Erreur lors du chargement de l'image : {e}")
         original_image = None 
 
-   control_col1, control_col2 = st.columns(2)
+    control_col1, control_col2 = st.columns(2)
     with control_col1:
         if st.button("🔄 Nouvelle image", use_container_width=True):
             st.session_state.current_image_path = random.choice(all_image_paths)
