@@ -12,18 +12,23 @@ st.set_page_config(page_title="Analyse des Données", layout="wide")
 
 st.title("Analyse des données")
 
+palette = {
+    'Normal': 'green',
+    'COVID': 'red',
+    'Lung_Opacity': 'orange',
+    'Viral Pneumonia': 'blue'}
 
 st.subheader("Exploration visuelle")
 
 st.write("""
-Inspection visuelle de quelques images : l’inspection visuelle met en évidence que les radios sont dans l’ensemble de très bonne qualité.
+Inspection visuelle de quelques images met en évidence que la plupart des radios sont dans l’ensemble de très bonne qualité.
 """)
 interactive_image("src/images/InspectionVisuelle.png", "exemple")
 
 
 st.subheader("Description du jeu de données")
 st.write("""
-Le jeu de données comprend 21 164 images réparties entre quatre classes : Normal (10192), COVID-19 (3615), Pneumonie virale (1345), Opacité pulmonaire (6012). Les images proviennent de différentes sources médicales internationales.  
+Le jeu de données comprend 21 164 images réparties entre quatre classes : Normal (10192), Opacité pulmonaire (6012), COVID-19 (3615), Pneumonie virale (1345). Les images proviennent de différentes sources médicales internationales.  
 La distribution est inégale, avec 48% de radios normales et seulement 6% de pneumonies virales, ce qui peut poser des défis pour l'apprentissage automatique.
 """)
 
@@ -39,6 +44,7 @@ fig = px.bar(
     x='Classe',
     y="Nombre d'images",
     text="Nombre d'images",
+    color=palette,
     color='Classe',
     title="Répartition des classes dans le jeu de données",
     color_discrete_sequence=px.colors.qualitative.Set2
@@ -52,8 +58,7 @@ fig.update_layout(
 st.plotly_chart(fig, use_container_width=True)
 
 st.write("""
-Visualisation statistique : variance de l’intensité, projections UMAP, et examen manuel sur quelques images.
-Variance : ci-dessous une visualisation de la variance par classe
+Ci-dessous une visualisation de la variance par classe.
 """)
 interactive_image("src/images/Variance.png", "exemple")
 
@@ -74,11 +79,7 @@ options = ["PCA", "AE", "NMF", "UMAP"]
 selection = st.segmented_control("", options, selection_mode="single"
 )
 
-palette = {
-    'Normal': 'green',
-    'COVID': 'red',
-    'Lung_Opacity': 'orange',
-    'Viral Pneumonia': 'blue'}
+
 
 if selection == "PCA" :
     st.write("#### Analyse en Composantes Principales (PCA)")
