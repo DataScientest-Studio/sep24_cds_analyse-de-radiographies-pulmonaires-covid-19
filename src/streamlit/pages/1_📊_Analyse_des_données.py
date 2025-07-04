@@ -201,7 +201,6 @@ if selection == "Statistique":
             color='score',
             size='score',
             size_max=20,
-            title="Visualisation 3D - Anomalies Statistiques",
             color_continuous_scale=px.colors.sequential.Viridis,
         )
     fig.update_traces(marker=dict(opacity=0.8), hoverinfo='none', hovertemplate=None)
@@ -241,7 +240,6 @@ elif selection == "Isolation Forest":
         color='score',
         size='size_score',
         size_max=20,
-        title="Visualisation 3D - Anomalies par Isolation Forest (sur features VGG16)",
         color_continuous_scale=px.colors.sequential.Viridis,
     )
     fig.update_traces(marker=dict(opacity=0.8), hoverinfo='none', hovertemplate=None)
@@ -277,7 +275,6 @@ elif selection == "Auto-encodeur":
         color='score',
         size='score',
         size_max=20,
-        title="Visualisation 3D - Erreur de reconstruction dans l'espace latent",
         color_continuous_scale=px.colors.sequential.Viridis,
     )
     fig.update_traces(marker=dict(opacity=0.8), hoverinfo='none', hovertemplate=None)
