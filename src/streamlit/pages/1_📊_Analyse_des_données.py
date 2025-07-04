@@ -119,7 +119,6 @@ fig = px.scatter(
     color_discrete_map=palette_bar,
     symbol='est_outlier',
     size='taille_point',         
-    symbol='est_outlier',
     symbol_map={'Non': 'circle', 'Oui': 'star-diamond'},
     hover_data=['fichier'], 
     category_orders={
