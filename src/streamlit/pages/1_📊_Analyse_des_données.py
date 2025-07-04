@@ -46,7 +46,7 @@ fig = px.bar(
     y="Nombre d'images",
     text="Nombre d'images",
     color='Classe',
-    color_discrete_map=colors_map,
+    color_discrete_map=palette_bar,
     title="Répartition des classes dans le jeu de données"
 )
 fig.update_traces(textposition='outside')
