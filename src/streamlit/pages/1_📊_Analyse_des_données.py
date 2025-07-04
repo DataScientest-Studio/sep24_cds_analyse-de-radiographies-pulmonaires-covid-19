@@ -259,6 +259,7 @@ elif selection == "Auto-encodeur":
 
 st.write("#### Top 10 des anomalies détectées par cette méthode")
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 IMAGES_DIR = os.path.join(BASE_DIR, 'outliers_images')
 method_key = selection.lower().replace(' ', '_')
 outliers_file = os.path.join(RESULTS_DIR, f'outliers_{method_key}.csv')
