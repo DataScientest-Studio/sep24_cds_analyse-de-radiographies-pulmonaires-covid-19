@@ -208,7 +208,25 @@ if selection == "IQR":
     
     st.plotly_chart(fig, use_container_width=True)
 
-    st.write("Exemples d'images anormales trouvées :")
+    input_filename = os.path.join(project_root, 'data', 'intensity.csv')
+    df_intensity = pd.read_csv(input_filename)   
+    fig = px.scatter(
+        df_intensity,
+        x='norm_intensity_std',
+        y='norm_intensity_mean',
+        color='classification',
+        title="Répartition intensité moyenne selon écart-type après normalisation",
+        color_discrete_map=palette
+    )
+        
+    fig.update_layout(
+        xaxis_title="Ecart-type",
+        yaxis_title="Intensité moyenne",
+        showlegend=True
+    )
+    st.plotly_chart(fig, use_container_width=True)
+
+    st.write("Exemples d'images anormales trouvées par la méthode IQR :")
 
     method_key = selection.lower().replace(' ', '_')  
     for i in range(3):
