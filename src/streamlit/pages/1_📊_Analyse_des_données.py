@@ -207,6 +207,8 @@ if selection == "Statistique":
     fig.update_layout(margin=dict(l=0, r=0, b=0, t=40))
     st.plotly_chart(fig, use_container_width=True)
 
+    st.write("Les 10 images les plus anormales trouvées :")
+
     method_key = selection.lower().replace(' ', '_')  
     for i in range(2):
         cols = st.columns(5)
@@ -246,6 +248,9 @@ elif selection == "Isolation Forest":
     fig.update_layout(margin=dict(l=0, r=0, b=0, t=40))
     st.plotly_chart(fig, use_container_width=True)
 
+    st.write("Les 10 images les plus anormales trouvées :")
+
+
     method_key = selection.lower().replace(' ', '_')
     for i in range(2):
         cols = st.columns(5)
@@ -260,7 +265,7 @@ elif selection == "Isolation Forest":
                 except FileNotFoundError:
                     st.markdown(f"_(Image #{rank} non trouvée)_")   
 
-elif selection == "Auto-encodeur":
+elif selection == "Auto-encoder":
     st.write("#### Approche Deep Learning (Auto-encodeur)")
     st.write(DESCRIPTIONS[selection])
 
@@ -281,7 +286,9 @@ elif selection == "Auto-encodeur":
     fig.update_layout(margin=dict(l=0, r=0, b=0, t=40))
     st.plotly_chart(fig, use_container_width=True)
 
-    method_key = 'autoencoder' 
+    st.write("Les 10 images les plus anormales trouvées :")
+    
+    method_key = selection.lower().replace(' ', '_').replace('-', '')
     for i in range(2):
         cols = st.columns(5)
         for j in range(5):
