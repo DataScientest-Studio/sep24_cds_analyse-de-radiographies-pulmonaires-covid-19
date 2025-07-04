@@ -242,9 +242,12 @@ elif selection == "Auto-encoder":
 
 st.subheader("Réductions de dimensions")
 
-options = ["PCA", "AE", "NMF", "UMAP"]
-selection = st.segmented_control("", options, selection_mode="single"
-)
+options = ["PCA", "UMAP", "AE", "NMF"]
+selection = st.segmented_control("", 
+                                 options, 
+                                 selection_mode="single",
+                                 default="PCA"
+                                )
 
 palette = {
     'Normal': 'green',
