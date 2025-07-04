@@ -120,7 +120,6 @@ fig = px.scatter(
     symbol='est_outlier',
     size='taille_point',         
     symbol_map={'Non': 'circle', 'Oui': 'star-diamond'},
-    hover_data=['fichier'], 
     category_orders={
         'classe': classes_order,
         'est_outlier': ['Non', 'Oui']
@@ -134,7 +133,7 @@ fig = px.scatter(
     title='Distribution des Radiographies par Intensité et Écart-Type'
 )
 
-fig.update_traces(marker=dict(line=dict(width=1, color='DarkSlateGrey')), selector=dict(mode='markers'))
+fig.update_traces(hoverinfo='none', hovertemplate=None)
 fig.update_layout(
     legend_title="Légendes",
     height=700 
