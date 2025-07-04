@@ -107,12 +107,34 @@ st.markdown("---")
 st.subheader("🧪 Essai avec une radiographie")
 uploaded_file = st.file_uploader("Chargez une radiographie", type=["jpg", "jpeg", "png"])
 
+# Téléchargement modèle sur Google Drive
+file_ID = '11_24wevAbwi3Tx3deIArvA40Vd9y_8pC'
 
+url = f'https://drive.google.com/uc?id={file_id}'
+output_path = 'model.keras'
+
+# Télécharger le fichier s'il n'existe pas déjà
+@st.cache_resource
+def download_model():
+    if not os.path.exists(output_path):
+        gdown.download(url, output_path, quiet=False)
+    return load_model(output_path)
+
+# Charger le modèle
+model = download_model()
+
+st.title("Chargement de modèle Keras depuis Google Drive")
+st.success("✅ Modèle chargé avec succès depuis Google Drive !")
+
+
+"""
 @st.cache_resource
 def load_model():
     return tf.keras.models.load_model("src/models/efficientnet_optimized.h5")
 
 model = load_model()
+"""
+
 class_names = ["COVID", "Normal", "Viral Pneumonia"]
 
 def preprocess_image(image):
