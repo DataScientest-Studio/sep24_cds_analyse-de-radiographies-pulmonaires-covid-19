@@ -256,28 +256,32 @@ elif selection == "Auto-encodeur":
     fig.update_layout(margin=dict(l=0, r=0, b=0, t=40))
     st.plotly_chart(fig, use_container_width=True)
 
-"""
+
 st.write("#### Top 10 des anomalies détectées par cette méthode")
 
+IMAGES_DIR = os.path.join(BASE_DIR, 'outliers_images')
 method_key = selection.lower().replace(' ', '_')
 outliers_file = os.path.join(RESULTS_DIR, f'outliers_{method_key}.csv')
-top_anomalies = pd.read_csv(outliers_file).head(10)
+try:
+    top_anomalies = pd.read_csv(outliers_file).head(10)
+    
+    for i in range(2):
+        cols = st.columns(5)
+        for j in range(5):
+            index = i * 5 + j
+            if index < len(top_anomalies):
+                with cols[j]:
+                    row = top_anomalies.iloc[index]
+                    image_path = os.path.join(IMAGES_DIR, f"{method_key}_anomaly_{index + 1}.png")                    
+                    try:
+                        image = Image.open(image_path)
+                        st.image(image, use_column_width=True,
+                                 caption=f"Rang #{index + 1} | Score: {row['score']:.4f}")
+                    except FileNotFoundError:
+                        st.warning(f"Image non trouvée: {image_path}")
+except FileNotFoundError:
+    st.error(f"Fichier de résultats non trouvé: {outliers_file}. Assurez-vous que le script d'analyse a été exécuté.")
 
-for i in range(2):
-    cols = st.columns(5)
-    for j in range(5):
-        index = i * 5 + j
-        if index < len(top_anomalies):
-            with cols[j]:
-                row = top_anomalies.iloc[index]
-                image_path = os.path.join(RESULTS_DIR, f"{method_key}_anomaly_{index + 1}.png")
-                try:
-                    image = Image.open(image_path)
-                    st.image(image, use_column_width=True,
-                             caption=f"Rang #{index + 1} | Score: {row['score']:.4f}")
-                except FileNotFoundError:
-                    st.warning(f"Image {image_path} non trouvée.")
-"""
 st.write("""
 Les images ont été redimensionnées à 240x240 pixels, normalisées, et enrichies par augmentation de données (flip, rotation, zoom). Des méthodes comme Isolation Forest ont été utilisées pour retirer les outliers.
 """)
