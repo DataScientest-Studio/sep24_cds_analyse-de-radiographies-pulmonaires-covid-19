@@ -306,7 +306,7 @@ elif selection == "Auto-encoder":
 
 st.write("#### Redimensionnement et normalisation")
 
-st.write("""Les images ont été redimensionnées à 240 x 240 pixels et normalisées.""")
+st.write("""Les images ont été redimensionnées à 240 x 240 pixels et normalisées. En effet, il a été constaté que 7 radiographies sur 10 ne sont pas normalisées.""")
 
 @st.cache_data 
 def get_image_paths(folder):
@@ -380,6 +380,3 @@ else:
         else:
              st.info("Cliquez sur 'Appliquer une transformation' pour générer une version augmentée.")
 
-
-st.write("Il a été constaté que 7 radiographies sur 10 ne sont pas normalisées. Voici la représentation en fonction des diverses sources de données initiales :")
-interactive_image("src/images/Normalisation.png", "exemple")
