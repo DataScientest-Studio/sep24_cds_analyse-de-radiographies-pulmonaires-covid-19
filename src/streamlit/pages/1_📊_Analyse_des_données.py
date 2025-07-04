@@ -255,7 +255,7 @@ elif selection == "Auto-encodeur":
     fig.update_layout(margin=dict(l=0, r=0, b=0, t=40))
     st.plotly_chart(fig, use_container_width=True)
 
-
+"""
 st.write("#### Top 10 des anomalies détectées par cette méthode")
 
 method_key = selection.lower().replace(' ', '_')
@@ -276,7 +276,7 @@ for i in range(2):
                              caption=f"Rang #{index + 1} | Score: {row['score']:.4f}")
                 except FileNotFoundError:
                     st.warning(f"Image {image_path} non trouvée.")
-
+"""
 st.write("""
 Les images ont été redimensionnées à 240x240 pixels, normalisées, et enrichies par augmentation de données (flip, rotation, zoom). Des méthodes comme Isolation Forest ont été utilisées pour retirer les outliers.
 """)
