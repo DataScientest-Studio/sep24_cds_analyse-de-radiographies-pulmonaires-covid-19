@@ -108,6 +108,9 @@ project_root = os.path.dirname(script_dir)
 input_filename = os.path.join(project_root, 'data', 'iqr_outliers.csv')    
 df_plot = pd.read_csv(input_filename)  
 
+taille_mapping = {'Non': 5, 'Oui': 20} 
+df['taille_point'] = df['est_outlier'].map(taille_mapping)
+
 fig = px.scatter(
     df_plot,
     x='intensite_moyenne',
@@ -115,9 +118,9 @@ fig = px.scatter(
     color='classe',
     color_discrete_map=palette_bar,
     symbol='est_outlier',
-    size='est_outlier',
-    size_map={'Non': 5, 'Oui': 12},  
-    symbol_map={'Non': 'circle', 'Oui': 'star'}, 
+    size='taille_point',         
+    symbol='est_outlier',
+    symbol_map={'Non': 'circle', 'Oui': 'star-diamond'},
     hover_data=['fichier'], 
     category_orders={
         'classe': classes_order,
