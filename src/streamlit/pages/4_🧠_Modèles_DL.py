@@ -10,6 +10,7 @@ from codecarbon import EmissionsTracker
 #import gdown
 import zipfile
 from tensorflow.keras.applications.efficientnet import preprocess_input
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 st.set_page_config(layout="wide")
 st.title("📊 Résultats des modèles deep learning")
@@ -125,7 +126,9 @@ class_names = ["COVID", "Normal", "Viral Pneumonia"]
 def preprocess_image(image):
     image = image.convert("RGB").resize((240, 240))
     img_array = np.array(image)
-    img_array = preprocess_input(img_array)  
+    #img_array = preprocess_input(img_array)
+    img_array=ImageDataGenerator(preprocessing_function=preprocess_input).apply_transform(img_array)
+
     return np.expand_dims(img_array, axis=0)
 
 if uploaded_file is not None:
