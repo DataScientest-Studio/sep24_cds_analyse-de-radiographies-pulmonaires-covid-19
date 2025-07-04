@@ -17,7 +17,7 @@ La classe **Opacité pulmonaire** (non-COVID lung infection) pose de véritables
 👉 Elle constitue **la principale source d’erreurs** du modèle, comme le montre la matrice de confusion ci-dessous :
 """)
 
-st.image("src/images/lung_opcaity_lenet.png")
+#st.image("src/images/lung_opcaity_lenet.png")
 
 st.subheader("Grad-CAM et interprétabilité")
 st.write("""
@@ -64,7 +64,6 @@ Ci-dessous, nous comparons trois variantes courantes :
 st.image("src/images/gradcam_comp.png", caption="Comparaison : GradCAM vs LayerCAM vs GradCAM++", use_column_width=True)
 
 st.markdown("""
-### 🔍 Lecture visuelle
 - Chaque ligne montre une image et ses activations selon la méthode utilisée.
 - Les zones rouges indiquent les régions les plus contributives à la prédiction.
 - On observe souvent une **concentration dans les bases pulmonaires ou les zones anormales** selon le cas.
