@@ -317,17 +317,19 @@ def get_image_paths(folder):
 
 def transform_image_randomly(pil_image):
     image_np = np.array(pil_image.convert('L'))
+    if random.random() < 0.5: image_np = cv2.flip(image_np, 1) 
     h, w = image_np.shape
     angle = random.uniform(-10, 10)
     scale = random.uniform(0.9, 1.1)
     tx = random.uniform(-w * 0.05, w * 0.05)
     ty = random.uniform(-h * 0.05, h * 0.05)
-    M_rot_zoom = cv2.getRotationMatrix2D((w // 2, h // 2), angle, scale)    
-    M_rot_zoom[0, 2] += tx
-    M_rot_zoom[1, 2] += ty
-    transformed_image = cv2.warpAffine(image_np, M_rot_zoom, (w, h), borderMode=cv2.BORDER_REPLICATE)
+    M = cv2.getRotationMatrix2D((w // 2, h // 2), angle, scale)    
+    M[0, 2] += tx
+    M[1, 2] += ty    
+    transformed_image = cv2.warpAffine(image_np, M, (w, h), borderMode=cv2.BORDER_REPLICATE)    
     normalized_image = transformed_image.astype(np.float32) / 255.0    
     return normalized_image
+
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 streamlit_dir = os.path.dirname(script_dir) 
@@ -353,9 +355,9 @@ else:
         st.error(f"Erreur lors du chargement de l'image : {e}")
         original_image = None 
 
-    control_col1, control_col2 = st.columns(2)
+   control_col1, control_col2 = st.columns(2)
     with control_col1:
-        if st.button("🔄 Changer d'image", use_container_width=True):
+        if st.button("🔄 Nouvelle image", use_container_width=True):
             st.session_state.current_image_path = random.choice(all_image_paths)
             st.session_state.transformed_image = None
             st.rerun()
@@ -363,20 +365,22 @@ else:
     with control_col2:
         is_disabled = (original_image is None)
         if st.button("✨ Transformation", use_container_width=True, type="primary", disabled=is_disabled):
-            st.session_state.transformed_image = transform_image_randomly(original_image)
-    
+            if original_image:
+                st.session_state.transformed_image = transform_image_randomly(original_image)
+                
     image_col1, image_col2 = st.columns(2)
 
     with image_col1:
-        st.write("*Image Originale*")
+        st.markdown("<h5 style='text-align: center;'>Image Originale</h5>", unsafe_allow_html=True)
         if original_image:
             file_name = os.path.basename(st.session_state.current_image_path)
-            st.image(original_image, caption=f"Fichier : {file_name}", width=300) 
+            st.image(original_image, caption=f"Fichier : {file_name}", use_container_width=True) 
 
     with image_col2:
-        st.write("*Image Transformée*")
+        st.markdown("<h5 style='text-align: center;'>Image Transformée</h5>", unsafe_allow_html=True)
         if st.session_state.transformed_image is not None:
-            st.image(st.session_state.transformed_image, caption="Transformation + Normalisation", width=300)
+            st.image(st.session_state.transformed_image, caption="Résultat de l'augmentation aléatoire", use_container_width=True)
         else:
-             st.info("Cliquez sur 'Appliquer une transformation' pour générer une version augmentée.")
+            st.info("Cliquez sur le bouton '✨ Transformation'")
+            st.markdown("<div style='height: 200px;'></div>", unsafe_allow_html=True)
 
