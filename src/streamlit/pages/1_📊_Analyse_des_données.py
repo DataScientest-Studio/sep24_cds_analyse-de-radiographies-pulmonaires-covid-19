@@ -172,8 +172,49 @@ if selection == "Statistique":
             size_max=20,
             color_continuous_scale=px.colors.sequential.Viridis,
         )
-    fig.update_traces(marker=dict(opacity=0.8), hoverinfo='none', hovertemplate=None)
-    fig.update_layout(margin=dict(l=0, r=0, b=0, t=40))
+    n_frames = 120  # Nombre d'images pour une rotation complète
+    duration = 40   # Durée en ms entre chaque frame (plus c'est petit, plus c'est rapide)    
+    # Calculer une distance de caméra appropriée basée sur la plage de vos données
+    # (supposant que les données normalisées sont entre 0 et 1)
+    camera_distance = 2.5
+    angles = np.linspace(0, 360, n_frames)
+        frames = []
+    for t in angles:
+        # Calcul de la position de la caméra sur un cercle
+        camera_eye = dict(
+            x=camera_distance * np.cos(np.radians(t)),
+            y=camera_distance * np.sin(np.radians(t)),
+            z=1.2  # Hauteur de la caméra
+        )
+        frames.append(go.Frame(layout=dict(scene_camera_eye=camera_eye)))
+    fig.frames = frames    
+    fig.update_layout(
+        margin=dict(l=0, r=0, b=0, t=40),        
+        title_text="Analyse des clusters",
+        updatemenus=[{
+            'type': 'buttons',
+            'showactive': False,
+            'y': 0.95, 'x': 0.05, 'xanchor': 'left', 'yanchor': 'top',
+            'buttons': [
+                {
+                    'label': 'Play',
+                    'method': 'animate',
+                    'args': [None, {'frame': {'duration': duration, 'redraw': False}, 'fromcurrent': True, 'transition': {'duration': 0}}]
+                },
+                {
+                    'label': 'Pause',
+                    'method': 'animate',
+                    'args': [[None], {'frame': {'duration': 0, 'redraw': False}, 'mode': 'immediate', 'transition': {'duration': 0}}]
+                }
+            ]
+        }],
+        # Définir une position de caméra initiale et un aspect ratio
+        scene=dict(
+            camera_eye=dict(x=camera_distance, y=0, z=1.2),
+            aspectmode='cube' # 'cube' assure que les axes ont la même échelle visuelle
+        )
+    )
+    fig.update_traces(marker=dict(opacity=0.8), hoverinfo='none', hovertemplate=None)        
     st.plotly_chart(fig, use_container_width=True)
 
     st.write("Les 10 images les plus anormales trouvées :")
