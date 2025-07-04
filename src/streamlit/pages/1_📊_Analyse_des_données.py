@@ -193,8 +193,7 @@ if selection == "Statistique":
     project_root = os.path.dirname(script_dir)    
     input_filename = os.path.join(project_root, 'data', 'plot_data_statistique.csv')
     df_plot = pd.read_csv(input_filename)
-
-     fig = px.scatter_3d(
+    fig = px.scatter_3d(
             df_plot,
             x='Moyenne Normalisée',
             y='Écart-type Normalisé',
