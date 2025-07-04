@@ -7,6 +7,8 @@ from PIL import Image
 import cv2  
 import random
 import numpy as np
+import plotly.graph_objects as go
+
 
 st.set_page_config(page_title="Analyse des Données", layout="wide")
 
