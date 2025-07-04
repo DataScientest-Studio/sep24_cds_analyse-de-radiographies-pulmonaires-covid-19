@@ -172,24 +172,111 @@ st.subheader("Prétraitement")
 
 st.write("#### Elimination des anomalies")
 
-outliers_options = ["Statistique", "Isolation Forest", "Auto-Encodeur"]
-outliers_selection = st.segmented_control("", outliers_options, selection_mode="single")
+DESCRIPTIONS = {
+    'Statistique': "Cette méthode fondamentale transforme chaque image en caractéristiques numériques (moyenne, contraste, entropie). Le score d'anomalie est basé sur la distance d'une image à la distribution normale. Idéal pour trouver des anomalies grossières comme des images très sombres ou vides.",
+    'Isolation Forest': "Cette approche utilise un réseau expert (VGG16) pour extraire des caractéristiques complexes. L'algorithme Isolation Forest isole ensuite les images qui sont sémantiquement différentes des autres. Efficace pour trouver des textures ou des formes inhabituelles.",
+    'Auto-encodeur': "Un réseau de neurones est entraîné à compresser puis reconstruire les images du dataset. Il devient expert des radiographies 'typiques'. Une image qu'il peine à reconstruire (erreur élevée) est considérée comme anormale. C'est l'approche la plus sensible aux anomalies subtiles."
+}
 
-if outliers_selection == "Statistique" :
-    st.write("*Statistique*")
-    st.write("Cette méthode fondamentale transforme chaque image en un vecteur de trois caractéristiques numériques : la moyenne (luminosité globale), l'écart-type (contraste) et l'entropie (complexité/quantité d'information). Un score d'anomalie est ensuite calculé pour chaque image en mesurant sa distance par rapport au centre de la distribution de toutes les images. Une image très sombre, très blanche ou très simple (peu de détails) obtiendra un score élevé.")
+options = ["Statistique", "Isolation Forest", "Auto-encodeur"]
+selection = st.segmented_control(
+    "Choisissez la technique à visualiser",
+    options,
+    label_visibility="collapsed"
+)
 
+if selection == "Statistique":
+    st.write("#### Approche Statistique")
+    st.write(DESCRIPTIONS[selection])
+    
+    script_dir = os.path.dirname(os.path.abspath(__file__))    
+    project_root = os.path.dirname(script_dir)    
+    input_filename = os.path.join(project_root, 'data', 'outliers_statistique.csv')
+    df_plot = pd.read_csv(plot_file)
 
-if outliers_selection == "Isolation Forest" :
-    st.write("*Isolation Forest*")
-    st.write("Cette approche plus avancée utilise un réseau de neurones pré-entraîné (VGG16) comme un expert pour extraire des caractéristiques complexes (textures, formes, motifs) de chaque image. Sur ces caractéristiques, l'algorithme Isolation Forest est appliqué. Son principe est d'isoler les observations : les points anormaux, étant différents et peu nombreux, sont plus faciles à isoler que les points normaux. Le score d'anomalie reflète la facilité avec laquelle une image a été isolée.  L'espace des caractéristiques extraites étant de très haute dimension, une Analyse en Composantes Principales (ACP) est utilisée pour le réduire à trois dimensions. Le graphique 3D résultant positionne chaque image dans cet espace sémantique réduit.")
+    fig = px.scatter_3d(
+        df_plot,
+        x='Moyenne Norm.', y='Écart-type Norm.', z='Entropie Norm.',
+        color='score',
+        size='score',
+        size_max=20,
+        title="Visualisation 3D - Anomalies Statistiques",
+        color_continuous_scale=px.colors.sequential.Viridis,
+    )
+    fig.update_traces(marker=dict(opacity=0.8), hoverinfo='none', hovertemplate=None)
+    fig.update_layout(margin=dict(l=0, r=0, b=0, t=40))
+    st.plotly_chart(fig, use_container_width=True)
 
+elif selection == "Isolation Forest":
+    st.write("#### Approche Machine Learning (Isolation Forest)")
+    st.write(DESCRIPTIONS[selection])
 
-if outliers_selection == "Auto-Encodeur" :
-    st.write("*Auto-Encodeur*")
-    st.write("C'est l'approche la plus sophistiquée. Un réseau de neurones appelé auto-encodeur est entraîné spécifiquement sur notre jeu de données. Son unique objectif est d'apprendre à compresser (encoder) puis à reconstruire (décoder) chaque image le plus fidèlement possible. Le modèle devient ainsi un expert des radiographies typiques du dataset. Lorsqu'il est confronté à une image anormale (contenant un artéfact, une pathologie rare, etc.), il échoue à la reconstruire correctement. L'erreur de reconstruction (la différence entre l'original et la reconstruction) sert de score d'anomalie.Le graphique 3D représente l'espace latent, c'est-à-dire l'ensemble des représentations compressées de toutes les images, réduit à 3 dimensions par ACP. Cet espace montre comment le réseau a appris à organiser et regrouper les images.")
+    script_dir = os.path.dirname(os.path.abspath(__file__))    
+    project_root = os.path.dirname(script_dir)    
+    input_filename = os.path.join(project_root, 'data', 'outliers_isolation_forest.csv')
+    df_plot = pd.read_csv(plot_file)
+    
+    score_values = df_plot['score'].values
+    min_val, max_val = score_values.min(), score_values.max()
+    df_plot['size_score'] = (score_values - min_val) / (max_val - min_val) if (max_val - min_val) > 0 else 0
 
+    fig = px.scatter_3d(
+        df_plot,
+        x='PC1', y='PC2', z='PC3',
+        color='score',
+        size='size_score',
+        size_max=20,
+        title="Visualisation 3D - Anomalies par Isolation Forest (sur features VGG16)",
+        color_continuous_scale=px.colors.sequential.Viridis,
+    )
+    fig.update_traces(marker=dict(opacity=0.8), hoverinfo='none', hovertemplate=None)
+    fig.update_layout(margin=dict(l=0, r=0, b=0, t=40))
+    st.plotly_chart(fig, use_container_width=True)
 
+elif selection == "Auto-encodeur":
+    st.write("#### Approche Deep Learning (Auto-encodeur)")
+    st.write(DESCRIPTIONS[selection])
+
+    script_dir = os.path.dirname(os.path.abspath(__file__))    
+    project_root = os.path.dirname(script_dir)    
+    input_filename = os.path.join(project_root, 'data', 'outliers_autoencoder.csv')
+    df_plot = pd.read_csv(plot_file)
+
+    fig = px.scatter_3d(
+        df_plot,
+        x='Latent PC1', y='Latent PC2', z='Latent PC3',
+        color='score',
+        size='score',
+        size_max=20,
+        title="Visualisation 3D - Erreur de reconstruction dans l'espace latent",
+        color_continuous_scale=px.colors.sequential.Viridis,
+    )
+    fig.update_traces(marker=dict(opacity=0.8), hoverinfo='none', hovertemplate=None)
+    fig.update_layout(margin=dict(l=0, r=0, b=0, t=40))
+    st.plotly_chart(fig, use_container_width=True)
+
+"""
+st.write("#### Top 10 des anomalies détectées par cette méthode")
+
+method_key = selection.lower().replace(' ', '_')
+outliers_file = os.path.join(RESULTS_DIR, f'outliers_{method_key}.csv')
+top_anomalies = pd.read_csv(outliers_file).head(10)
+
+for i in range(2):
+    cols = st.columns(5)
+    for j in range(5):
+        index = i * 5 + j
+        if index < len(top_anomalies):
+            with cols[j]:
+                row = top_anomalies.iloc[index]
+                image_path = os.path.join(RESULTS_DIR, f"{method_key}_anomaly_{index + 1}.png")
+                try:
+                    image = Image.open(image_path)
+                    st.image(image, use_column_width=True,
+                             caption=f"Rang #{index + 1} | Score: {row['score']:.4f}")
+                except FileNotFoundError:
+                    st.warning(f"Image {image_path} non trouvée.")
+"""
 st.write("""
 Les images ont été redimensionnées à 240x240 pixels, normalisées, et enrichies par augmentation de données (flip, rotation, zoom). Des méthodes comme Isolation Forest ont été utilisées pour retirer les outliers.
 """)
