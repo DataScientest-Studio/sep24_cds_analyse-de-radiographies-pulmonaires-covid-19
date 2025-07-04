@@ -8,3 +8,4 @@ codecarbon
 opencv-python-headless
 joblib
 scikit-image
+matplotlib
