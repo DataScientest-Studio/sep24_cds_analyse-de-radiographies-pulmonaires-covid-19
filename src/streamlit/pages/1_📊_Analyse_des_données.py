@@ -332,7 +332,9 @@ def transform_image_randomly(pil_image):
     M = cv2.getRotationMatrix2D((w // 2, h // 2), angle, scale)    
     M[0, 2] += tx
     M[1, 2] += ty    
-    transformed_image = cv2.warpAffine(image_np, M, (w, h), borderMode=cv2.BORDER_REPLICATE)    
+    transformed_image = cv2.warpAffine(image_np, M, (w, h), borderMode=cv2.BORDER_REPLICATE)
+    clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
+    transformed_image = clahe.apply(transformed_image)
     normalized_image = transformed_image.astype(np.float32) / 255.0    
     return normalized_image
 
@@ -345,7 +347,7 @@ all_image_paths = get_image_paths(IMAGE_DIR)
 
 st.write("#### Augmentation de Données")
 
-st.write("Les images ont été enrichies par augmentation de données (retournements, rotations, zooms, translations aléatoires).")
+st.write("Les images ont été enrichies par augmentation de données (retournements horizontaux, rotations, zooms, translations aléatoires).")
 
 if not all_image_paths:
     st.error(f"Aucune image trouvée dans le dossier '{IMAGE_DIR}'.")
