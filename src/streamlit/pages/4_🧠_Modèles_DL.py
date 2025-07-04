@@ -111,7 +111,7 @@ uploaded_file = st.file_uploader("Chargez une radiographie", type=["jpg", "jpeg"
 # Téléchargement modèle sur Google Drive
 file_ID = '11_24wevAbwi3Tx3deIArvA40Vd9y_8pC'
 
-url = f'https://drive.google.com/uc?id={file_id}'
+url = f'https://drive.google.com/uc?id={file_ID}'
 output_path = 'model.keras'
 
 # Télécharger le fichier s'il n'existe pas déjà
