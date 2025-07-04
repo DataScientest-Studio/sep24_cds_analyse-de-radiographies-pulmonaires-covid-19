@@ -9,4 +9,5 @@ opencv-python-headless
 joblib
 scikit-image
 matplotlib
-xgboost 
+xgboost>=1.7.0
+scikit-learn>=1.0
