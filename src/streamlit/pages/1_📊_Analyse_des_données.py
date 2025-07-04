@@ -12,6 +12,12 @@ st.set_page_config(page_title="Analyse des Données", layout="wide")
 
 st.title("Analyse des données")
 
+palette_bar = {
+    'Normal': 'green',
+    'Opacité Pulmonaire': 'orange',
+    'COVID-19': 'red',
+    'Pneumonie virale': 'blue'}
+
 
 st.subheader("Exploration visuelle")
 
@@ -32,13 +38,6 @@ df_dist = pd.DataFrame({
     'Classe': ['Normal', 'Opacité Pulmonaire', 'COVID-19', 'Pneumonie virale'],
     'Nombre d\'images': [10192, 6012, 3615, 1345]
 })
-
-
-palette_bar = {
-    'Normal': 'green',
-    'COVID-19': 'red',
-    'Opacité Pulmonaire': 'orange',
-    'Pneumonie virale': 'blue'}
 
 fig = px.bar(
     df_dist,
@@ -67,12 +66,6 @@ project_root = os.path.dirname(script_dir)
 input_filename = os.path.join(project_root, 'data', 'variance.csv')    
 df_plot = pd.read_csv(input_filename)  
 
-color_palette = {
-    'Normal': 'green',
-    'COVID-19': 'red',
-    'Opacité Pulmonaire': 'orange',
-    'Pneumonie virale': 'blue'
-}
 
 st.header("Distribution de la variance par classe")
 
@@ -87,8 +80,7 @@ fig = px.violin(
     labels={
         'classe': 'Classe de la radiographie',
         'variance': 'Variance des pixels'
-    },
-    title='Comparaison de la distribution de la variance des pixels par classe'
+    }
 )
 fig.update_layout(
     xaxis_title="Catégorie",
