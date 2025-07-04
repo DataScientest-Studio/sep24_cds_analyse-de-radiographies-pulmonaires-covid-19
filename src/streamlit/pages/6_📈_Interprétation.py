@@ -18,6 +18,7 @@ La classe **Opacité pulmonaire** (non-COVID lung infection) pose de véritables
 """)
 
 #st.image("src/images/lung_opcaity_lenet.png")
+st.image("src/images/lung_opcaity_lenet.png")
 
 st.subheader("Grad-CAM et interprétabilité")
 st.write("""
@@ -35,11 +36,11 @@ col1, col2 = st.columns(2)
 
 with col1:
     st.markdown("**Image originale**")
-    st.image("src/images/Normal-2.png", caption="Radiographie normale", use_column_width=True)
+    st.image("src/images/Normal-2.png", caption="Radiographie normale", use_container_width=True)
 
 with col2:
     st.markdown("**Carte Grad-CAM**")
-    st.image("src/images/gradcam_normal.png", caption="Grad-CAM - Image sans pathologie", use_column_width=True)
+    st.image("src/images/gradcam_normal.png", caption="Grad-CAM - Image sans pathologie", use_container_width=True)
 
 st.markdown("""
 ---
