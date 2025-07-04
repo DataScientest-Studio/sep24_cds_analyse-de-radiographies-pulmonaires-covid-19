@@ -22,7 +22,7 @@ palette_bar = {
 st.subheader("Exploration visuelle")
 
 st.write("""
-Inspection visuelle de quelques images met en évidence que la plupart des radios sont dans l’ensemble de très bonne qualité.
+L'inspection visuelle de quelques images met en évidence que les radios sont dans l’ensemble de très bonne qualité.
 """)
 interactive_image("src/images/InspectionVisuelle.png", "exemple")
 
