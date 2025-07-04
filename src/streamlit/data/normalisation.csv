@@ -1,0 +1,17 @@
+url,is_norm,percent
+https://bimcv.cipf.es/bimcv-projects/bimcv-covid19/#1590858128006-9e640421-6711,False,72.1503637833468
+https://bimcv.cipf.es/bimcv-projects/bimcv-covid19/#1590858128006-9e640421-6711,True,27.849636216653195
+https://eurorad.org,False,60.85271317829457
+https://eurorad.org,True,39.14728682170542
+https://github.com/armiro/COVID-CXNet,False,69.0
+https://github.com/armiro/COVID-CXNet,True,31.0
+https://github.com/ieee8023/covid-chestxray-dataset,False,78.02197802197803
+https://github.com/ieee8023/covid-chestxray-dataset,True,21.978021978021978
+https://github.com/ml-workgroup/covid-19-image-repository/tree/master/png,False,63.934426229508205
+https://github.com/ml-workgroup/covid-19-image-repository/tree/master/png,True,36.0655737704918
+https://sirm.org/category/senza-categoria/covid-19/,False,67.22689075630252
+https://sirm.org/category/senza-categoria/covid-19/,True,32.773109243697476
+https://www.kaggle.com/c/rsna-pneumonia-detection-challenge/data,False,71.70154073874723
+https://www.kaggle.com/c/rsna-pneumonia-detection-challenge/data,True,28.298459261252773
+https://www.kaggle.com/paultimothymooney/chest-xray-pneumonia,False,64.22189128816083
+https://www.kaggle.com/paultimothymooney/chest-xray-pneumonia,True,35.77810871183917
