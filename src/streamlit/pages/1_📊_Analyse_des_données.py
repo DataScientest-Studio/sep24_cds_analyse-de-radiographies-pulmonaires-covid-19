@@ -218,8 +218,7 @@ if selection == "Statistique":
             image_path = os.path.join(project_root, 'outliers_images', f"{method_key}_anomaly_{rank}.png")
             with cols[j]:
                 try:
-                    st.image(Image.open(image_path), use_column_width=True,
-                             caption=f"Anomalie #{rank}")
+                    st.image(Image.open(image_path), use_container_width=True)
                 except FileNotFoundError:
                     st.markdown(f"_(Image #{rank} non trouvée)_")    
 
@@ -259,8 +258,7 @@ elif selection == "Isolation Forest":
             image_path = os.path.join(project_root, 'outliers_images', f"{method_key}_anomaly_{rank}.png")
             with cols[j]:
                 try:
-                    st.image(Image.open(image_path), use_column_width=True,
-                             caption=f"Anomalie #{rank}")
+                    st.image(Image.open(image_path), use_container_width=True)
                 except FileNotFoundError:
                     st.markdown(f"_(Image #{rank} non trouvée)_")   
 
@@ -296,8 +294,7 @@ elif selection == "Auto-encodeur":
             image_path = os.path.join(project_root, 'outliers_images', f"{method_key}_anomaly_{rank}.png")
             with cols[j]:
                 try:
-                    st.image(Image.open(image_path), use_column_width=True,
-                             caption=f"Anomalie #{rank}")
+                    st.image(Image.open(image_path), use_container_width=True)
                 except FileNotFoundError:
                     st.markdown(f"_(Image #{rank} non trouvée)_")   
 
