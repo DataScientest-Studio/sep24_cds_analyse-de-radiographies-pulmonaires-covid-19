@@ -12,11 +12,6 @@ st.set_page_config(page_title="Analyse des Données", layout="wide")
 
 st.title("Analyse des données")
 
-palette_bar = {
-    'Normal': 'green',
-    'COVID-19': 'red',
-    'Opacité Pulmonaire': 'orange',
-    'Pneumonie virale': 'blue'}
 
 st.subheader("Exploration visuelle")
 
@@ -38,6 +33,12 @@ df_dist = pd.DataFrame({
     'Nombre d\'images': [10192, 6012, 3615, 1345]
 })
 
+
+palette_bar = {
+    'Normal': 'green',
+    'COVID-19': 'red',
+    'Opacité Pulmonaire': 'orange',
+    'Pneumonie virale': 'blue'}
 
 fig = px.bar(
     df_dist,
