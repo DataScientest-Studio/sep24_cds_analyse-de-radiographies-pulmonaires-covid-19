@@ -12,6 +12,7 @@ from skimage.feature import hog
 from skimage.color import rgb2gray
 import numpy as np
 import matplotlib.pyplot as plt
+import xgboost as xgb
 
 @st.cache_resource
 def load_model():
