@@ -64,6 +64,8 @@ elif selection == "Inspection Visuelle":
 
 elif selection == "Analyse statistique":
 
+    st.write("#### Distribution des classes")
+
     df_dist = pd.DataFrame({
     'Classe': ['Normal', 'Opacité Pulmonaire', 'COVID-19', 'Pneumonie virale'],
     'Nombre d\'images': [10192, 6012, 3615, 1345]
@@ -85,10 +87,9 @@ elif selection == "Analyse statistique":
         showlegend=True
     )
     st.plotly_chart(fig, use_container_width=True)
-    
-    st.subheader("Distribution de la variance par classe")
-    
-    
+
+    st.write("#### Distribution de la variance par classe")
+        
     st.write("""Ci-dessous une réprésentation de la variance par classe (plus la variance est élevée, plus l'image est complexe/texturée) :""")
     
     
@@ -119,56 +120,7 @@ elif selection == "Analyse statistique":
     )
     st.plotly_chart(fig, use_container_width=True)
     
-    st.write("#### Distribution des classes")
-    df_dist = pd.DataFrame({
-        'Classe': ['Normal', 'Lung_Opacity', 'COVID', 'Viral Pneumonia'],
-        'Nombre d\'images': [10192, 6012, 3615, 1345]
-    })
-
-
-    fig = px.bar(
-        df_dist,
-        x='Classe',
-        y="Nombre d'images",
-        text="Nombre d'images",
-        color='Classe',
-        title="Répartition des classes dans le jeu de données",
-        color_discrete_map=palette_bar
-    )
-    fig.update_traces(textposition='outside')
-    fig.update_layout(
-        xaxis_title="Classe",
-        yaxis_title="Nombre d'images",
-        showlegend=False
-    )
-    st.plotly_chart(fig, use_container_width=True)
-
-    st.write("#### Distribution de l'intensité des pixels")
-
-    st.write("""
-    Variance du niveau d'intensité des pixels : ci-dessous une visualisation de la variance par classe
-    """)
-    input_filename = os.path.join(project_root, 'data', 'intensity.csv')
-    df_intensity = pd.read_csv(input_filename)   
     
-    fig = px.box(
-    df_intensity,
-    x='classification',              # Sur l'axe des catégories
-    y='norm_intensity_std',          # Valeur numérique à analyser
-    color='classification',
-    title="Répartition de la variance intra-classe (écart-type de l'intensité après normalisation)",
-    color_discrete_map=palette_bar       # Dictionnaire {'classe': 'couleur'}
-    )
-
-    fig.update_layout(
-        xaxis_title="Classe",
-        yaxis_title="Écart-type de l’intensité",
-        boxmode='group'
-    )
-
-    st.plotly_chart(fig, use_container_width=True)
-
-
     st.write("#### Normalisation des images")
 
     st.write("Il a été constaté que 7 radiographies sur 10 ne sont pas normalisées. Voici la représentation en fonction des diverses sources de données initiales :")
@@ -192,9 +144,6 @@ elif selection == "Analyse statistique":
     )
     st.plotly_chart(fig, use_container_width=True)
 
-
-    #interactive_image("src/images/Normalisation.png", "exemple")
-
     st.write("#### Identification des doublons")
     st.write("103 doublons ont été identifiés")
 
@@ -203,11 +152,6 @@ elif selection == "Analyse statistique":
     st.dataframe(df_doublons.rename(columns={'count': "Nombre de doublons", 'list': "Liste des doublons"}), hide_index=True)
 
 
-
-
-
-# Remplacé par graphique interactif plotly en violin plot
-# interactive_image("src/images/Variance.png", "exemple")
 
 st.subheader("Détection d'anomalies")
 st.write("""
