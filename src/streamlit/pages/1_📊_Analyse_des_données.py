@@ -194,15 +194,17 @@ if selection == "Statistique":
     input_filename = os.path.join(project_root, 'data', 'plot_data_statistique.csv')
     df_plot = pd.read_csv(input_filename)
 
-    fig = px.scatter_3d(
-        df_plot,
-        x='Moyenne Norm.', y='Écart-type Norm.', z='Entropie Norm.',
-        color='score',
-        size='score',
-        size_max=20,
-        title="Visualisation 3D - Anomalies Statistiques",
-        color_continuous_scale=px.colors.sequential.Viridis,
-    )
+     fig = px.scatter_3d(
+            df_plot,
+            x='Moyenne Normalisée',
+            y='Écart-type Normalisé',
+            z='Entropie Normalisée',
+            color='score',
+            size='score',
+            size_max=20,
+            title="Visualisation 3D - Anomalies Statistiques",
+            color_continuous_scale=px.colors.sequential.Viridis,
+        )
     fig.update_traces(marker=dict(opacity=0.8), hoverinfo='none', hovertemplate=None)
     fig.update_layout(margin=dict(l=0, r=0, b=0, t=40))
     st.plotly_chart(fig, use_container_width=True)
