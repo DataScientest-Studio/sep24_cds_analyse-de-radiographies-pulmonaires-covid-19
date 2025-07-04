@@ -256,6 +256,22 @@ elif selection == "Auto-encodeur":
     fig.update_layout(margin=dict(l=0, r=0, b=0, t=40))
     st.plotly_chart(fig, use_container_width=True)
 
+method_key = selection.lower().replace(' ', '_')
+
+for i in range(2):
+    cols = st.columns(5)
+    for j in range(5):
+        rank = i * 5 + j + 1
+        script_dir = os.path.dirname(os.path.abspath(__file__))    
+        project_root = os.path.dirname(script_dir)    
+        image_path = os.path.join(project_root, 'outliers_images', f"{method_key}_anomaly_{rank}.png")
+        with cols[j]:
+            try:
+                st.image(Image.open(image_path), use_column_width=True,
+                         caption=f"Anomalie #{rank}")
+            except FileNotFoundError:
+                st.markdown(f"_(Image #{rank} non trouvée)_")
+
 
 st.write("""
 Les images ont été redimensionnées à 240x240 pixels, normalisées, et enrichies par augmentation de données (flip, rotation, zoom). Des méthodes comme Isolation Forest ont été utilisées pour retirer les outliers.
