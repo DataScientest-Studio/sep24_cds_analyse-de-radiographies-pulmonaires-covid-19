@@ -110,7 +110,7 @@ st.markdown("---")
 st.subheader("🧪 Essai avec une radiographie")
 uploaded_file = st.file_uploader("Chargez une radiographie", type=["jpg", "jpeg", "png"])
 
-zip_path = "src/models/efficientnet_optimized.zip"
+zip_path = "models/efficientnet_optimized.zip"
 with zipfile.ZipFile(zip_path, 'r') as zip_ref:
     zip_ref.extractall("src/models/")
 
