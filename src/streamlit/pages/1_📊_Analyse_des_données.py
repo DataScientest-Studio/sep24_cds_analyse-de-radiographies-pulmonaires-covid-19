@@ -154,66 +154,61 @@ elif selection == "Analyse statistique":
 
 
 st.subheader("Détection d'anomalies")
-st.write("""
-Des anomalies ont été identifiées, telles que des doublons ou des images de faible qualité.
-""")
-
-st.write("""
-Avec la méthode IQR sur l’intensité et l’écart-type, après normalisation de l’intensité (seuil à 1,5 x IQR) : 285 outliers identifiés.  
-Ci-dessous une visualisation de la répartition de l’intensité en fonction de l’écart-type sur les radios après normalisation :
-""")
-
-
-script_dir = os.path.dirname(os.path.abspath(__file__))    
-project_root = os.path.dirname(script_dir)    
-input_filename = os.path.join(project_root, 'data', 'iqr_outliers.csv')    
-df_plot = pd.read_csv(input_filename)  
-
-taille_mapping = {'Non': 1, 'Oui': 10} 
-df_plot['taille_point'] = df_plot['est_outlier'].map(taille_mapping)
-
-fig = px.scatter(
-    df_plot,
-    x='ecart_type',
-    y='intensite_moyenne',
-    color='classe',
-    color_discrete_map=palette_bar,
-    size='taille_point',         
-    category_orders={
-        'classe': classes_order,
-        'est_outlier': ['Non', 'Oui']
-    },
-    labels={
-        'intensite_moyenne': 'Intensité Moyenne (après normalisation)',
-        'ecart_type': 'Écart-Type (Contraste/Texture)'
-    })
-
-fig.update_traces(hoverinfo='none', hovertemplate=None)
-fig.update_layout(legend_title="Légende", height=700)
-
-st.plotly_chart(fig, use_container_width=True)
-
-# Remplacé par graphique interactif plotly 
-# interactive_image("src/images/Intensite-ecart.png", "exemple")
-
-
-st.write("#### Elimination des anomalies")
 
 DESCRIPTIONS = {
-    'Statistique': "Cette méthode fondamentale transforme chaque image en caractéristiques numériques (moyenne, contraste, entropie). Le score d'anomalie est basé sur la distance d'une image à la distribution normale. La technique fonctionne très bien pour trouver les images très sombres ou vides.",
-    'Isolation Forest': "Cette approche utilise un réseau de neurones VGG16 entraîné sur des images pour extraire des caractéristiques complexes. L'algorithme Isolation Forest isole ensuite les images qui sont sémantiquement différentes des autres. Cette approche est efficace pour trouver des textures ou des formes inhabituelles (présence de colliers, pacemakers, etc.)",
+    'IQR' : "Il s'agit de la méthode statistique classique basée sur l'Intervalle InterQuartile : les éléments situés hors de la plage Q1 - 1,5*IQR / Q3 + 1,5*IQR sont considérés comme des anomalies. Elle a été appliquée ici à l'intensité moyenne des pixels et à l'écart-type de l'internsité.",
+    'Statistique': "Cette méthode fondamentale transforme chaque image en caractéristiques numériques (moyenne, contraste, entropie). Le score d'anomalie est basé sur la distance d'une image à la distribution normale. Idéal pour trouver des anomalies grossières comme des images très sombres ou vides.",
+    'Isolation Forest': "Cette approche utilise un réseau expert (VGG16) pour extraire des caractéristiques complexes. L'algorithme Isolation Forest isole ensuite les images qui sont sémantiquement différentes des autres. Efficace pour trouver des textures ou des formes inhabituelles.",
     'Auto-encoder': "Un réseau de neurones est entraîné à compresser puis reconstruire les images du dataset. Il devient expert des radiographies 'typiques'. Une image qu'il peine à reconstruire (erreur élevée) est considérée comme anormale. C'est l'approche la plus sensible aux anomalies subtiles."
 }
 
-options = ["Statistique", "Isolation Forest", "Auto-encoder"]
+options = ["IQR", "Statistique", "Isolation Forest", "Auto-encoder"]
 selection = st.segmented_control(
-    "",
+    "Choisissez la technique à visualiser",
     options,
-    label_visibility="collapsed", 
-    default="Statistique"
+    label_visibility="collapsed",
+    default='IQR'
 )
 
-if selection == "Statistique":
+if selection == "IQR":
+    st.write("#### Approche IQR")
+    st.write(DESCRIPTIONS[selection])
+    
+    st.write("""
+    285 outliers ont été identifiés par cette méthode.  
+    Ci-dessous une visualisation de la répartition de l’intensité en fonction de l’écart-type sur les radios après normalisation :
+    """)
+
+    script_dir = os.path.dirname(os.path.abspath(__file__))    
+    project_root = os.path.dirname(script_dir)    
+    input_filename = os.path.join(project_root, 'data', 'iqr_outliers.csv')    
+    df_plot = pd.read_csv(input_filename)  
+    
+    taille_mapping = {'Non': 1, 'Oui': 10} 
+    df_plot['taille_point'] = df_plot['est_outlier'].map(taille_mapping)
+    
+    fig = px.scatter(
+        df_plot,
+        x='ecart_type',
+        y='intensite_moyenne',
+        color='classe',
+        color_discrete_map=palette_bar,
+        size='taille_point',         
+        category_orders={
+            'classe': classes_order,
+            'est_outlier': ['Non', 'Oui']
+        },
+        labels={
+            'intensite_moyenne': 'Intensité Moyenne (après normalisation)',
+            'ecart_type': 'Écart-Type (Contraste/Texture)'
+        })
+    
+    fig.update_traces(hoverinfo='none', hovertemplate=None)
+    fig.update_layout(legend_title="Légende", height=700)
+    
+    st.plotly_chart(fig, use_container_width=True)
+
+elif selection == "Statistique":
     st.write("#### Approche Statistique")
     st.write(DESCRIPTIONS[selection])
     
