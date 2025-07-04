@@ -182,7 +182,7 @@ if outliers_selection == "Statistique" :
     project_root = os.path.dirname(script_dir)    
     input_filename = os.path.join(project_root, 'data', 'outliers_statistique.csv')    
     df_plot = pd.read_csv(input_filename)  
-    fig_stat = px.scatter_3d(plot_df_stat, x='Moyenne Normalisée', y='Écart-type Normalisé', z='Entropie Normalisée',
+    fig_stat = px.scatter_3d(df_plot, x='Moyenne Normalisée', y='Écart-type Normalisé', z='Entropie Normalisée',
                              color='score', size='score', size_max=20,
                              color_continuous_scale=px.colors.sequential.Viridis,
                              title='Anomalies par Caractéristiques Statistiques (Taille & Couleur)',
