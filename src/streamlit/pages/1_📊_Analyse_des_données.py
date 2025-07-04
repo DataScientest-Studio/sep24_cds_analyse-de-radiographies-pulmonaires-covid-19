@@ -27,7 +27,7 @@ classes_order = ['Normal', 'Opacité Pulmonaire', 'COVID-19', 'Pneumonie virale'
 st.subheader("Exploration des données")
 
 options = ["Jeu de données", "Inspection Visuelle", "Analyse statistique"]
-selection = st.segmented_control("", options, selection_mode="single"
+selection = st.segmented_control("", options, selection_mode="single", default="Jeu de données"
 )
 
 if selection == "Jeu de données":
