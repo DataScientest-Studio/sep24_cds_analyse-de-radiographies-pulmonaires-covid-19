@@ -127,7 +127,7 @@ def preprocess_image(image):
     image = image.convert("RGB").resize((240, 240))
     img_array = np.array(image)
     #img_array = preprocess_input(img_array)
-    img_array=ImageDataGenerator(preprocessing_function=preprocess_input).apply_transform(img_array)
+    img_array=ImageDataGenerator(preprocessing_function=preprocess_input).apply_transform(img_array, transform_parameters=None)
 
     return np.expand_dims(img_array, axis=0)
 
