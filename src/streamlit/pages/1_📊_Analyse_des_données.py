@@ -109,7 +109,7 @@ input_filename = os.path.join(project_root, 'data', 'iqr_outliers.csv')
 df_plot = pd.read_csv(input_filename)  
 
 taille_mapping = {'Non': 5, 'Oui': 20} 
-df['taille_point'] = df['est_outlier'].map(taille_mapping)
+df_plot['taille_point'] = df_plot['est_outlier'].map(taille_mapping)
 
 fig = px.scatter(
     df_plot,
