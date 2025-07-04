@@ -123,19 +123,15 @@ fig = px.scatter(
         'est_outlier': ['Non', 'Oui']
     },
     labels={
-        'intensite_moyenne': 'Intensité Moyenne (Image Normalisée)',
-        'ecart_type': 'Écart-Type des Pixels (Contraste/Texture)',
-        'classe': 'Classe de la Radiographie',
-        'est_outlier': 'Est un Outlier ?'
+        'intensite_moyenne': 'Intensité Moyenne (après normalisation)',
+        'ecart_type': 'Écart-Type (Contraste/Texture)'
     },
     title='Distribution des Radiographies par Intensité et Écart-Type'
 )
 
 fig.update_traces(hoverinfo='none', hovertemplate=None)
 fig.update_layout(
-    legend_title="Légendes",
-    height=700 
-)
+    legend_title="Légende")
 
 st.plotly_chart(fig, use_container_width=True)
 
