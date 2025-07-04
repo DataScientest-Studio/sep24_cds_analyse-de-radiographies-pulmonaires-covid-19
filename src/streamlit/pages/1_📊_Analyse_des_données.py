@@ -175,10 +175,10 @@ st.write("#### Elimination des anomalies")
 outliers_options = ["Statistique", "Isolation Forest", "Auto-Encodeur"]
 outliers_selection = st.segmented_control("", outliers_options, selection_mode="single")
 
-if selection == "Statistique" :
+if outliers_selection == "Statistique" :
     st.write("#### Statistique")
     st.write("Cette méthode fondamentale transforme chaque image en un vecteur de trois caractéristiques numériques : la moyenne (luminosité globale), l'écart-type (contraste) et l'entropie (complexité/quantité d'information). Un score d'anomalie est ensuite calculé pour chaque image en mesurant sa distance par rapport au centre de la distribution de toutes les images. Une image très sombre, très blanche ou très simple (peu de détails) obtiendra un score élevé.")
-    """
+    
     script_dir = os.path.dirname(os.path.abspath(__file__))    
     project_root = os.path.dirname(script_dir)    
     input_filename = os.path.join(project_root, 'data', 'outliers_statistique.csv')    
@@ -190,13 +190,13 @@ if selection == "Statistique" :
                          hover_data={'path': True, 'label': True, 'score': ':.4f'})
     fig_stat.update_traces(hoverinfo='none', hovertemplate=None)
     fig_stat.show()
-    """
+    
 
-if selection == "Isolation Forest" :
+if outliers_selection == "Isolation Forest" :
     st.write("#### Isolation Forest")
 
 
-if selection == "Auto-Encodeur" :
+if outliers_selection == "Auto-Encodeur" :
     st.write("#### Auto-Encodeur")
 
 
