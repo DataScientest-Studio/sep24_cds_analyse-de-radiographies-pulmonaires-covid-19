@@ -108,8 +108,8 @@ interactive_image("src/images/Intensite-ecart.png", "exemple")
 st.write("#### Elimination des anomalies")
 
 DESCRIPTIONS = {
-    'Statistique': "Cette méthode fondamentale transforme chaque image en caractéristiques numériques (moyenne, contraste, entropie). Le score d'anomalie est basé sur la distance d'une image à la distribution normale. Idéal pour trouver des anomalies grossières comme des images très sombres ou vides.",
-    'Isolation Forest': "Cette approche utilise un réseau de neurones VGG16 entraîné sur des images pour extraire des caractéristiques complexes. L'algorithme Isolation Forest isole ensuite les images qui sont sémantiquement différentes des autres. Efficace pour trouver des textures ou des formes inhabituelles.",
+    'Statistique': "Cette méthode fondamentale transforme chaque image en caractéristiques numériques (moyenne, contraste, entropie). Le score d'anomalie est basé sur la distance d'une image à la distribution normale. La technique fonctionne très bien pour trouver les images très sombres ou vides.",
+    'Isolation Forest': "Cette approche utilise un réseau de neurones VGG16 entraîné sur des images pour extraire des caractéristiques complexes. L'algorithme Isolation Forest isole ensuite les images qui sont sémantiquement différentes des autres. Cette approche est efficace pour trouver des textures ou des formes inhabituelles (présence de colliers, pacemakers, etc.)",
     'Auto-encoder': "Un réseau de neurones est entraîné à compresser puis reconstruire les images du dataset. Il devient expert des radiographies 'typiques'. Une image qu'il peine à reconstruire (erreur élevée) est considérée comme anormale. C'est l'approche la plus sensible aux anomalies subtiles."
 }
 
