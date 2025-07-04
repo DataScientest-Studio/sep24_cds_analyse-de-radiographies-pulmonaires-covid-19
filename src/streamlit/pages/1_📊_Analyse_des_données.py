@@ -304,7 +304,7 @@ elif selection == "Auto-encoder":
                 except FileNotFoundError:
                     st.markdown(f"_(Image #{rank} non trouvée)_")   
 
-st.write("#### redimensionnement et normalisation")
+st.write("#### Redimensionnement et normalisation")
 
 st.write("""Les images ont été redimensionnées à 240 x 240 pixels et normalisées.""")
 
@@ -371,12 +371,12 @@ else:
         st.write("*Image Originale*")
         if original_image:
             file_name = os.path.basename(st.session_state.current_image_path)
-            st.image(original_image, caption=f"Fichier : {file_name}", width=200) 
+            st.image(original_image, caption=f"Fichier : {file_name}", width=300) 
 
     with image_col2:
         st.write("*Image Transformée*")
         if st.session_state.transformed_image is not None:
-            st.image(st.session_state.transformed_image, caption="Transformation + Normalisation", width=200)
+            st.image(st.session_state.transformed_image, caption="Transformation + Normalisation", width=300)
         else:
              st.info("Cliquez sur 'Appliquer une transformation' pour générer une version augmentée.")
 
