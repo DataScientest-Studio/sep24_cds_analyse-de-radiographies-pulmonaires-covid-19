@@ -113,13 +113,11 @@ df_plot['taille_point'] = df_plot['est_outlier'].map(taille_mapping)
 
 fig = px.scatter(
     df_plot,
-    x='intensite_moyenne',
-    y='ecart_type',
+    x='ecart_type',
+    y='intensite_moyenne',
     color='classe',
     color_discrete_map=palette_bar,
-    symbol='est_outlier',
     size='taille_point',         
-    #symbol_map={'Non': 'circle', 'Oui': 'star-diamond'},
     category_orders={
         'classe': classes_order,
         'est_outlier': ['Non', 'Oui']
