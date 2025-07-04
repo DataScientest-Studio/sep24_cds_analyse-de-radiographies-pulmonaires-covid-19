@@ -6,4 +6,4 @@ pillow
 plotly
 codecarbon
 opencv-python-headless
-
+joblib
