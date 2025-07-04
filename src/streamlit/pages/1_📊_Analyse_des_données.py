@@ -102,6 +102,12 @@ Avec la méthode IQR sur l’intensité et l’écart-type, après normalisation
 Ci-dessous une visualisation de la répartition de l’intensité en fonction de l’écart-type sur les radios après normalisation :
 """)
 
+
+script_dir = os.path.dirname(os.path.abspath(__file__))    
+project_root = os.path.dirname(script_dir)    
+input_filename = os.path.join(project_root, 'data', 'iqr_outliers.csv')    
+df_plot = pd.read_csv(input_filename)  
+
 fig = px.scatter(
     df,
     x='intensite_moyenne',
