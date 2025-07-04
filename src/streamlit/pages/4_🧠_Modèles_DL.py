@@ -8,6 +8,7 @@ from utils import interactive_image
 import plotly.express as px
 from codecarbon import EmissionsTracker
 import gdown
+import zipfile
 
 
 st.set_page_config(layout="wide")
@@ -111,6 +112,9 @@ uploaded_file = st.file_uploader("Chargez une radiographie", type=["jpg", "jpeg"
 
 @st.cache_resource
 def load_model():
+    zip_path = "src/models/efficientnet_optimized.zip"
+    with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+        zip_ref.extractall("src/models/")
     return tf.keras.models.load_model("src/models/efficientnet_optimized.h5")
 
 model = load_model()
