@@ -58,8 +58,45 @@ fig.update_layout(
 st.plotly_chart(fig, use_container_width=True)
 
 st.write("""
-Ci-dessous une visualisation de la variance par classe.
+Ci-dessous une réprésentation de la variance par classe :
 """)
+
+
+script_dir = os.path.dirname(os.path.abspath(__file__))    
+project_root = os.path.dirname(script_dir)    
+input_filename = os.path.join(project_root, 'data', 'variance.csv')    
+df_plot = pd.read_csv(input_filename)  
+
+color_palette = {
+    'Normal': 'green',
+    'COVID-19': 'red',
+    'Opacité Pulmonaire': 'orange',
+    'Pneumonie virale': 'blue'
+}
+
+st.header("Distribution de la variance par classe")
+
+fig = px.violin(
+    df_plot,
+    x='classe',
+    y='variance',
+    color='classe',
+    color_discrete_map=palette_bar,
+    box=True,  
+    points=False,
+    labels={
+        'classe': 'Classe de la radiographie',
+        'variance': 'Variance des pixels'
+    },
+    title='Comparaison de la distribution de la variance des pixels par classe'
+)
+fig.update_layout(
+    xaxis_title="Catégorie",
+    yaxis_title="Variance des Pixels (plus c'est élevé, plus l'image est complexe/texturée)",
+    legend_title="Légende"
+)
+st.plotly_chart(fig, use_container_width=True)
+
 interactive_image("src/images/Variance.png", "exemple")
 
 st.subheader("Détection d'anomalies")
