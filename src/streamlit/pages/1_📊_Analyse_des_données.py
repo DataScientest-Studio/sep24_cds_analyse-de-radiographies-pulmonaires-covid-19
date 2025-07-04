@@ -284,7 +284,7 @@ elif selection == "Auto-encodeur":
     fig.update_layout(margin=dict(l=0, r=0, b=0, t=40))
     st.plotly_chart(fig, use_container_width=True)
 
-    method_key = 'autoencodeur' 
+    method_key = 'autoencoder' 
     for i in range(2):
         cols = st.columns(5)
         for j in range(5):
