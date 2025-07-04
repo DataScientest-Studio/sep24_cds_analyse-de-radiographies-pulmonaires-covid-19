@@ -119,7 +119,7 @@ fig = px.scatter(
     color_discrete_map=palette_bar,
     symbol='est_outlier',
     size='taille_point',         
-    symbol_map={'Non': 'circle', 'Oui': 'star-diamond'},
+    #symbol_map={'Non': 'circle', 'Oui': 'star-diamond'},
     category_orders={
         'classe': classes_order,
         'est_outlier': ['Non', 'Oui']
