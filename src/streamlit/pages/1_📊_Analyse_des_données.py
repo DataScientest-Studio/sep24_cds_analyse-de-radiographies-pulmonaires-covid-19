@@ -56,11 +56,13 @@ fig.update_layout(
 )
 st.plotly_chart(fig, use_container_width=True)
 
+st.subheader("Distribution de la variance par classe")
+
+
 st.write("""
 Ci-dessous une réprésentation de la variance par classe (plus la variance est élevée, plus l'image est complexe/texturée) :
 """)
 
-st.subheader("Distribution de la variance par classe")
 
 script_dir = os.path.dirname(os.path.abspath(__file__))    
 project_root = os.path.dirname(script_dir)    
