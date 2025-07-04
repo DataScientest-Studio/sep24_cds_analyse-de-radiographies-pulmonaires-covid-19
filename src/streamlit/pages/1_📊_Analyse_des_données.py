@@ -17,6 +17,7 @@ palette_bar = {
     'Opacité Pulmonaire': 'orange',
     'COVID-19': 'red',
     'Pneumonie virale': 'blue'}
+classes_order = ['Normal', 'Opacité Pulmonaire', 'COVID-19', 'Pneumonie virale']
 
 
 st.subheader("Exploration visuelle")
@@ -66,7 +67,6 @@ project_root = os.path.dirname(script_dir)
 input_filename = os.path.join(project_root, 'data', 'variance.csv')    
 df_plot = pd.read_csv(input_filename)  
 
-classes_order = ['Normal', 'Opacité Pulmonaire', 'COVID-19', 'Pneumonie virale']
 
 fig = px.violin(
     df_plot,
@@ -101,6 +101,40 @@ st.write("""
 Avec la méthode IQR sur l’intensité et l’écart-type, après normalisation de l’intensité (seuil à 1,5 x IQR) : 285 outliers identifiés.  
 Ci-dessous une visualisation de la répartition de l’intensité en fonction de l’écart-type sur les radios après normalisation :
 """)
+
+fig = px.scatter(
+    df,
+    x='intensite_moyenne',
+    y='ecart_type',
+    color='classe',
+    color_discrete_map=palette_bar,
+    symbol='est_outlier',
+    size='est_outlier',
+    size_map={'Non': 5, 'Oui': 12},  
+    symbol_map={'Non': 'circle', 'Oui': 'star'}, 
+    hover_data=['fichier'], 
+    category_orders={
+        'classe': classes_order,
+        'est_outlier': ['Non', 'Oui']
+    },
+    labels={
+        'intensite_moyenne': 'Intensité Moyenne (Image Normalisée)',
+        'ecart_type': 'Écart-Type des Pixels (Contraste/Texture)',
+        'classe': 'Classe de la Radiographie',
+        'est_outlier': 'Est un Outlier ?'
+    },
+    title='Distribution des Radiographies par Intensité et Écart-Type'
+)
+
+fig.update_traces(marker=dict(line=dict(width=1, color='DarkSlateGrey')), selector=dict(mode='markers'))
+fig.update_layout(
+    legend_title="Légendes",
+    height=700 
+)
+
+st.plotly_chart(fig, use_container_width=True)
+
+
 interactive_image("src/images/Intensite-ecart.png", "exemple")
 
 
