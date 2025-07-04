@@ -130,8 +130,7 @@ fig = px.scatter(
 )
 
 fig.update_traces(hoverinfo='none', hovertemplate=None)
-fig.update_layout(
-    legend_title="Légende")
+fig.update_layout(legend_title="Légende", height=700)
 
 st.plotly_chart(fig, use_container_width=True)
 
