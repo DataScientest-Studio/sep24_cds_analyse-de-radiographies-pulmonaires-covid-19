@@ -62,7 +62,7 @@ Ci-dessous, nous comparons trois variantes courantes :
 
 """)
 
-st.image("src/images/gradcam_comp.png", caption="Comparaison : GradCAM vs LayerCAM vs GradCAM++", use_column_width=True)
+st.image("src/images/gradcam_comp.png", caption="Comparaison : GradCAM vs LayerCAM vs GradCAM++", use_container_width=True)
 
 st.markdown("""
 - Chaque ligne montre une image et ses activations selon la méthode utilisée.
