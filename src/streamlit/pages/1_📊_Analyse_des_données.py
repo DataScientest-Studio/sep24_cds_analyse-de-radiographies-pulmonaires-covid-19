@@ -192,7 +192,7 @@ if selection == "Statistique":
     script_dir = os.path.dirname(os.path.abspath(__file__))    
     project_root = os.path.dirname(script_dir)    
     input_filename = os.path.join(project_root, 'data', 'outliers_statistique.csv')
-    df_plot = pd.read_csv(plot_file)
+    df_plot = pd.read_csv(input_filename)
 
     fig = px.scatter_3d(
         df_plot,
@@ -214,7 +214,7 @@ elif selection == "Isolation Forest":
     script_dir = os.path.dirname(os.path.abspath(__file__))    
     project_root = os.path.dirname(script_dir)    
     input_filename = os.path.join(project_root, 'data', 'outliers_isolation_forest.csv')
-    df_plot = pd.read_csv(plot_file)
+    df_plot = pd.read_csv(input_filename)
     
     score_values = df_plot['score'].values
     min_val, max_val = score_values.min(), score_values.max()
@@ -240,7 +240,7 @@ elif selection == "Auto-encodeur":
     script_dir = os.path.dirname(os.path.abspath(__file__))    
     project_root = os.path.dirname(script_dir)    
     input_filename = os.path.join(project_root, 'data', 'outliers_autoencoder.csv')
-    df_plot = pd.read_csv(plot_file)
+    df_plot = pd.read_csv(input_filename)
 
     fig = px.scatter_3d(
         df_plot,
