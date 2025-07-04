@@ -14,6 +14,9 @@ st.set_page_config(page_title="Analyse des Données", layout="wide")
 
 st.title("Analyse des données")
 
+script_dir = os.path.dirname(os.path.abspath(__file__))    
+project_root = os.path.dirname(script_dir)
+
 palette_bar = {
     'Normal': 'green',
     'Opacité Pulmonaire': 'orange',
@@ -21,6 +24,127 @@ palette_bar = {
     'Pneumonie virale': 'blue'}
 classes_order = ['Normal', 'Opacité Pulmonaire', 'COVID-19', 'Pneumonie virale']
 
+st.subheader("Exploration des données")
+
+options = ["Jeu de données", "Inspection Visuelle", "Analyse statistique"]
+selection = st.segmented_control("", options, selection_mode="single"
+)
+
+if selection == "Jeu de données":
+    st.write("#### Description du jeu de données")
+    st.write("""
+    - **~ 20 000** radios des poumons  
+    - Issues de différentes **sources médicales** internationales  
+    - Mis à disposition sur **Kaggle** par une équipe de chercheurs de l’université du Qatar à Doha  
+    - **Base de référence**, qui a été régulièrement enrichie  
+    - **Masques** associés  
+    - **Taille** des images : 299x299  
+    - **4 classes** : Covid, Normal, Opacité Pulmonaire, Pneumonie Virale
+    """)
+
+elif selection == "Inspection Visuelle":
+    st.write("#### Exploration visuelle des images")
+    st.write("""
+    - Radios dans l’ensemble de très bonne qualité
+    - Présence de matériel médical visible sur certaines radios
+    - Annotations également souvent (L, R, ORTHO...)  
+    - Quelques clichés râtés (sur/sous exposition, pb de cadrage, floues)
+    """)
+    st.write("Voici quelques exemples de radios (1 par classe) :")
+    file_names = ["COVID-13.png", "Lung_Opacity-13.png", "Normal-13.png", "Viral Pneumonia-13.png"]
+    cols = st.columns(4)
+    for i in range(4):
+        image_path = os.path.join(project_root, 'images', f"{file_names[i]}")
+        with cols[i]:
+            try:
+                st.image(Image.open(image_path), caption=f"{file_names[i]}" ,use_container_width=True)
+            except FileNotFoundError:
+                st.markdown(f"_(Image non trouvée: `{file_names[i]}`)_")   
+
+
+elif selection == "Analyse statistique":
+    st.write("#### Distribution des classes")
+    df_dist = pd.DataFrame({
+        'Classe': ['Normal', 'Lung_Opacity', 'COVID', 'Viral Pneumonia'],
+        'Nombre d\'images': [10192, 6012, 3615, 1345]
+    })
+
+
+    fig = px.bar(
+        df_dist,
+        x='Classe',
+        y="Nombre d'images",
+        text="Nombre d'images",
+        color='Classe',
+        title="Répartition des classes dans le jeu de données",
+        color_discrete_map=palette
+    )
+    fig.update_traces(textposition='outside')
+    fig.update_layout(
+        xaxis_title="Classe",
+        yaxis_title="Nombre d'images",
+        showlegend=False
+    )
+    st.plotly_chart(fig, use_container_width=True)
+
+    st.write("#### Distribution de l'intensité des pixels")
+
+    st.write("""
+    Variance du niveau d'intensité des pixels : ci-dessous une visualisation de la variance par classe
+    """)
+    input_filename = os.path.join(project_root, 'data', 'intensity.csv')
+    df_intensity = pd.read_csv(input_filename)   
+    
+    fig = px.box(
+    df_intensity,
+    x='classification',              # Sur l'axe des catégories
+    y='norm_intensity_std',          # Valeur numérique à analyser
+    color='classification',
+    title="Répartition de la variance intra-classe (écart-type de l'intensité après normalisation)",
+    color_discrete_map=palette       # Dictionnaire {'classe': 'couleur'}
+    )
+
+    fig.update_layout(
+        xaxis_title="Classe",
+        yaxis_title="Écart-type de l’intensité",
+        boxmode='group'
+    )
+
+    st.plotly_chart(fig, use_container_width=True)
+
+
+    st.write("#### Normalisation des images")
+
+    st.write("Il a été constaté que 7 radiographies sur 10 ne sont pas normalisées. Voici la représentation en fonction des diverses sources de données initiales :")
+    
+    input_filename = os.path.join(project_root, 'data', 'normalisation.csv')
+    df_norm = pd.read_csv(input_filename)
+    df_norm_sorted = df_norm.sort_values(by='is_norm', ascending=False)
+    fig = px.bar(
+        df_norm_sorted,
+        y='url',
+        x='percent',
+        color='is_norm',
+        title="Analyse de la normalisation des images selon la source de données"
+    )
+    
+    fig.update_traces(textposition='outside')
+    fig.update_layout(
+        xaxis_title="% de radios normalisées",
+        yaxis_title="Source",
+        showlegend=False
+    )
+    st.plotly_chart(fig, use_container_width=True)
+
+
+    #interactive_image("src/images/Normalisation.png", "exemple")
+
+    st.write("#### Identification des doublons")
+    st.write("103 doublons ont été identifiés")
+
+    input_filename = os.path.join(project_root, 'data', 'Doublons_liste.csv')
+    df_doublons = pd.read_csv(input_filename)
+    st.dataframe(df_doublons.rename(columns={'count': "Nombre de doublons", 'list': "Liste des doublons"}), hide_index=True)
 
 st.subheader("Exploration visuelle")
 
