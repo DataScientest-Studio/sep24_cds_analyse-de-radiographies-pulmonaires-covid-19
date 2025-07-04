@@ -63,6 +63,62 @@ elif selection == "Inspection Visuelle":
 
 
 elif selection == "Analyse statistique":
+
+    df_dist = pd.DataFrame({
+    'Classe': ['Normal', 'Opacité Pulmonaire', 'COVID-19', 'Pneumonie virale'],
+    'Nombre d\'images': [10192, 6012, 3615, 1345]
+    })
+    
+    st.write("""Ci-dessous une réprésentation de la répartition des classes dans le jeu de données :""")
+    
+    fig = px.bar(
+        df_dist,
+        x='Classe',
+        y="Nombre d'images",
+        text="Nombre d'images",
+        color='Classe',
+        color_discrete_map=palette_bar)
+    fig.update_traces(textposition='outside')
+    fig.update_layout(
+        xaxis_title="Classe",
+        yaxis_title="Nombre d'images",
+        showlegend=True
+    )
+    st.plotly_chart(fig, use_container_width=True)
+    
+    st.subheader("Distribution de la variance par classe")
+    
+    
+    st.write("""Ci-dessous une réprésentation de la variance par classe (plus la variance est élevée, plus l'image est complexe/texturée) :""")
+    
+    
+    script_dir = os.path.dirname(os.path.abspath(__file__))    
+    project_root = os.path.dirname(script_dir)    
+    input_filename = os.path.join(project_root, 'data', 'variance.csv')    
+    df_plot = pd.read_csv(input_filename)  
+    
+    
+    fig = px.violin(
+        df_plot,
+        x='classe',
+        y='variance',
+        color='classe',
+        color_discrete_map=palette_bar,
+        box=True,  
+        points=False,
+        category_orders={'classe': classes_order},
+        labels={
+            'classe': 'Classe de la radiographie',
+            'variance': 'Variance des pixels'
+        }
+    )
+    fig.update_layout(
+        xaxis_title="Catégorie",
+        yaxis_title="Variance",
+        legend_title="Légende"
+    )
+    st.plotly_chart(fig, use_container_width=True)
+    
     st.write("#### Distribution des classes")
     df_dist = pd.DataFrame({
         'Classe': ['Normal', 'Lung_Opacity', 'COVID', 'Viral Pneumonia'],
@@ -146,74 +202,9 @@ elif selection == "Analyse statistique":
     df_doublons = pd.read_csv(input_filename)
     st.dataframe(df_doublons.rename(columns={'count': "Nombre de doublons", 'list': "Liste des doublons"}), hide_index=True)
 
-st.subheader("Exploration visuelle")
-
-st.write("""
-L'inspection visuelle de quelques images met en évidence que les radios sont dans l’ensemble de très bonne qualité.
-""")
-interactive_image("src/images/InspectionVisuelle.png", "exemple")
 
 
-st.subheader("Description du jeu de données")
-st.write("""
-Le jeu de données comprend 21 164 images réparties entre quatre classes : Normal (10192), Opacité pulmonaire (6012), COVID-19 (3615), Pneumonie virale (1345). Les images proviennent de différentes sources médicales internationales.  
-La distribution est inégale, avec 48% de radios normales et seulement 6% de pneumonies virales, ce qui peut poser des défis pour l'apprentissage automatique.
-""")
 
-df_dist = pd.DataFrame({
-    'Classe': ['Normal', 'Opacité Pulmonaire', 'COVID-19', 'Pneumonie virale'],
-    'Nombre d\'images': [10192, 6012, 3615, 1345]
-})
-
-st.write("""Ci-dessous une réprésentation de la répartition des classes dans le jeu de données :""")
-
-fig = px.bar(
-    df_dist,
-    x='Classe',
-    y="Nombre d'images",
-    text="Nombre d'images",
-    color='Classe',
-    color_discrete_map=palette_bar)
-fig.update_traces(textposition='outside')
-fig.update_layout(
-    xaxis_title="Classe",
-    yaxis_title="Nombre d'images",
-    showlegend=True
-)
-st.plotly_chart(fig, use_container_width=True)
-
-st.subheader("Distribution de la variance par classe")
-
-
-st.write("""Ci-dessous une réprésentation de la variance par classe (plus la variance est élevée, plus l'image est complexe/texturée) :""")
-
-
-script_dir = os.path.dirname(os.path.abspath(__file__))    
-project_root = os.path.dirname(script_dir)    
-input_filename = os.path.join(project_root, 'data', 'variance.csv')    
-df_plot = pd.read_csv(input_filename)  
-
-
-fig = px.violin(
-    df_plot,
-    x='classe',
-    y='variance',
-    color='classe',
-    color_discrete_map=palette_bar,
-    box=True,  
-    points=False,
-    category_orders={'classe': classes_order},
-    labels={
-        'classe': 'Classe de la radiographie',
-        'variance': 'Variance des pixels'
-    }
-)
-fig.update_layout(
-    xaxis_title="Catégorie",
-    yaxis_title="Variance",
-    legend_title="Légende"
-)
-st.plotly_chart(fig, use_container_width=True)
 
 # Remplacé par graphique interactif plotly en violin plot
 # interactive_image("src/images/Variance.png", "exemple")
