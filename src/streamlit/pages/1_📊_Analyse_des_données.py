@@ -109,7 +109,7 @@ input_filename = os.path.join(project_root, 'data', 'iqr_outliers.csv')
 df_plot = pd.read_csv(input_filename)  
 
 fig = px.scatter(
-    df,
+    df_plot,
     x='intensite_moyenne',
     y='ecart_type',
     color='classe',
