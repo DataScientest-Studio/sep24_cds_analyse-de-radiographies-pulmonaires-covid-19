@@ -52,7 +52,7 @@ fig.update_traces(textposition='outside')
 fig.update_layout(
     xaxis_title="Classe",
     yaxis_title="Nombre d'images",
-    showlegend=False
+    showlegend=True
 )
 st.plotly_chart(fig, use_container_width=True)
 
