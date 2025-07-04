@@ -221,6 +221,8 @@ st.markdown("""
                  
 """)
 
+st.image("src/images/xgboost_matrice.png")
+
 st.markdown("---")
 st.subheader("🧪 Tester une image avec XGBoost")
 
