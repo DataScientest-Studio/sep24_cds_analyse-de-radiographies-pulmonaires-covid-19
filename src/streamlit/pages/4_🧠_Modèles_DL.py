@@ -139,6 +139,7 @@ if uploaded_file is not None:
     with st.spinner("Prédiction en cours..."):
         input_tensor = preprocess_image(image)
         predictions = model.predict(input_tensor)[0]
+        st.markdown(predictions)
         predicted_class = class_names[np.argmax(predictions)]
         confidence = 100 * np.max(predictions)
 
