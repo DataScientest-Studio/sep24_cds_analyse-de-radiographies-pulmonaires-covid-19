@@ -261,7 +261,9 @@ st.write("#### Top 10 des anomalies détectées par cette méthode")
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 IMAGES_DIR = os.path.join(BASE_DIR, 'outliers_images')
+RESULTS_DIR = os.path.join(BASE_DIR, 'data') 
 method_key = selection.lower().replace(' ', '_')
+
 outliers_file = os.path.join(RESULTS_DIR, f'outliers_{method_key}.csv')
 try:
     top_anomalies = pd.read_csv(outliers_file).head(10)
