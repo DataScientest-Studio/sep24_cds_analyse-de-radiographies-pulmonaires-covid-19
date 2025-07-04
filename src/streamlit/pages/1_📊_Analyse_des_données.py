@@ -127,9 +127,7 @@ fig = px.scatter(
     labels={
         'intensite_moyenne': 'Intensité Moyenne (après normalisation)',
         'ecart_type': 'Écart-Type (Contraste/Texture)'
-    },
-    title='Distribution des Radiographies par Intensité et Écart-Type'
-)
+    })
 
 fig.update_traces(hoverinfo='none', hovertemplate=None)
 fig.update_layout(legend_title="Légende", height=700)
