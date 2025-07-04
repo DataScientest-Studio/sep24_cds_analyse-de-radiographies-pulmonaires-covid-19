@@ -3,7 +3,6 @@ from utils import interactive_image  # Si nécessaire pour la démo
 from PIL import Image
 import joblib
 import io
-import shap
 
 import pandas as pd
 import plotly.express as px
@@ -70,6 +69,7 @@ Utiliser des **modèles de Machine Learning classiques** pour détecter automati
 
 ### Prétraitements et optimisations
 - **Hyperparamètres** : Recherche automatique des meilleurs hyperparamètres (Grid search, Bayesian search)
+- **Taille des images** : tests en 32×32, 64×64, 128×128
 - **Standardisation** : Mise à l’échelle des données pour éviter les biais
 """)
 st.image("../images/MLP_standard.png", width=700)
@@ -211,6 +211,11 @@ st.markdown("""
 - Algorithme de **boosting** très efficace
 - Corrige les erreurs au fur et à mesure
 - Bon compromis entre performance, rapidité, et simplicité
+
+- Entraîné sur HOG, pas besoin de normalisation
+- ~88 % de F1-score
+- Rapide à entraîner, prédire
+- Stable sur toutes les classes
                  
 """)
 
@@ -226,8 +231,6 @@ test_samples = {
 class_names = ["Normal", "Covid", "Pneumonie", "Opacité pulmonaire"]
 
 cols = st.columns(3)
-
-explainer = shap.Explainer(model)
 
 for idx, (label, filepath) in enumerate(test_samples.items()):
     with cols[idx]:
@@ -249,13 +252,9 @@ for idx, (label, filepath) in enumerate(test_samples.items()):
         st.markdown("**Probabilités :**")
         st.bar_chart(dict(zip(class_names, proba)))
 
-        # SHAP plot
-        features = np.array(features).reshape(1, -1)
-        shap_values = explainer(features)
-
         st.markdown("**Contributions des features**")
 
-        # Bar chart SHAP (contributions les + importantes)
+        # Bar chart  (contributions les + importantes)
         importances = model.feature_importances_
         top_indices = np.argsort(importances)[-10:][::-1]
 
