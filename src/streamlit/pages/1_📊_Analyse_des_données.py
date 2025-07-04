@@ -175,10 +175,7 @@ if selection == "NMF" :
 st.subheader("Prétraitement")
 st.write("""
 Les images ont été redimensionnées à 240x240 pixels, normalisées, et enrichies par augmentation de données (flip, rotation, zoom). Des méthodes comme Isolation Forest ont été utilisées pour retirer les outliers.
-
-Il a été constaté que 7 radiographies sur 10 ne sont pas normalisées. Voici la représentation en fonction des diverses sources de données initiales :            
 """)
-
 
 @st.cache_data 
 def get_image_paths(folder):
@@ -253,4 +250,6 @@ else:
         else:
              st.info("Cliquez sur 'Appliquer une transformation' pour générer une version augmentée.")
 
+
+st.write("Il a été constaté que 7 radiographies sur 10 ne sont pas normalisées. Voici la représentation en fonction des diverses sources de données initiales :")
 interactive_image("src/images/Normalisation.png", "exemple")
