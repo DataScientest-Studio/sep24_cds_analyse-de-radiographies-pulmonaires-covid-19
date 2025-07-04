@@ -57,7 +57,7 @@ fig.update_layout(
 st.plotly_chart(fig, use_container_width=True)
 
 st.write("""
-Ci-dessous une réprésentation de la variance par classe :
+Ci-dessous une réprésentation de la variance par classe (plus la variance est élevée, plus l'image est complexe/texturée) :
 """)
 
 st.subheader("Distribution de la variance par classe")
@@ -85,7 +85,7 @@ fig = px.violin(
 )
 fig.update_layout(
     xaxis_title="Catégorie",
-    yaxis_title="Variance des Pixels (plus c'est élevé, plus l'image est complexe/texturée)",
+    yaxis_title="Variance",
     legend_title="Légende"
 )
 st.plotly_chart(fig, use_container_width=True)
