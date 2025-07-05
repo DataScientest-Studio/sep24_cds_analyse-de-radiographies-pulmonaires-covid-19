@@ -9,14 +9,13 @@ st.set_page_config(
 
 col1, col2 = st.columns([1, 20])
 with col1:
-    st.image("src/images/Normal-2.png", width=170)
+    st.image("src/images/Normal-2.png", width=400)
 with col2:
     st.title("Détection de pathologies pulmonaires à partir de radiographies thoraciques")
 
 st.write("_Projet basé sur le rapport d'analyse de radiographies pour la détection de la COVID-19 et autres pathologies._")
 
-
-st.write("### Introduction")
+st.title("Introduction")
 
 
 st.write("""
