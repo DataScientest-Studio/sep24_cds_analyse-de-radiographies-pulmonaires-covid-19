@@ -41,7 +41,7 @@ st.set_page_config(page_title="Modèles avancés", layout="wide")
 
 
 
-st.title("Modèles Avancés")
+st.subheader("Modèles Avancés")
 st.write("""
 Les modèles avancés explorent la combinaison de **CNN classiques avec des modules d’attention** ou des architectures de type **Transformer**.
 """)
