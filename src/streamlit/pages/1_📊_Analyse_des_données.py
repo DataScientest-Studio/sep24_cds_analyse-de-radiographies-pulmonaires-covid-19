@@ -293,40 +293,35 @@ elif selection == "Statistique (3D)":
             size_max=20,
             color_continuous_scale=px.colors.sequential.Viridis,
         )
-    #fig.update_traces(marker=dict(opacity=0.8), hoverinfo='none', hovertemplate=None)
-    #fig.update_layout(margin=dict(l=0, r=0, b=0, t=40))
+
     bounds = {
     'x': {'min': -2.7684, 'max': 2.7981, 'axis_name': 'Moyenne Normalisée'},
     'y': {'min': -2.6921, 'max': 2.7548, 'axis_name': 'Écart-type Normalisé'},
     'z': {'min': -2.0112, 'max': 2.2540, 'axis_name': 'Entropie Normalisée'}
     }
-
     x_b = [bounds['x']['min'], bounds['x']['max']]
     y_b = [bounds['y']['min'], bounds['y']['max']]
-    z_b = [bounds['z']['min'], bounds['z']['max']]
-    
+    z_b = [bounds['z']['min'], bounds['z']['max']]    
     fig.add_trace(go.Mesh3d(
         x=[x_b[0], x_b[0], x_b[1], x_b[1], x_b[0], x_b[0], x_b[1], x_b[1]],
         y=[y_b[0], y_b[1], y_b[1], y_b[0], y_b[0], y_b[1], y_b[1], y_b[0]],
-        z=[z_b[0], z_b[0], z_b[0], z_b[0], z_b[1], z_b[1], z_b[1], z_b[1]],
+        z=[z_b[0], z_b[0], z_b[0], z_b[0], z_b[1], z_b[1], z_b[1], z_b[1]],    
         i = [7, 0, 0, 0, 4, 4, 6, 6, 4, 0, 3, 2],
         j = [3, 4, 1, 2, 5, 6, 5, 2, 0, 1, 6, 3],
         k = [0, 7, 2, 3, 6, 7, 2, 5, 1, 2, 7, 6],
+        
         opacity=0.1,
         color='grey',
-        flatshading=True,
-        name='Boîte de validation'
-    ))
-    
-    fig.update_layout(
-        margin=dict(l=0, r=0, b=0, t=40),
-        legend_title_text='Statut du point'
-    )
+        name='Boîte de validation',
+        hoverinfo='none' 
+    ))    
     fig.update_scenes(
         xaxis_autorange=True, 
         yaxis_autorange=True, 
         zaxis_autorange=True
     )
+    fig.update_traces(marker=dict(opacity=0.8), hoverinfo='none', hovertemplate=None)
+    fig.update_layout(margin=dict(l=0, r=0, b=0, t=40))
     st.plotly_chart(fig, use_container_width=True)   
 
     st.write("Exemples d'images anormales trouvées par la méthode IQR sur deux dimensions :")
