@@ -295,6 +295,11 @@ elif selection == "Statistique (3D)":
         )
     #fig.update_traces(marker=dict(opacity=0.8), hoverinfo='none', hovertemplate=None)
     #fig.update_layout(margin=dict(l=0, r=0, b=0, t=40))
+    bounds = {
+    'x': {'min': -2.7684, 'max': 2.7981, 'axis_name': 'Moyenne Normalisée'},
+    'y': {'min': -2.6921, 'max': 2.7548, 'axis_name': 'Écart-type Normalisé'},
+    'z': {'min': -2.0112, 'max': 2.2540, 'axis_name': 'Entropie Normalisée'}
+    }
 
     x_b = [bounds['x']['min'], bounds['x']['max']]
     y_b = [bounds['y']['min'], bounds['y']['max']]
