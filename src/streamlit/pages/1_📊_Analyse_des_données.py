@@ -187,6 +187,8 @@ if selection == "IQR":
    
     taille_mapping = {'Non': 1, 'Oui': 10} 
     df_plot['taille_point'] = df_plot['est_outlier'].map(taille_mapping)
+
+    symbol_mapping = {'Non': 'circle', 'Oui': 'x'}
     
     fig = px.scatter(
         df_plot,
@@ -194,7 +196,9 @@ if selection == "IQR":
         y='intensite_moyenne',
         color='classe',
         color_discrete_map=palette_bar,
-        size='taille_point',         
+        #size='taille_point',        
+        symbol='est_outlier',
+        symbol_map=symbol_mapping,
         category_orders={
             'classe': classes_order,
             'est_outlier': ['Non', 'Oui']
