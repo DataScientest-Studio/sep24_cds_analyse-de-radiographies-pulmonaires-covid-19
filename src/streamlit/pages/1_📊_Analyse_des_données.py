@@ -306,10 +306,7 @@ elif selection == "Statistique (3D)":
         x=[x_b[0], x_b[0], x_b[1], x_b[1], x_b[0], x_b[0], x_b[1], x_b[1]],
         y=[y_b[0], y_b[1], y_b[1], y_b[0], y_b[0], y_b[1], y_b[1], y_b[0]],
         z=[z_b[0], z_b[0], z_b[0], z_b[0], z_b[1], z_b[1], z_b[1], z_b[1]],    
-        i = [7, 0, 0, 0, 4, 4, 6, 6, 4, 0, 3, 2],
-        j = [3, 4, 1, 2, 5, 6, 5, 2, 0, 1, 6, 3],
-        k = [0, 7, 2, 3, 6, 7, 2, 5, 1, 2, 7, 6],
-        
+        alphahull=0, 
         opacity=0.1,
         color='grey',
         name='Boîte de validation',
