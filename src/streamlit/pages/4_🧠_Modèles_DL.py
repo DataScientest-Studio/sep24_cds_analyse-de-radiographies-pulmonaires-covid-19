@@ -8,6 +8,7 @@ from utils import interactive_image
 import plotly.express as px
 from codecarbon import EmissionsTracker
 import gdown
+from tensorflow.keras.applications.efficientnet import preprocess_input
 
 
 st.set_page_config(layout="wide")
@@ -126,9 +127,13 @@ model = load_model()
 
 class_names = ["COVID", "Normal", "Viral Pneumonia"]
 
-def preprocess_image(image):
-    image = image.convert("RGB").resize((240, 240))
-    return np.expand_dims(np.array(image) / 255.0, axis=0)
+def preprocess_image(image_pil):
+    image_resized = image_pil.convert("RGB").resize((240, 240))
+    img_array = np.array(image_resized) 
+    img_array_preprocessed = preprocess_input(img_array)
+    input_tensor = np.expand_dims(img_array_preprocessed, axis=0)    
+    return input_tensor
+
 
 if uploaded_file is not None:
     image = Image.open(uploaded_file)
