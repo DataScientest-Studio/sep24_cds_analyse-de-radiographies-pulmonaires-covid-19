@@ -320,7 +320,7 @@ elif selection == "Statistique (3D)":
         yaxis_autorange=True, 
         zaxis_autorange=True
     )
-    fig.update_traces(marker=dict(opacity=0.8), hoverinfo='none', hovertemplate=None)
+    #fig.update_traces(marker=dict(opacity=0.8), hoverinfo='none', hovertemplate=None)
     fig.update_layout(margin=dict(l=0, r=0, b=0, t=40))
     st.plotly_chart(fig, use_container_width=True)   
 
