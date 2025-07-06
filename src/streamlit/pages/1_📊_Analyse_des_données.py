@@ -297,9 +297,9 @@ elif selection == "Statistique (3D)":
     fig.update_layout(margin=dict(l=0, r=0, b=0, t=40))
     st.plotly_chart(fig, use_container_width=True)
 
-    st.write("Les 10 images les plus anormales trouvées :")
+    st.write("Exemples d'images anormales trouvées par la méthode IQR sur deux dimensions :")
 
-    method_key = selection.lower().replace(' ', '_')  
+    method_key = "statistique" 
     for i in range(2):
         cols = st.columns(5)
         for j in range(5):
@@ -338,7 +338,7 @@ elif selection == "Isolation Forest":
     fig.update_layout(margin=dict(l=0, r=0, b=0, t=40))
     st.plotly_chart(fig, use_container_width=True)
 
-    st.write("Exemples d'images anormales trouvées par la méthode IQR sur trois dimensions :")
+    st.write("Les 10 images les plus anormales trouvées :")
 
     method_key = selection.lower().replace(' ', '_')
     for i in range(2):
