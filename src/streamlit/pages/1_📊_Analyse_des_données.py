@@ -167,7 +167,7 @@ selection = st.segmented_control(
     "Choisissez la technique à visualiser",
     options,
     label_visibility="collapsed",
-    default='IQR'
+    default='Statistique (2D)'
 )
 
 if selection == "Statistique (2D)":
