@@ -156,13 +156,13 @@ elif selection == "Analyse statistique":
 st.subheader("Détection d'anomalies")
 
 DESCRIPTIONS = {
-    'IQR' : "Il s'agit de la méthode statistique classique basée sur l'Intervalle InterQuartile : les éléments situés hors de la plage Q1 - 1,5*IQR / Q3 + 1,5*IQR sont considérés comme des anomalies. Elle a été appliquée ici à l'intensité moyenne des pixels et à l'écart-type de l'internsité.",
-    'Statistique': "Cette méthode fondamentale transforme chaque image en caractéristiques numériques (moyenne, contraste, entropie). Le score d'anomalie est basé sur la distance d'une image à la distribution normale. Idéal pour trouver des anomalies grossières comme des images très sombres ou vides.",
+    'Statistique (2D)' : "Il s'agit de la méthode statistique classique basée sur l'Intervalle InterQuartile : les éléments situés hors de la plage Q1 - 1,5*IQR / Q3 + 1,5*IQR sont considérés comme des anomalies. Elle a été appliquée ici à l'intensité moyenne des pixels et à l'écart-type de l'internsité.",
+    'Statistique (3D)' : "Cette méthode fondamentale transforme chaque image en caractéristiques numériques (moyenne, contraste, entropie). Le score d'anomalie est basé sur la distance d'une image à la distribution normale. Idéal pour trouver des anomalies grossières comme des images très sombres ou vides.",
     'Isolation Forest': "Cette approche utilise un réseau expert (VGG16) pour extraire des caractéristiques complexes. L'algorithme Isolation Forest isole ensuite les images qui sont sémantiquement différentes des autres. Efficace pour trouver des textures ou des formes inhabituelles.",
     'Auto-encoder': "Un réseau de neurones est entraîné à compresser puis reconstruire les images du dataset. Il devient expert des radiographies 'typiques'. Une image qu'il peine à reconstruire (erreur élevée) est considérée comme anormale. C'est l'approche la plus sensible aux anomalies subtiles."
 }
 
-options = ["IQR", "Statistique", "Isolation Forest", "Auto-encoder"]
+options = ["Statistique (2D)", "Statistique (3D)", "Isolation Forest", "Auto-encoder"]
 selection = st.segmented_control(
     "Choisissez la technique à visualiser",
     options,
@@ -170,8 +170,8 @@ selection = st.segmented_control(
     default='IQR'
 )
 
-if selection == "IQR":
-    st.write("#### Approche IQR")
+if selection == "Statistique (2D)":
+    st.write("#### Statistique (2D) : moyenne et écart-type")
     st.write(DESCRIPTIONS[selection])
 
     script_dir = os.path.dirname(os.path.abspath(__file__))    
@@ -218,7 +218,7 @@ if selection == "IQR":
                         symbol='x',         
                         color=color,     
                         opacity=1.0,
-                        size=5),
+                        size=10),
                     legendgroup=classe,
                     showlegend=False,
                     name=classe, 
@@ -240,28 +240,28 @@ if selection == "IQR":
     'Lung_Opacity': 'orange',
     'Viral Pneumonia': 'blue'}
 
-    input_filename = os.path.join(project_root, 'data', 'intensity.csv')
-    df_intensity = pd.read_csv(input_filename)   
-    fig = px.scatter(
-        df_intensity,
-        x='norm_intensity_std',
-        y='norm_intensity_mean',
-        color='classification',
-        title="Répartition intensité moyenne selon écart-type après normalisation",
-        color_discrete_map=palette
-    )
+    #input_filename = os.path.join(project_root, 'data', 'intensity.csv')
+    #df_intensity = pd.read_csv(input_filename)   
+    #fig = px.scatter(
+    #    df_intensity,
+    #    x='norm_intensity_std',
+    #    y='norm_intensity_mean',
+    #    color='classification',
+    #    title="Répartition intensité moyenne selon écart-type après normalisation",
+    #    color_discrete_map=palette
+    #)
         
-    fig.update_layout(
-        xaxis_title="Ecart-type",
-        yaxis_title="Intensité moyenne",
-        showlegend=True
-    )
-    st.plotly_chart(fig, use_container_width=True)
+    #fig.update_layout(
+    #    xaxis_title="Ecart-type",
+    #    yaxis_title="Intensité moyenne",
+    #    showlegend=True
+    #)
+    #st.plotly_chart(fig, use_container_width=True)
 
-    st.write("Exemples d'images anormales trouvées par la méthode IQR :")
+    st.write("Exemples d'images anormales trouvées par la méthode IQR sur deux dimensions :")
 
     method_key = selection.lower().replace(' ', '_')  
-    for i in range(3):
+    for i in range(2):
         cols = st.columns(5)
         for j in range(5):
             rank = i * 5 + j + 1
@@ -275,8 +275,8 @@ if selection == "IQR":
                     st.markdown(f"_(Image #{rank} non trouvée)_")    
 
 
-elif selection == "Statistique":
-    st.write("#### Approche Statistique")
+elif selection == "Statistique (3D)":
+    st.write("#### Approche statistique (2D) : moyenne, écart-type et entropie")
     st.write(DESCRIPTIONS[selection])
     
     script_dir = os.path.dirname(os.path.abspath(__file__))    
@@ -285,9 +285,9 @@ elif selection == "Statistique":
     df_plot = pd.read_csv(input_filename)
     fig = px.scatter_3d(
             df_plot,
-            x='Moyenne Normalisée',
-            y='Écart-type Normalisé',
-            z='Entropie Normalisée',
+            x='Moyenne normalisée',
+            y='Écart-type normalisé',
+            z='Entropie normalisée',
             color='score',
             size='score',
             size_max=20,
@@ -314,7 +314,7 @@ elif selection == "Statistique":
                     st.markdown(f"_(Image #{rank} non trouvée)_")    
 
 elif selection == "Isolation Forest":
-    st.write("#### Approche Machine Learning (Isolation Forest)")
+    st.write("#### Approche Machine Learning (VGG 16 & Isolation Forest)")
     st.write(DESCRIPTIONS[selection])
 
     script_dir = os.path.dirname(os.path.abspath(__file__))    
@@ -338,8 +338,7 @@ elif selection == "Isolation Forest":
     fig.update_layout(margin=dict(l=0, r=0, b=0, t=40))
     st.plotly_chart(fig, use_container_width=True)
 
-    st.write("Les 10 images les plus anormales trouvées :")
-
+    st.write("Exemples d'images anormales trouvées par la méthode IQR sur trois dimensions :")
 
     method_key = selection.lower().replace(' ', '_')
     for i in range(2):
