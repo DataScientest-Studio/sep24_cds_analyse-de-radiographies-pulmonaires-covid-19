@@ -295,7 +295,74 @@ elif selection == "Statistique (3D)":
         )
     fig.update_traces(marker=dict(opacity=0.8), hoverinfo='none', hovertemplate=None)
     fig.update_layout(margin=dict(l=0, r=0, b=0, t=40))
-    st.plotly_chart(fig, use_container_width=True)
+
+    bounds = {
+        'x': {'min': -2.7684, 'max': 2.7981, 'axis_name': 'Moyenne Normalisée'},
+        'y': {'min': -2.6921, 'max': 2.7548, 'axis_name': 'Écart-type Normalisé'},
+        'z': {'min': -2.0112, 'max': 2.2540, 'axis_name': 'Entropie Normalisée'}
+    }    
+    x_range = [df_plot[bounds['x']['axis_name']].min() * 1.1, df_plot[bounds['x']['axis_name']].max() * 1.1]
+    y_range = [df_plot[bounds['y']['axis_name']].min() * 1.1, df_plot[bounds['y']['axis_name']].max() * 1.1]
+    z_range = [df_plot[bounds['z']['axis_name']].min() * 1.1, df_plot[bounds['z']['axis_name']].max() * 1.1]    
+    # Plans pour la Moyenne Normalisée (plans verticaux en X)
+    x_plane_min = go.Surface(
+        x=[[bounds['x']['min'], bounds['x']['min']]] * 2,
+        y=[y_range, y_range],
+        z=[[z_range[0], z_range[1]], [z_range[0], z_range[1]]],
+        colorscale=[[0, 'lightgray'], [1, 'lightgray']], # Couleur unie
+        showscale=False,
+        opacity=0.3,
+        name=f"Borne inf. X ({bounds['x']['min']})"
+    )
+    x_plane_max = go.Surface(
+        x=[[bounds['x']['max'], bounds['x']['max']]] * 2,
+        y=[y_range, y_range],
+        z=[[z_range[0], z_range[1]], [z_range[0], z_range[1]]],
+        colorscale=[[0, 'lightgray'], [1, 'lightgray']],
+        showscale=False,
+        opacity=0.3,
+        name=f"Borne sup. X ({bounds['x']['max']})"
+    )    
+    # Plans pour l'Écart-type Normalisé (plans verticaux en Y)
+    y_plane_min = go.Surface(
+        x=[x_range, x_range],
+        y=[[bounds['y']['min'], bounds['y']['min']]] * 2,
+        z=[[z_range[0], z_range[1]], [z_range[0], z_range[1]]],
+        colorscale=[[0, 'cyan'], [1, 'cyan']],
+        showscale=False,
+        opacity=0.3,
+        name=f"Borne inf. Y ({bounds['y']['min']})"
+    )
+    y_plane_max = go.Surface(
+        x=[x_range, x_range],
+        y=[[bounds['y']['max'], bounds['y']['max']]] * 2,
+        z=[[z_range[0], z_range[1]], [z_range[0], z_range[1]]],
+        colorscale=[[0, 'cyan'], [1, 'cyan']],
+        showscale=False,
+        opacity=0.3,
+        name=f"Borne sup. Y ({bounds['y']['max']})"
+    )    
+    # Plans pour l'Entropie Normalisée (plans horizontaux en Z)
+    z_plane_min = go.Surface(
+        x=[x_range, x_range],
+        y=[[y_range[0], y_range[1]], [y_range[0], y_range[1]]],
+        z=[[bounds['z']['min'], bounds['z']['min']]] * 2,
+        colorscale=[[0, 'fuchsia'], [1, 'fuchsia']],
+        showscale=False,
+        opacity=0.3,
+        name=f"Borne inf. Z ({bounds['z']['min']})"
+    )
+    z_plane_max = go.Surface(
+        x=[x_range, x_range],
+        y=[[y_range[0], y_range[1]], [y_range[0], y_range[1]]],
+        z=[[bounds['z']['max'], bounds['z']['max']]] * 2,
+        colorscale=[[0, 'fuchsia'], [1, 'fuchsia']],
+        showscale=False,
+        opacity=0.3,
+        name=f"Borne sup. Z ({bounds['z']['max']})"
+    )    
+    fig.add_traces([x_plane_min, x_plane_max, y_plane_min, y_plane_max, z_plane_min, z_plane_max])    
+    st.plotly_chart(fig, use_container_width=True)    
 
     st.write("Exemples d'images anormales trouvées par la méthode IQR sur deux dimensions :")
 
