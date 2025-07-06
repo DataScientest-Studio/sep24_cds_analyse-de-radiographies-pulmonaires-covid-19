@@ -211,7 +211,8 @@ if selection == "IQR":
             'intensite_moyenne': 'Intensité Moyenne (après normalisation)',
             'ecart_type': 'Écart-Type (Contraste/Texture)'
         })
-    
+    fig.update_layout(coloraxis_showscale=False) 
+
     fig.update_traces(hoverinfo='none', hovertemplate=None)
     fig.update_layout(legend_title="Légende", height=700)
     
