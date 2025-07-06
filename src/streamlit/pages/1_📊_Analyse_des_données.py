@@ -188,8 +188,8 @@ if selection == "IQR":
     #taille_mapping = {'Non': 1, 'Oui': 10} 
     #df_plot['taille_point'] = df_plot['est_outlier'].map(taille_mapping)
     
-    df_plot['opacite'] = df_plot['est_outlier'].map({'Oui': 1.0, 'Non': 0.3})
-
+    opacity_mapping = {'Oui': 1.0, 'Non': 0.7}
+    df_plot['opacite_point'] = df_plot['est_outlier'].map(opacity_mapping)
 
     symbol_mapping = {'Non': 'circle', 'Oui': 'x'}
     
@@ -202,7 +202,7 @@ if selection == "IQR":
         #size='taille_point',        
         symbol='est_outlier',
         symbol_map=symbol_mapping,
-        opacity=df_plot['opacite'],
+        opacity=df_plot['opacite_point'],          
         category_orders={
             'classe': classes_order,
             'est_outlier': ['Non', 'Oui']
