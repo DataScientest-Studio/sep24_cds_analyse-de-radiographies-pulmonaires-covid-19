@@ -211,6 +211,7 @@ if selection == "IQR":
             marker=dict(
                 symbol='x', 
                 color='classe',
+                color_discrete_map=palette_bar,
                 opacity=1.0,
                 line=dict(width=1.5)
             ),
