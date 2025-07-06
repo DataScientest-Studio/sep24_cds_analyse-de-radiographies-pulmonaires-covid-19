@@ -260,7 +260,7 @@ if selection == "Statistique (2D)":
 
     st.write("Exemples d'images anormales trouvées par la méthode IQR sur deux dimensions :")
 
-    method_key = selection.lower().replace(' ', '_')  
+    method_key = "iqr"
     for i in range(2):
         cols = st.columns(5)
         for j in range(5):
