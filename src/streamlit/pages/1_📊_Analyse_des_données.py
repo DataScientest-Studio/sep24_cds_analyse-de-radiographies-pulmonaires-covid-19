@@ -276,7 +276,7 @@ if selection == "Statistique (2D)":
 
 
 elif selection == "Statistique (3D)":
-    st.write("#### Approche statistique (2D) : moyenne, écart-type et entropie")
+    st.write("#### Approche statistique (3D) : moyenne, écart-type et entropie")
     st.write(DESCRIPTIONS[selection])
     
     script_dir = os.path.dirname(os.path.abspath(__file__))    
