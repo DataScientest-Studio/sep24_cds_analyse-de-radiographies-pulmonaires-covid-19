@@ -210,8 +210,7 @@ if selection == "IQR":
             mode='markers',
             marker=dict(
                 symbol='x', 
-                color='black',
-                size=10, 
+                color='classe',
                 opacity=1.0,
                 line=dict(width=1.5)
             ),
