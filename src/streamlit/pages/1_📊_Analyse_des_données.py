@@ -185,8 +185,8 @@ if selection == "IQR":
     Ci-dessous une visualisation de la répartition de l’intensité en fonction de l’écart-type sur les radios après normalisation :
     """)
    
-    taille_mapping = {'Non': 5, 'Oui': 12} 
-    df_plot['taille_point'] = df_plot['est_outlier'].map(taille_mapping)
+    #taille_mapping = {'Non': 5, 'Oui': 12} 
+    #df_plot['taille_point'] = df_plot['est_outlier'].map(taille_mapping)
     
     opacity_mapping = {'Oui': 1.0, 'Non': 0.5}
     df_plot['opacite_point'] = df_plot['est_outlier'].map(opacity_mapping)
@@ -199,7 +199,7 @@ if selection == "IQR":
         y='intensite_moyenne',
         color='classe',
         color_discrete_map=palette_bar,
-        size='taille_point',        
+        #size='taille_point',        
         symbol='est_outlier',
         symbol_map=symbol_mapping,
         opacity=df_plot['opacite_point'],          
