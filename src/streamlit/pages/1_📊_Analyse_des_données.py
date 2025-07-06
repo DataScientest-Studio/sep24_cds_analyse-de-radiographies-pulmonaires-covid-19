@@ -185,37 +185,47 @@ if selection == "IQR":
     Ci-dessous une visualisation de la répartition de l’intensité en fonction de l’écart-type sur les radios après normalisation :
     """)
    
-    #taille_mapping = {'Non': 5, 'Oui': 12} 
-    #df_plot['taille_point'] = df_plot['est_outlier'].map(taille_mapping)
-    
-    opacity_mapping = {'Oui': 1.0, 'Non': 0.5}
-    df_plot['opacite_point'] = df_plot['est_outlier'].map(opacity_mapping)
+    df_non_outliers = df_plot[df_plot['est_outlier'] == 'Non']
+    df_outliers = df_plot[df_plot['est_outlier'] == 'Oui']
 
-    symbol_mapping = {'Non': 'circle', 'Oui': 'x'}
-    
     fig = px.scatter(
-        df_plot,
+        df_non_outliers,
         x='ecart_type',
         y='intensite_moyenne',
         color='classe',
         color_discrete_map=palette_bar,
-        #size='taille_point',        
-        symbol='est_outlier',
-        symbol_map=symbol_mapping,
-        opacity=df_plot['opacite_point'],          
-        category_orders={
-            'classe': classes_order,
-            'est_outlier': ['Non', 'Oui']
-        },
+        opacity=0.7, 
+        category_orders={'classe': classes_order},
         labels={
             'intensite_moyenne': 'Intensité Moyenne (après normalisation)',
-            'ecart_type': 'Écart-Type (Contraste/Texture)'
-        })
-    fig.update_layout(coloraxis_showscale=False) 
+            'ecart_type': 'Écart-Type (Contraste/Texture)',
+            'classe': 'Classe'
+        }
+    )
 
-    fig.update_traces(hoverinfo='none', hovertemplate=None)
-    fig.update_layout(legend_title="Légende", height=700)
-    
+    fig.add_trace(
+        go.Scatter(
+            x=df_outliers['ecart_type'],
+            y=df_outliers['intensite_moyenne'],
+            mode='markers',
+            marker=dict(
+                symbol='x', 
+                color='black',
+                size=10, 
+                opacity=1.0,
+                line=dict(width=1.5)
+            ),
+            customdata=df_outliers[['classe']],
+            name='Outlier' 
+        )
+    )
+
+    fig.update_layout(
+        legend_title="Légende",
+        height=700,
+        legend=dict(traceorder='normal') 
+    )
+
     st.plotly_chart(fig, use_container_width=True)
 
     palette = {
