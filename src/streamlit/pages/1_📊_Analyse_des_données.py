@@ -194,7 +194,7 @@ if selection == "IQR":
         y='intensite_moyenne',
         color='classe',
         color_discrete_map=palette_bar,
-        opacity=0.3, 
+        opacity=0.5, 
         category_orders={'classe': classes_order},
         labels={
             'intensite_moyenne': 'Intensité Moyenne (après normalisation)',
@@ -217,7 +217,8 @@ if selection == "IQR":
                     marker=dict(
                         symbol='x',         
                         color=color,     
-                        opacity=1.0),
+                        opacity=1.0,
+                        size=5),
                     legendgroup=classe,
                     showlegend=False,
                     name=classe, 
