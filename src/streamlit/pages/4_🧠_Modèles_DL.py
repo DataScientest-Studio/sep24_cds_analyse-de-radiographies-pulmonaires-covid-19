@@ -16,6 +16,8 @@ st.title("📊 Résultats des modèles deep learning")
 # Méthodologie
 st.header("🔧 Méthodologie")
 st.markdown("""
+- **Test d'un CNN de référence (LeNet)** puis de plusieurs modèles représentatifs d'évolutions successives.  
+Pour chacun de ces modèles, la logique suivante a été appliquée :  
 - **Transfer learning** sur la base de modèles pré-entraînés ImageNet
 - **Optimisation d'hyper-paramètres** par keras-tuner ou optuna (couches de classification en particulier : nb de couches/neurones)
 - **Fine‑tuning** via dégel des dernières couches de convolution des modèles pré-entraînés
@@ -55,16 +57,23 @@ st.header("📈 Comparaisons visuelles")
 melted = df.melt(id_vars="Modèle", value_vars=["Précision (%)", "Rappel (%)", "F1-score (%)"],
                  var_name="Métrique", value_name="Valeur")
 
-fig2 = px.line(
+# Création du graphique à barres
+fig2 = px.bar(
     melted,
     x="Modèle",
     y="Valeur",
     color="Métrique",
-    markers=True,
+    barmode="group",  # Affiche les barres côte à côte
     labels={"Valeur": "Score (%)"}
 )
 
-fig2.update_layout(title="Comparaison des scores (Précision, Rappel, F1-score)", title_x=0.3)
+fig2.update_layout(
+    title="Comparaison des scores (Précision, Rappel, F1-score)",
+    title_x=0.3,
+    bargap=0.3,         # Espace entre les groupes de barres
+    bargroupgap=0.15    # Espace entre les barres dans un groupe
+)
+
 st.plotly_chart(fig2, use_container_width=True)
 
 fig1 = px.scatter(
