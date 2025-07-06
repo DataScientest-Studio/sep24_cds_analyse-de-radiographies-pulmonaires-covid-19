@@ -261,7 +261,7 @@ if selection == "Statistique (2D)":
     st.write("Exemples d'images anormales trouvées par la méthode IQR sur deux dimensions :")
 
     method_key = "iqr"
-    for i in range(2):
+    for i in range(3):
         cols = st.columns(5)
         for j in range(5):
             rank = i * 5 + j + 1
@@ -321,10 +321,10 @@ elif selection == "Statistique (3D)":
     fig.update_layout(margin=dict(l=0, r=0, b=0, t=40))
     st.plotly_chart(fig, use_container_width=True)   
 
-    st.write("Exemples d'images anormales trouvées par la méthode IQR sur deux dimensions :")
+    st.write("Exemples d'images anormales trouvées par la méthode IQR sur trois dimensions :")
 
     method_key = "statistique" 
-    for i in range(2):
+    for i in range(3):
         cols = st.columns(5)
         for j in range(5):
             rank = i * 5 + j + 1
@@ -365,7 +365,7 @@ elif selection == "Isolation Forest":
     st.write("Les 10 images les plus anormales trouvées :")
 
     method_key = selection.lower().replace(' ', '_')
-    for i in range(2):
+    for i in range(3):
         cols = st.columns(5)
         for j in range(5):
             rank = i * 5 + j + 1
@@ -402,7 +402,7 @@ elif selection == "Auto-encoder":
     st.write("Les 10 images les plus anormales trouvées :")
     
     method_key = selection.lower().replace(' ', '_').replace('-', '')
-    for i in range(2):
+    for i in range(3):
         cols = st.columns(5)
         for j in range(5):
             rank = i * 5 + j + 1
