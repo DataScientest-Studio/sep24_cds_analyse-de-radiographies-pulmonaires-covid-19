@@ -173,17 +173,18 @@ selection = st.segmented_control(
 if selection == "IQR":
     st.write("#### Approche IQR")
     st.write(DESCRIPTIONS[selection])
-    
-    st.write("""
-    285 outliers ont été identifiés par cette méthode.  
-    Ci-dessous une visualisation de la répartition de l’intensité en fonction de l’écart-type sur les radios après normalisation :
-    """)
 
     script_dir = os.path.dirname(os.path.abspath(__file__))    
     project_root = os.path.dirname(script_dir)    
     input_filename = os.path.join(project_root, 'data', 'iqr_outliers.csv')    
-    df_plot = pd.read_csv(input_filename)  
-    
+    df_plot = pd.read_csv(input_filename)
+    nb_outliers = len(df_plot[df_plot['est_outlier'] == 'Oui'])
+
+    st.write(f"""
+    **{nb_outliers} outliers** ont été identifiés par cette méthode (calcul global sur tout le dataset).  
+    Ci-dessous une visualisation de la répartition de l’intensité en fonction de l’écart-type sur les radios après normalisation :
+    """)
+   
     taille_mapping = {'Non': 1, 'Oui': 10} 
     df_plot['taille_point'] = df_plot['est_outlier'].map(taille_mapping)
     
