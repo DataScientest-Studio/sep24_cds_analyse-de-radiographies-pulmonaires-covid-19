@@ -217,10 +217,7 @@ if selection == "IQR":
                     marker=dict(
                         symbol='x',         
                         color=color,     
-                        size=10,
-                        opacity=1.0, 
-                        line=dict(width=1.5)
-                    ),
+                        opacity=1.0),
                     legendgroup=classe,
                     showlegend=False,
                     name=classe, 
