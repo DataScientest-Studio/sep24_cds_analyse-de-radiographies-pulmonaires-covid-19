@@ -194,7 +194,7 @@ if selection == "IQR":
         y='intensite_moyenne',
         color='classe',
         color_discrete_map=palette_bar,
-        opacity=0.7, 
+        opacity=0.3, 
         category_orders={'classe': classes_order},
         labels={
             'intensite_moyenne': 'Intensité Moyenne (après normalisation)',
