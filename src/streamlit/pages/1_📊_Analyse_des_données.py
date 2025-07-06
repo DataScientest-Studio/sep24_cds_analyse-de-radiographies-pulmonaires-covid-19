@@ -202,7 +202,7 @@ if selection == "IQR":
         #size='taille_point',        
         symbol='est_outlier',
         symbol_map=symbol_mapping,
-        opacity='opacite',
+        opacity=df_plot['opacite'],
         category_orders={
             'classe': classes_order,
             'est_outlier': ['Non', 'Oui']
