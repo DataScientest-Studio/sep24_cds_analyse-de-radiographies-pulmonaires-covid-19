@@ -361,7 +361,18 @@ elif selection == "Statistique (3D)":
         opacity=0.3,
         name=f"Borne sup. Z ({bounds['z']['max']})"
     )    
-    fig.add_traces([x_plane_min, x_plane_max, y_plane_min, y_plane_max, z_plane_min, z_plane_max])    
+    fig.add_traces([x_plane_min, x_plane_max, y_plane_min, y_plane_max, z_plane_min, z_plane_max])
+
+    final_x_range = [min(df_plot[bounds['x']['axis_name']].min(), bounds['x']['min']), max(df_plot[bounds['x']['axis_name']].max(), bounds['x']['max'])]
+    final_y_range = [min(df_plot[bounds['y']['axis_name']].min(), bounds['y']['min']), max(df_plot[bounds['y']['axis_name']].max(), bounds['y']['max'])]
+    final_z_range = [min(df_plot[bounds['z']['axis_name']].min(), bounds['z']['min']), max(df_plot[bounds['z']['axis_name']].max(), bounds['z']['max'])]
+    
+    fig.update_scenes(
+        xaxis_range=final_x_range,
+        yaxis_range=final_y_range,
+        zaxis_range=final_z_range,
+    )
+        
     st.plotly_chart(fig, use_container_width=True)    
 
     st.write("Exemples d'images anormales trouvées par la méthode IQR sur deux dimensions :")
