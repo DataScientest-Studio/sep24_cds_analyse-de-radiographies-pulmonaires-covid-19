@@ -285,9 +285,9 @@ elif selection == "Statistique (3D)":
     df_plot = pd.read_csv(input_filename)
     fig = px.scatter_3d(
             df_plot,
-            x='Moyenne normalisée',
-            y='Écart-type normalisé',
-            z='Entropie normalisée',
+            x='Moyenne Normalisée',
+            y='Écart-type Normalisé',
+            z='Entropie Normalisée',
             color='score',
             size='score',
             size_max=20,
