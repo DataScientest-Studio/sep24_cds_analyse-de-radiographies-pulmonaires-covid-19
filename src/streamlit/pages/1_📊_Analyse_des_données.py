@@ -203,28 +203,36 @@ if selection == "IQR":
         }
     )
 
-    fig.add_trace(
-        go.Scatter(
-            x=df_outliers['ecart_type'],
-            y=df_outliers['intensite_moyenne'],
-            mode='markers',
-            marker=dict(
-                symbol='x', 
-                color='classe',
-                color_discrete_map=palette_bar,
-                opacity=1.0,
-                line=dict(width=1.5)
-            ),
-            customdata=df_outliers[['classe']],
-            name='Outlier' 
-        )
-    )
+    for classe, color in palette_bar.items():
+            df_class_outliers = df_outliers[df_outliers['classe'] == classe]
+    
+            if df_class_outliers.empty:
+                continue
+    
+            fig.add_trace(
+                go.Scatter(
+                    x=df_class_outliers['ecart_type'],
+                    y=df_class_outliers['intensite_moyenne'],
+                    mode='markers',
+                    marker=dict(
+                        symbol='x',         
+                        color=color,     
+                        size=10,
+                        opacity=1.0, 
+                        line=dict(width=1.5)
+                    ),
+                    legendgroup=classe,
+                    showlegend=False,
+                    name=classe, 
+                    customdata=df_class_outliers[['classe']],
+                )
+            )
 
     fig.update_layout(
         legend_title="Légende",
-        height=700,
-        legend=dict(traceorder='normal') 
+        height=700
     )
+
 
     st.plotly_chart(fig, use_container_width=True)
 
