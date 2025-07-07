@@ -14,16 +14,18 @@ Il a atteint un **f1-score pondéré de 99.08 %**.
 
 st.subheader("Difficultés rencontrées")
 st.write("""
-- **Données non homogènes** : forte variabilité des images selon leur origine.
-- **Classes déséquilibrées** : certains labels sont sous-représentés, rendant l'apprentissage plus difficile.
-- **Infrastructure GPU nécessaire** : les entraînements avancés nécessitent des ressources que nos PC personnels ne permettaient pas.  
-  L’usage des GPU gratuits de **Kaggle (30h/semaine)** a été essentiel pour tester le dégel des couches convolutives.
-- **Gestion de la mémoire GPU** : lors du dégel de plusieurs blocs convolutifs (ex. : VGG16 en 4 classes), il a été nécessaire de réduire la taille des batchs (batch = 32).
-- **Choix de la taille des batchs** :  
-  - Trop petite : mauvais apprentissage (~20 % d’accuracy en VGG16 3 classes avec batch=32).  
-  - Trop grande : overfitting ou crash mémoire.  
-  - **Compromis idéal identifié autour de batch=32**, selon les résultats de la recherche d’hyperparamètres.
-- **Prétraitement des images** : divergence des méthodes selon les cas (élimination des anomalies, contraste, bruit…).
+- **Richesse et qualité du jeu de données** : 
+  - Présence de matériel médical (électrodes d'ECG, cathéters, sondes, drains), 
+  - Réalisation technique : cadrage, flou / manque de contraste, position du patient, 
+  - Annotations du radiologue (flèches, texte),
+  - Représentativité de la population en terme de sexe et d'âge (sur-représentation de radiographies infantiles ?).
+- **Infrastructure et limites matérielles** : 
+  - Echantillonage ciblé sur ~10 000 images (réprésentativité des différentes classes) pour le calcul des réductions de dimension pour ne pas  
+  - Utilisation de GPU nécessaire pour l'entrainement, l'optimisation des hyperparamètes et le transfer-learning des CNN,
+  - Réduction de la taille des batch.  
+- **Diversité des pratiques et choix des paramètres** :
+  - Taille des batchs : trop petite → mauvais apprentissage, trop grande → crash mémoire, compromis identifié autour de 32,
+  - Prétraitement des images : nombreuses techniques dans la littérature pour éliminer les anomalies, améliorer le contraste, éliminer le bruit, etc.
 - **Temps limité** : projet mené en parallèle de la formation et des obligations professionnelles.
 """)
 
@@ -69,7 +71,7 @@ st.subheader("Conclusion")
 st.write("""
 Ce projet a permis de mettre en œuvre une démarche complète d’analyse et de classification d’images médicales, depuis le prétraitement des radiographies pulmonaires jusqu’à l’évaluation de modèles avancés de deep learning. Après avoir exploré les limites des approches classiques de machine learning, nous avons démontré la pertinence l’efficacité des réseaux de neurones convolutifs.
 \n\nL’optimisation des hyperparamètres, le fine-tuning du modèle, ainsi que l’application de techniques de prétraitement et d’augmentation de données ont permis d’atteindre des performances prometteuses, validant la capacité du modèle à extraire des caractéristiques discriminantes au sein d’images médicales complexes.
-\n\nL’intégration de méthodes d’explicabilité, telles que GradCAM et ses variantes, ont mis en évidence les régions d’intérêt pertinentes pour la décision.
+L’intégration de méthodes d’explicabilité, telles que GradCAM et ses variantes, ont mis en évidence les régions d’intérêt pertinentes pour la décision.
 \n\nPlusieurs perspectives d’amélioration subsistent, notamment l’exploration de modèles hybrides, l’utilisation de techniques avancées de prétraitement ainsi que l'augmentation de jeu de données.
 \n\nAu-delà des résultats obtenus, ce projet souligne le potentiel de l’intelligence artificielle pour assister les professionnels de santé dans le diagnostic par imagerie, tout en mettant en lumière les défis liés à la qualité des données, à l’équilibrage des classes et à l’interprétabilité des modèles.
 """)
