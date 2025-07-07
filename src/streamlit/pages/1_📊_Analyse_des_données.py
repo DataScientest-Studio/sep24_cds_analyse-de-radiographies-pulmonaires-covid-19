@@ -419,6 +419,8 @@ elif selection == "Auto-encoder":
 
 st.subheader("Réductions de dimensions")
 
+st.write("Les méthodes de réduction de dimension extraient les composantes principales ou les caractéristiques les plus discriminantes et facilitent la réprésentation visuelle des différences entre classes.")
+
 options = ["PCA", "UMAP", "AE", "NMF"]
 selection = st.segmented_control("", 
                                  options, 
