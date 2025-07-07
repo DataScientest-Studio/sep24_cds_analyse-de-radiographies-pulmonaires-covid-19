@@ -253,4 +253,4 @@ if uploaded_file is not None:
 
     # Arrêt du tracker et affichage des émissions
     tracker.stop()
-    st.write(f"Émissions estimées lors de l'inférence : {tracker.final_emissions*1000:.2e} g CO₂ (Estimation Code Carbone)")
+    st.write(f"Émissions estimées lors de l'inférence : {tracker.final_emissions*1000000:.2e} mg CO₂ (Estimation Code Carbone - à comparer avec 1 recharge de smartphone ~ 5g)")
