@@ -239,7 +239,11 @@ if uploaded_file is not None:
     })
 
     fig = px.bar(df, x='Classe', y='Probabilité (%)', text='Probabilité (%)')
-
+    # Formatage du texte : 2 décimales
+    fig.update_traces(
+        texttemplate='%{text:.2f}',  # <- C'est ici qu'on force le format à 2 décimales
+        textposition='outside'
+    )
     # Inclinaison des labels à 45°
     fig.update_layout(
         xaxis_tickangle=-45,
