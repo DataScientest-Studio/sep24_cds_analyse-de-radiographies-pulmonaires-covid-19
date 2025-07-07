@@ -189,7 +189,7 @@ class EfficientNetClassifierOptimized(nn.Module):
         return x
     
 model = EfficientNetClassifierOptimized(num_classes=4)
-model.load_state_dict(torch.load("efficentnetB0.pth", map_location="cpu"))
+model.load_state_dict(torch.load("models/efficentnetB0.pth", map_location="cpu"))
 model.eval()    
 
 class_names = ['COVID', 'Lung_Opacity', 'Normal', 'Viral Pneumonia']
