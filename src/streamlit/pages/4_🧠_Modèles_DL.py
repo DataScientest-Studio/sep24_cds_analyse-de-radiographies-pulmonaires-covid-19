@@ -145,7 +145,7 @@ def predict_image(image_path, model, class_names, device="cpu"):
                              [0.229, 0.224, 0.225])
     ])
 
-    image = image.convert("RGB")
+    image = image_path.convert("RGB")
     input_tensor = transform(image).unsqueeze(0).to(device)  
 
     with torch.no_grad():
