@@ -52,7 +52,7 @@ def get_hog_image(gray_img):
     return buf
 
 st.set_page_config(page_title="Modélisation ML", layout="wide")
-st.title("Classification de radiographies pulmonaires avec le machine learning")
+st.title("Modèles de Machine Learning")
 
 data_ml = [
     {"Modèle": "KNN", "F1-score (%)": 77.0, "Accuracy (%)": 83.0, "Temps (s)": 12, "Params": 0},
