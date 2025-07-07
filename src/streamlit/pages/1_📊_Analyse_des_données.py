@@ -326,7 +326,7 @@ elif selection == "Statistique (3D)":
     st.write("Exemples d'images anormales trouvées par la méthode IQR sur trois dimensions :")
 
     method_key = "statistique" 
-    for i in range(3):
+    for i in range(2):
         cols = st.columns(5)
         for j in range(5):
             rank = i * 5 + j + 1
@@ -338,7 +338,7 @@ elif selection == "Statistique (3D)":
                     st.image(Image.open(image_path), use_container_width=True)
                 except FileNotFoundError:
                     st.markdown(f"_(Image #{rank} non trouvée)_")
-    with st.expander("Exemples d'images trouvées anormales par le critère de l'entropie") :
+    with st.expander("Exemples d'images trouvées anormales par le **critère de l'entropie uniquement** :") :
         method_key = "entropy"
         for i in range(2):
             cols = st.columns(5)
