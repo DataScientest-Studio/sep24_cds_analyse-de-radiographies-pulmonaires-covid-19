@@ -18,7 +18,7 @@ from torch import nn
 
 
 st.set_page_config(layout="wide")
-st.title("📊 Résultats des modèles deep learning")
+st.title("Modèles de Deep Learning")
 
 # Méthodologie
 st.header("🔧 Méthodologie")
