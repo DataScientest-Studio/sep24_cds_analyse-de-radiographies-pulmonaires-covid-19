@@ -206,7 +206,7 @@ if uploaded_file is not None:
         #input_tensor = preprocess_image(image)
         #predictions = model.predict(input_tensor)[0]
         predicted_class, confidence, predictions =  predict_image(image, model, class_names)
-        ~#st.markdown(predictions)
+        #st.markdown(predictions)
         #predicted_class = class_names[np.argmax(predictions)]
         #confidence = 100 * np.max(predictions)
 
