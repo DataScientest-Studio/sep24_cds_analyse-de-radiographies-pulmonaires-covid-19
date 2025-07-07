@@ -337,7 +337,22 @@ elif selection == "Statistique (3D)":
                 try:
                     st.image(Image.open(image_path), use_container_width=True)
                 except FileNotFoundError:
-                    st.markdown(f"_(Image #{rank} non trouvée)_")    
+                    st.markdown(f"_(Image #{rank} non trouvée)_")
+                    
+     with st.expander("Exemples d'images trouvées anormales par le critère de l'entropie") :
+        method_key = "entropy"
+        for i in range(2):
+            cols = st.columns(5)
+            for j in range(5):
+                rank = i * 5 + j + 1
+                script_dir = os.path.dirname(os.path.abspath(__file__))    
+                project_root = os.path.dirname(script_dir)    
+                image_path = os.path.join(project_root, 'outliers_images', f"{method_key}_anomaly_{rank}.png")
+                with cols[j]:
+                    try:
+                        st.image(Image.open(image_path), use_container_width=True)
+                    except FileNotFoundError:
+                        st.markdown(f"_(Image #{rank} non trouvée)_")
 
 elif selection == "Isolation Forest":
     st.write("#### Approche Machine Learning (VGG 16 & Isolation Forest)")
@@ -379,21 +394,7 @@ elif selection == "Isolation Forest":
                     st.image(Image.open(image_path), use_container_width=True)
                 except FileNotFoundError:
                     st.markdown(f"_(Image #{rank} non trouvée)_")
-    with st.expander("Exemples d'images trouvées anormales par le critère de l'entropie") :
-        method_key = "entropy"
-        for i in range(2):
-            cols = st.columns(5)
-            for j in range(5):
-                rank = i * 5 + j + 1
-                script_dir = os.path.dirname(os.path.abspath(__file__))    
-                project_root = os.path.dirname(script_dir)    
-                image_path = os.path.join(project_root, 'outliers_images', f"{method_key}_anomaly_{rank}.png")
-                with cols[j]:
-                    try:
-                        st.image(Image.open(image_path), use_container_width=True)
-                    except FileNotFoundError:
-                        st.markdown(f"_(Image #{rank} non trouvée)_")
-
+   
 elif selection == "Auto-encoder":
     st.write("#### Approche Deep Learning (Auto-encodeur)")
     st.write(DESCRIPTIONS[selection])
