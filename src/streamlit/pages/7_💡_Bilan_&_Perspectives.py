@@ -16,7 +16,7 @@ st.subheader("Difficultés rencontrées")
 st.write("""
 - **Richesse et qualité du jeu de données** : 
   - Présence de matériel médical (électrodes d'ECG, cathéters, sondes, drains), 
-  - Réalisation technique : cadrage, flou / manque de contraste, position du patient, 
+  - Erreur d'acquisition et variabilité dans les techniques de réalisation : cadrage, flou / manque de contraste, position du patient, 
   - Annotations du radiologue (flèches, texte),
   - Représentativité de la population en terme de sexe et d'âge (sur-représentation de radiographies infantiles ?).
 - **Infrastructure et limites matérielles** : 
