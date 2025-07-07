@@ -338,8 +338,7 @@ elif selection == "Statistique (3D)":
                     st.image(Image.open(image_path), use_container_width=True)
                 except FileNotFoundError:
                     st.markdown(f"_(Image #{rank} non trouvée)_")
-                    
-     with st.expander("Exemples d'images trouvées anormales par le critère de l'entropie") :
+    with st.expander("Exemples d'images trouvées anormales par le critère de l'entropie") :
         method_key = "entropy"
         for i in range(2):
             cols = st.columns(5)
