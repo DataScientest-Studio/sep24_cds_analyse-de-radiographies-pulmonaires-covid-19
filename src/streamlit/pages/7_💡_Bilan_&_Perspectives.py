@@ -20,9 +20,9 @@ st.write("""
   - Annotations du radiologue (flèches, texte),
   - Représentativité de la population en terme de sexe et d'âge (sur-représentation de radiographies infantiles ?).
 - **Infrastructure et limites matérielles** : 
-  - Echantillonage ciblé sur ~10 000 images (réprésentativité des différentes classes) pour le calcul des réductions de dimension pour ne pas  
+  - Echantillonage ciblé sur ~10 000 images (réprésentativité des différentes classes) pour le calcul des réductions de dimension pour ne pas saturer la mémoire,
   - Utilisation de GPU nécessaire pour l'entrainement, l'optimisation des hyperparamètes et le transfer-learning des CNN,
-  - Réduction de la taille des batch.  
+  - Réduction de la taille des batch pour éviter un crash mémoire.  
 - **Diversité des pratiques et choix des paramètres** :
   - Taille des batchs : trop petite → mauvais apprentissage, trop grande → crash mémoire, compromis identifié autour de 32,
   - Prétraitement des images : nombreuses techniques dans la littérature pour éliminer les anomalies, améliorer le contraste, éliminer le bruit, etc.
