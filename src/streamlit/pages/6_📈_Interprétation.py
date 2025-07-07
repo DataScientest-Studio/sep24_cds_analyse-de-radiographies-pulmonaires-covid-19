@@ -18,7 +18,7 @@ Elle constitue **la principale source d’erreurs** du modèle, comme le montre 
 """)
 
 #st.image("src/images/lung_opcaity_lenet.png")
-col1, col2, col3 = st.columns([1, 6, 1]) 
+col1, col2, col3 = st.columns([1, 2, 1]) 
 with col2:
     st.image("src/images/lung_opacity_lenet.png", use_container_width=True)
 
