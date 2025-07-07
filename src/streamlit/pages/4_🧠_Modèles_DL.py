@@ -226,8 +226,7 @@ if uploaded_file is not None:
     st.markdown(f"**Classe prédite :** `{predicted_class}`")
     st.markdown(f"**Confiance :** `{confidence:.2f}%`")
     #st.bar_chart(dict(zip(class_names, predictions)))
-    st.markdown("### Répartition des probabilités")
-    predictions = predictions.cpu().numpy()
+    st.markdown("### Répartition des probabilités")    
     #predictions = predictions.cpu().numpy()
     #df_probs = pd.DataFrame({
     #    "Classe": class_names,
