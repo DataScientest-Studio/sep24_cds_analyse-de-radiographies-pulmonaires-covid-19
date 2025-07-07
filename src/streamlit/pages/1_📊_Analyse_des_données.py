@@ -541,7 +541,9 @@ st.write("Plusieurs techniques de prétraitement ont été appliquées durant le
 
 st.write("#### Redimensionnement, normalisation et amélioration du contraste")
 
-st.write("""Les images ont été redimensionnées à 240 x 240 pixels et normalisées. L'amélioration du contraste par la technique CLAHE (Contrast Limited Adaptive Histogram Equalization) a également été testée. Elle améliore le contraste en l'égalisant sur de petites zones locales de l'image, ce qui permet de rehausser les détails fins sans sur-amplifier le bruit de manière globale. Sur les radiographies, cette technique est très pertinente car elle fait ressortir les structures subtiles des tissus mous sans saturer les zones très denses comme les os, améliorant ainsi la visibilité pour le diagnostic.
+st.write("""
+- Les images ont été redimensionnées à 240 x 240 pixels et normalisées. 
+- L'amélioration du contraste par la technique CLAHE (Contrast Limited Adaptive Histogram Equalization) a également été testée. Elle améliore le contraste en l'égalisant sur de petites zones locales de l'image, ce qui permet de rehausser les détails fins sans sur-amplifier le bruit de manière globale. Sur les radiographies, cette technique est très pertinente car elle fait ressortir les structures subtiles des tissus mous sans saturer les zones très denses comme les os, améliorant ainsi la visibilité pour le diagnostic.
 """)
 
 @st.cache_data 
