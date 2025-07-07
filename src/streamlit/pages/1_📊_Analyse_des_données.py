@@ -454,26 +454,28 @@ palette = {
 if selection == "PCA" :
     st.write("#### Analyse en Composantes Principales (PCA)")
     st.write("PCA trouve de nouveaux axes (appelés composantes principales) qui maximisent la variance (la dispersion) des données. Le premier axe capture le plus de variance possible, le deuxième en capture le plus possible parmi ce qu'il reste, et ainsi de suite. C'est une méthode purement mathématique et linéaire.")
-    script_dir = os.path.dirname(os.path.abspath(__file__))    
-    project_root = os.path.dirname(script_dir)    
-    input_filename = os.path.join(project_root, 'data', 'pca_3d_data.csv')    
-    df_plot = pd.read_csv(input_filename)  
-    fig = px.scatter_3d(
-        df_plot,
-        x='PCA 1',
-        y='PCA 2',
-        z='PCA 3',
-        color='label', 
-        color_discrete_map=palette
-    )
-    fig.update_traces(marker=dict(size=3, opacity=0.8))
-    fig.update_layout(legend_title_text='Classe',margin=dict(l=0, r=0, b=0, t=0))
-    fig.update_traces(hoverinfo='none', hovertemplate=None)
-    st.plotly_chart(fig, use_container_width=True)
+    
+    col_gauche, col_droite = st.columns([1, 1])
 
+    with col_gauche:
+        script_dir = os.path.dirname(os.path.abspath(__file__))    
+        project_root = os.path.dirname(script_dir)    
+        input_filename = os.path.join(project_root, 'data', 'pca_3d_data.csv')    
+        df_plot = pd.read_csv(input_filename)  
+        fig = px.scatter_3d(
+            df_plot,
+            x='PCA 1',
+            y='PCA 2',
+            z='PCA 3',
+            color='label', 
+            color_discrete_map=palette
+        )
+        fig.update_traces(marker=dict(size=3, opacity=0.8))
+        fig.update_layout(legend_title_text='Classe',margin=dict(l=0, r=0, b=0, t=0))
+        fig.update_traces(hoverinfo='none', hovertemplate=None)
+        st.plotly_chart(fig, use_container_width=True)
 
-    col1, col2, col3 = st.columns([1, 2, 1])
-    with col2: 
+    with col_droite:
         st.image("src/streamlit/dimensionality_reduction/pca_visualization_with_thumbnails.png", use_container_width=True)
 
 if selection == "UMAP" :
