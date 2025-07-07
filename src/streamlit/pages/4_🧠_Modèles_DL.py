@@ -214,10 +214,11 @@ if uploaded_file is not None:
     st.markdown(f"**Confiance :** `{confidence:.2f}%`")
     #st.bar_chart(dict(zip(class_names, predictions)))
     st.markdown("### Répartition des probabilités")
-    st.bar_chart(pd.DataFrame({
-        'Classe': class_names,
-        'Probabilité (%)': [p * 100 for p in predictions]
-    }).set_index('Classe'))
+    df_probs = pd.DataFrame({
+        "Classe": class_names,
+        "Probabilité (%)": [round(p * 100, 2) for p in predictions]
+    }).set_index('Classe')
+    st.bar_chart(df_probs)
 
     # Arrêt du tracker et affichage des émissions
     tracker.stop()
