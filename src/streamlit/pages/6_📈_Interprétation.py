@@ -32,7 +32,7 @@ Attention toutefois : l’interprétation de ces cartes d’activation reste com
 
 st.subheader("🧪 Exemple : activation sur une image *Normale*")
 
-col1, col2 = st.columns(2)
+spacer1, col1, col2, spacer2 = st.columns([1, 2, 2, 1]) 
 
 with col1:
     st.markdown("**Image originale**")
