@@ -153,7 +153,7 @@ def predict_image(image_path, model, class_names, device="cpu"):
         probs = torch.nn.functional.softmax(outputs[0], dim=0)
         predicted_idx = torch.argmax(probs).item()
         predicted_class = class_names[predicted_idx]
-        confidence = probs[predicted_idx].item()
+        confidence = probs[predicted_idx].item() * 100
 
     #print(f"Prédiction : {predicted_class} ({confidence*100:.2f}%)")
     return predicted_class, confidence, probs
