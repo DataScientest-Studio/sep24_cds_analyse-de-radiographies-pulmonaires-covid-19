@@ -501,9 +501,9 @@ if selection == "UMAP" :
         fig.update_traces(hoverinfo='none', hovertemplate=None)
         st.plotly_chart(fig, use_container_width=True)
    
-with col_droite:
+    with col_droite:
         st.image("src/streamlit/dimensionality_reduction/umap_visualization_with_thumbnails.png", use_container_width=True)
-    
+
 elif selection == "AE" :
     st.write("#### Auto-Encoder (AE)")
     st.write("C'est un type de réseau de neurones qui apprend à compresser les données (partie encodeur) en une représentation de faible dimension (le goulot d'étranglement ou bottleneck), puis à les décompresser (partie décodeur) pour reconstruire l'entrée originale. En forçant le réseau à recréer les données à partir d'une version compressée, il apprend les caractéristiques les plus importantes.")
