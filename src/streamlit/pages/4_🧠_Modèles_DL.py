@@ -9,6 +9,7 @@ import plotly.express as px
 from codecarbon import EmissionsTracker
 import gdown
 from tensorflow.keras.applications.efficientnet import preprocess_input
+import torch
 from torchvision.models import efficientnet_b0, EfficientNet_B0_Weights
 from torch import nn
 
