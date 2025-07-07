@@ -474,7 +474,7 @@ if selection == "PCA" :
 
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2: 
-        st.image("src/streamlit/dimensionality_reduction/pca_with_thumbnails.png", use_container_width=True)
+        st.image("src/streamlit/dimensionality_reduction/pca_visualization_with_thumbnails.png", use_container_width=True)
 
 if selection == "UMAP" :
     st.write("#### Uniform Manifold Approximation and Projection (UMAP)")
