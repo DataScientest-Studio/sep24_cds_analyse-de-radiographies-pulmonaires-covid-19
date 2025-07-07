@@ -126,9 +126,9 @@ uploaded_file = st.file_uploader("Chargez une radiographie", type=["jpg", "jpeg"
 def load_model():
     return tf.keras.models.load_model("src/models/efficientnet_optimized.h5")
 
-model = load_model()
+#model = load_model()
 
-class_names = ["COVID", "Normal", "Viral Pneumonia"]
+#class_names = ["COVID", "Normal", "Viral Pneumonia"]
 
 def preprocess_image(image_pil):
     image_resized = image_pil.convert("RGB").resize((240, 240))
