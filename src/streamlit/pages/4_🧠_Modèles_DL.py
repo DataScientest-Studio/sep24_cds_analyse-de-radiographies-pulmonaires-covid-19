@@ -120,7 +120,6 @@ st.markdown("""
 - Utile pour les déploiements contraints en ressources (cloud limité, mobilité...).
 """)
 
-
 st.markdown("---")
 st.subheader("🧪 Essai avec une radiographie")
 uploaded_file = st.file_uploader("Chargez une radiographie", type=["jpg", "jpeg", "png"])
