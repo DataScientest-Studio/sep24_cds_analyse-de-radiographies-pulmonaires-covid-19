@@ -364,7 +364,7 @@ elif selection == "Isolation Forest":
     fig.update_layout(margin=dict(l=0, r=0, b=0, t=40))
     st.plotly_chart(fig, use_container_width=True)
 
-    st.write("Les 10 images les plus anormales trouvées :")
+    st.write("Voici les 15 images avec les score d'anomalie les plus importantes :")
 
     method_key = selection.lower().replace(' ', '_')
     for i in range(3):
@@ -401,7 +401,7 @@ elif selection == "Auto-encoder":
     fig.update_layout(margin=dict(l=0, r=0, b=0, t=40))
     st.plotly_chart(fig, use_container_width=True)
 
-    st.write("Les 10 images les plus anormales trouvées :")
+    st.write("Voici les 15 images avec les score d'anomalie les plus importantes :")
     
     method_key = selection.lower().replace(' ', '_').replace('-', '')
     for i in range(3):
@@ -450,8 +450,7 @@ if selection == "PCA" :
         y='PCA 2',
         z='PCA 3',
         color='label', 
-        title="Visualisation 3D PCA des radiographies pulmonaires",
-        color_discrete_map=palette,
+        color_discrete_map=palette
     )
     fig.update_traces(marker=dict(size=3, opacity=0.8))
     fig.update_layout(legend_title_text='Classe',margin=dict(l=0, r=0, b=0, t=0))
@@ -471,8 +470,7 @@ if selection == "UMAP" :
         y='UMAP 2',
         z='UMAP 3',
         color='label', 
-        title="Visualisation 3D UMAP des radiographies pulmonaires",
-        color_discrete_map=palette,
+        color_discrete_map=palette
     )
     fig.update_traces(marker=dict(size=3, opacity=0.8))
     fig.update_layout(legend_title_text='Classe',margin=dict(l=0, r=0, b=0, t=0))
@@ -493,8 +491,7 @@ elif selection == "AE" :
         y='AE 2',
         z='AE 3',
         color='label', 
-        title="Visualisation 3D AE des radiographies pulmonaires",
-        color_discrete_map=palette,
+        color_discrete_map=palette
     )
     fig.update_traces(marker=dict(size=3, opacity=0.8))
     fig.update_layout(legend_title_text='Classe',margin=dict(l=0, r=0, b=0, t=0))
@@ -515,8 +512,7 @@ if selection == "NMF" :
         y='NMF 2',
         z='NMF 3',
         color='label', 
-        title="Visualisation 3D NMF des radiographies pulmonaires",
-        color_discrete_map=palette,
+        color_discrete_map=palette
     )
     fig.update_traces(marker=dict(size=3, opacity=0.8))
     fig.update_layout(legend_title_text='Classe',margin=dict(l=0, r=0, b=0, t=0))
@@ -531,7 +527,7 @@ st.write("Plusieurs techniques de prétraitement ont été appliquées durant le
 
 st.write("#### Redimensionnement, normalisation et amélioration du contraste")
 
-st.write("""Les images ont été redimensionnées à 240 x 240 pixels et normalisées. En effet, il a été constaté que 7 radiographies sur 10 ne sont pas normalisées. L'amélioration du contraste par la technique CLAHE a également été testée. Elle améliore le contraste en l'égalisant sur de petites zones locales de l'image, ce qui permet de rehausser les détails fins sans sur-amplifier le bruit de manière globale. Sur les radiographies, cette technique est très pertinente car elle fait ressortir les structures subtiles des tissus mous sans saturer les zones très denses comme les os, améliorant ainsi la visibilité pour le diagnostic.
+st.write("""Les images ont été redimensionnées à 240 x 240 pixels et normalisées. L'amélioration du contraste par la technique CLAHE (Contrast Limited Adaptive Histogram Equalization) a également été testée. Elle améliore le contraste en l'égalisant sur de petites zones locales de l'image, ce qui permet de rehausser les détails fins sans sur-amplifier le bruit de manière globale. Sur les radiographies, cette technique est très pertinente car elle fait ressortir les structures subtiles des tissus mous sans saturer les zones très denses comme les os, améliorant ainsi la visibilité pour le diagnostic.
 """)
 
 @st.cache_data 
