@@ -18,7 +18,7 @@ st.write("""
   - Présence de matériel médical (électrodes d'ECG, cathéters, sondes, drains), 
   - Erreur d'acquisition et variabilité dans les techniques de réalisation : cadrage, flou / manque de contraste, position du patient, 
   - Annotations du radiologue (flèches, texte),
-  - Représentativité de la population en terme de sexe et d'âge (sur-représentation de radiographies infantiles ?).
+  - Représentativité de la population en terme de sexe et d'âge : sur-représentation de radiographies d'enfants pour la pneumonie par exemple.
 - **Infrastructure et limites matérielles** : 
   - Echantillonage ciblé sur ~10 000 images (réprésentativité des différentes classes) pour le calcul des réductions de dimension pour ne pas saturer la mémoire,
   - Utilisation de GPU nécessaire pour l'entrainement, l'optimisation des hyperparamètes et le transfer-learning des CNN,
