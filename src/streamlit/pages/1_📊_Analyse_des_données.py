@@ -471,6 +471,11 @@ if selection == "PCA" :
     fig.update_traces(hoverinfo='none', hovertemplate=None)
     st.plotly_chart(fig, use_container_width=True)
 
+
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2: 
+        st.image("src/streamlit/dimensionality_reduction/pca_with_thumbnails.png", use_container_width=True)
+
 if selection == "UMAP" :
     st.write("#### Uniform Manifold Approximation and Projection (UMAP)")
     st.write("UMAP est une technique d'apprentissage de variétés (manifold learning). Elle suppose que les données, même si elles sont dans un grand espace, vivent en réalité sur une surface de plus faible dimension (la variété). UMAP essaie de modéliser cette surface et de la déplier dans un espace plus petit tout en préservant au mieux la structure topologique des données (qui est voisin de qui, localement et globalement).")
