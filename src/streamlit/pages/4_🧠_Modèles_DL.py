@@ -155,8 +155,8 @@ def predict_image(image_path, model, class_names, device="cpu"):
         predicted_class = class_names[predicted_idx]
         confidence = probs[predicted_idx].item()
 
-    print(f"Prédiction : {predicted_class} ({confidence*100:.2f}%)")
-    return predicted_class, confidence
+    #print(f"Prédiction : {predicted_class} ({confidence*100:.2f}%)")
+    return predicted_class, confidence, probs
 
 class EfficientNetClassifierOptimized(nn.Module):
     def __init__(self, num_classes=4, fine_tune=False):
@@ -205,14 +205,19 @@ if uploaded_file is not None:
     with st.spinner("Prédiction en cours..."):
         #input_tensor = preprocess_image(image)
         #predictions = model.predict(input_tensor)[0]
-        predictions =  predict_image(image, model, class_names)
-        st.markdown(predictions)
+        predicted_class, confidence, predictions =  predict_image(image, model, class_names)
+        ~#st.markdown(predictions)
         #predicted_class = class_names[np.argmax(predictions)]
         #confidence = 100 * np.max(predictions)
 
-    #st.markdown(f"**Classe prédite :** `{predicted_class}`")
-    #st.markdown(f"**Confiance :** `{confidence:.2f}%`")
+    st.markdown(f"**Classe prédite :** `{predicted_class}`")
+    st.markdown(f"**Confiance :** `{confidence:.2f}%`")
     #st.bar_chart(dict(zip(class_names, predictions)))
+    st.markdown("### Répartition des probabilités")
+    st.bar_chart(pd.DataFrame({
+        'Classe': class_names,
+        'Probabilité (%)': [p * 100 for p in predictions]
+    }).set_index('Classe'))
 
     # Arrêt du tracker et affichage des émissions
     tracker.stop()
