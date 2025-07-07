@@ -3,14 +3,13 @@ from utils import interactive_image
 
 st.set_page_config(page_title="Bilan et perspectives", layout="wide")
 
-
 st.title("Bilan et perspectives")
 
 st.subheader("Résultats obtenus")
 st.write("""
-Les modèles testés atteignent globalement d'excellents résultats (autour de 99 % de F1-score).
-Le modèle **EfficientNetB0** a été retenu pour la démo finale en raison de son **excellent compromis entre performance et coût d'entraînement**.  
-Il a atteint un **F1-score pondéré de 99.08 %**.
+Les modèles testés atteignent globalement d'excellents résultats (autour de 99 % de f1-score).
+Le modèle **EfficientNetB0** a été retenu pour la démonstration finale en raison de son **excellent compromis entre performance et coût d'entraînement**.  
+Il a atteint un **f1-score pondéré de 99.08 %**.
 """)
 
 st.subheader("Difficultés rencontrées")
@@ -30,25 +29,17 @@ st.write("""
 
 st.subheader("Perspectives futures")
 st.write("""
-- **Intégration de métadonnées cliniques** : âge, sexe, antécédents, symptômes…
-- **Exploration de nouvelles architectures** :  
-  Ex. : **Gravitational Search Algorithm** pour optimiser les hyperparamètres.
-- **Amélioration de l’interprétabilité** :  
-  Le modèle **DenseNet-121 + Vision Transformer** permet une meilleure compréhension via des **attention maps** et **Grad-CAM++**.
+- **Augmentation du jeu de données** : apport des sources de données cliniques supplémentaires pour garantir la généralisation et limiter le biais d'apprentissage,
+- **Intégration de métadonnées cliniques** (si disponibles) : âge, sexe, antécédents, symptômes, résultats biologiques, etc.,
+- **Segmentation préalable des poumons** : segmentation automatique des poumons (par exemple avec U-Net) avant la classification pour concentrer l’attention du modèle sur les régions d’intérêt et réduire l’influence du bruit hors poumon,
+- **Extraction de textures avancées** : ajout de descripteurs texturaux (par exemple GLCM, GLDM ou ondelettes) pour enrichir les features et mieux différencier les pathologies similaires,
+- **Mise en place d'optimisateurs avancés** : algorithmes (par exemple Adamax) pour optimiser la convergence et la stabilité du modèle,
+- **Interprétabilité avancée** : utilisation des cartes d'attentions de modèles hybrides CNN & Vision Transformer, techniques récentes (SHAP, etc.),
+- **Mise en oeuvre d'architectures avancées** : 
+  - Approches d'ensemble : plusieurs architectures CNN entraînées séparément dont dont les prédictions sont aggrégées (moyenne ou vote majoritaire),
+  - Architectures hybrides (CNN & ViT) : qui capturent à la fois les dépendances locales et globales et qui apportent d'autres éléments d'interprétabilité,
 """)
-
-st.set_page_config(page_title="Modèles avancés", layout="wide")
-
-
-
-st.title("Modèles Avancés")
-st.write("""
-Les modèles avancés explorent la combinaison de **CNN classiques avec des modules d’attention** ou des architectures de type **Transformer**.
-""")
-st.markdown("---")
-st.subheader("🔬 Architectures hybrides explorées")
-
-with st.expander("🧠 DenseNet-121 + Vision Transformer (ViT)"):
+with st.expander("🔬 DenseNet-121 + Vision Transformer (ViT)"):
     st.write("""
     DenseNet-121 est un réseau CNN structuré en quatre blocs denses. Chaque couche reçoit les sorties de toutes les couches précédentes, améliorant ainsi la réutilisation des caractéristiques extraites et limitant la disparition du gradient.  
     ViT (Vision Transformer), quant à lui, segmente l’image en **patches** pour appliquer une **self-attention globale**.  
@@ -62,8 +53,10 @@ with st.expander("🧠 DenseNet-121 + Vision Transformer (ViT)"):
     - le taux de dropout  
     - la taille des batchs
     """)
-
-with st.expander("📦 VGG16 + SE (Squeeze-and-Excitation)"):
+st.write("""
+  - Intégration de modules d’attention : pour améliorer la focalisation du réseau sur les régions critiques.
+""")
+with st.expander("🔬 VGG16 + SE (Squeeze-and-Excitation)"):
     st.write("""
     VGG16 est un CNN profond à 16 couches, introduit en 2014.  
     Les blocs SE (Squeeze-and-Excitation) appliquent une **attention par canal**, permettant au réseau de **recalibrer dynamiquement** les canaux d’activation.  
@@ -71,6 +64,7 @@ with st.expander("📦 VGG16 + SE (Squeeze-and-Excitation)"):
 
     **F1-score pondéré : 0.9864, Précision pondérée : 0.9864**
     """)
+
 
 st.markdown("---")
 st.subheader("📉 Conclusion")
