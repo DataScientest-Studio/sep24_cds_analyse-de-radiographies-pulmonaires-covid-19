@@ -69,9 +69,9 @@ En revanche, leur coût en calcul est plus élevé, notamment à cause des modul
 
 st.subheader("Conclusion")
 st.write("""
-Ce projet a permis de mettre en œuvre une démarche complète d’analyse et de classification d’images médicales, depuis le prétraitement des radiographies pulmonaires jusqu’à l’évaluation de modèles avancés de deep learning. Après avoir exploré les limites des approches classiques de machine learning, nous avons démontré la pertinence l’efficacité des réseaux de neurones convolutifs.
-\n\nL’optimisation des hyperparamètres, le fine-tuning du modèle, ainsi que l’application de techniques de prétraitement et d’augmentation de données ont permis d’atteindre des performances prometteuses, validant la capacité du modèle à extraire des caractéristiques discriminantes au sein d’images médicales complexes.
-L’intégration de méthodes d’explicabilité, telles que GradCAM et ses variantes, ont mis en évidence les régions d’intérêt pertinentes pour la décision.
+Ce projet a permis de mettre en œuvre une **démarche complète d’analyse et de classification d’images médicales**, depuis le prétraitement des radiographies pulmonaires jusqu’à l’évaluation de modèles avancés de deep learning. Après avoir exploré les limites des approches classiques de machine learning, nous avons démontré la **pertinence et l’efficacité des réseaux de neurones convolutifs**.
+\n\nL’optimisation des hyperparamètres, le fine-tuning du modèle, ainsi que l’application de techniques de prétraitement et d’augmentation de données ont permis d’atteindre une performance satisfaisante, validant la capacité du modèle à extraire des caractéristiques discriminantes au sein d’images médicales complexes.
+L’intégration de méthodes d’explicabilité, telles que Grad-CAM et ses variantes, ont mis en évidence les régions d’intérêt pertinentes pour la décision.
 \n\nPlusieurs perspectives d’amélioration subsistent, notamment l’exploration de modèles hybrides, l’utilisation de techniques avancées de prétraitement ainsi que l'augmentation de jeu de données.
-\n\nAu-delà des résultats obtenus, ce projet souligne le potentiel de l’intelligence artificielle pour assister les professionnels de santé dans le diagnostic par imagerie, tout en mettant en lumière les défis liés à la qualité des données, à l’équilibrage des classes et à l’interprétabilité des modèles.
+\n\nAu-delà des résultats obtenus, ce projet souligne le **potentiel de l’intelligence artificielle pour assister les professionnels de santé dans le diagnostic par imagerie, tout en mettant en lumière les défis liés à la qualité des données, à l’équilibrage des classes et à l’interprétabilité des modèles**.
 """)
