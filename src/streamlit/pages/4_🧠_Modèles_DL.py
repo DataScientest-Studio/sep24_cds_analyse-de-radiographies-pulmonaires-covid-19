@@ -215,11 +215,29 @@ if uploaded_file is not None:
     #st.bar_chart(dict(zip(class_names, predictions)))
     st.markdown("### Répartition des probabilités")
     predictions = predictions.cpu().numpy()
-    df_probs = pd.DataFrame({
-        "Classe": class_names,
-        "Probabilité (%)": [round(p * 100, 2) for p in predictions]
-    }).set_index('Classe')
-    st.bar_chart(df_probs)
+    #df_probs = pd.DataFrame({
+    #    "Classe": class_names,
+    #    "Probabilité (%)": [round(p * 100, 2) for p in predictions]
+    #}).set_index('Classe')
+    #st.bar_chart(df_probs)
+
+    df = pd.DataFrame({
+        'Classe': class_names,
+        'Probabilité (%)': [round(p * 100, 2) for p in predictions.cpu().numpy()]
+    })
+
+    fig = px.bar(df, x='Classe', y='Probabilité (%)', text='Probabilité (%)')
+
+    # Inclinaison des labels à 45°
+    fig.update_layout(
+        xaxis_tickangle=-45,
+        title="Répartition des probabilités",
+        yaxis_title="Probabilité (%)",
+        xaxis_title="Classe"
+    )
+
+    # Affichage dans Streamlit
+    st.plotly_chart(fig, use_container_width=True)
 
     # Arrêt du tracker et affichage des émissions
     tracker.stop()
