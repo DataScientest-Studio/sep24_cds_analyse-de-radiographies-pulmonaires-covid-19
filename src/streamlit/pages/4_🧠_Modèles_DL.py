@@ -10,6 +10,11 @@ from codecarbon import EmissionsTracker
 #import gdown
 import zipfile
 from tensorflow.keras.applications.efficientnet import preprocess_input
+import torch
+from torchvision import transforms
+from torch import nn
+from torchvision.models import efficientnet_b0, EfficientNet_B0_Weights
+from torch import nn
 
 st.set_page_config(layout="wide")
 st.title("📊 Résultats des modèles deep learning")
@@ -118,15 +123,76 @@ with zipfile.ZipFile(zip_path, 'r') as zip_ref:
 def load_model():
     return tf.keras.models.load_model("src/models/efficientnet_optimized.h5")
 
-model = load_model()
+#model = load_model()
 
-class_names = ["COVID", "Normal", "Viral Pneumonia"]
+#class_names = ["COVID", "Normal", "Viral Pneumonia"]
 
 def preprocess_image(image):
     image = image.convert("RGB").resize((240, 240))
     img_array = np.array(image)
     img_array = preprocess_input(img_array)  
     return np.expand_dims(img_array, axis=0)
+
+
+def predict_image(image_path, model, class_names, device="cpu"):
+    model.to(device)
+    model.eval()
+
+    transform = transforms.Compose([
+        transforms.Resize((240, 240)),
+        transforms.ToTensor(),
+        transforms.Normalize([0.485, 0.456, 0.406],
+                             [0.229, 0.224, 0.225])
+    ])
+
+    image = Image.open(image_path).convert("RGB")
+    input_tensor = transform(image).unsqueeze(0).to(device)  
+
+    with torch.no_grad():
+        outputs = model(input_tensor)
+        probs = torch.nn.functional.softmax(outputs[0], dim=0)
+        predicted_idx = torch.argmax(probs).item()
+        predicted_class = class_names[predicted_idx]
+        confidence = probs[predicted_idx].item()
+
+    print(f"Prédiction : {predicted_class} ({confidence*100:.2f}%)")
+    return predicted_class, confidence
+
+class EfficientNetClassifierOptimized(nn.Module):
+    def __init__(self, num_classes=4, fine_tune=False):
+        super(EfficientNetClassifierOptimized, self).__init__()
+
+        weights = EfficientNet_B0_Weights.IMAGENET1K_V1
+        self.base_model = efficientnet_b0(weights=weights)
+
+        for param in self.base_model.parameters():
+            param.requires_grad = fine_tune
+
+        in_features = self.base_model.classifier[1].in_features
+
+        self.classifier = nn.Sequential(
+            nn.BatchNorm1d(in_features),
+            nn.Linear(in_features, 3072),
+            nn.ReLU(),
+            nn.Dropout(0.5),
+            nn.Linear(3072, 768),
+            nn.ReLU(),
+            nn.Dropout(0.5),
+            nn.Linear(768, num_classes)
+        )
+
+        self.base_model.classifier = nn.Identity()
+
+    def forward(self, x):
+        x = self.base_model(x)
+        x = self.classifier(x)
+        return x
+    
+model = EfficientNetClassifierOptimized(num_classes=4)
+model.load_state_dict(torch.load("efficentnetB0.pth", map_location="cpu"))
+model.eval()    
+
+class_names = ['COVID', 'Lung_Opacity', 'Normal', 'Viral Pneumonia']
 
 if uploaded_file is not None:
     image = Image.open(uploaded_file)
@@ -137,15 +203,16 @@ if uploaded_file is not None:
     tracker.start()
 
     with st.spinner("Prédiction en cours..."):
-        input_tensor = preprocess_image(image)
-        predictions = model.predict(input_tensor)[0]
+        #input_tensor = preprocess_image(image)
+        #predictions = model.predict(input_tensor)[0]
+        predictions =  predict_image(image, model, class_names)
         st.markdown(predictions)
-        predicted_class = class_names[np.argmax(predictions)]
-        confidence = 100 * np.max(predictions)
+        #predicted_class = class_names[np.argmax(predictions)]
+        #confidence = 100 * np.max(predictions)
 
-    st.markdown(f"**Classe prédite :** `{predicted_class}`")
-    st.markdown(f"**Confiance :** `{confidence:.2f}%`")
-    st.bar_chart(dict(zip(class_names, predictions)))
+    #st.markdown(f"**Classe prédite :** `{predicted_class}`")
+    #st.markdown(f"**Confiance :** `{confidence:.2f}%`")
+    #st.bar_chart(dict(zip(class_names, predictions)))
 
     # Arrêt du tracker et affichage des émissions
     tracker.stop()
