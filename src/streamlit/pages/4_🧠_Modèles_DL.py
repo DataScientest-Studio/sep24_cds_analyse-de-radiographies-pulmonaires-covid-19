@@ -10,6 +10,8 @@ from codecarbon import EmissionsTracker
 import gdown
 from tensorflow.keras.applications.efficientnet import preprocess_input
 import torch
+from torchvision import transforms
+from torch import nn
 from torchvision.models import efficientnet_b0, EfficientNet_B0_Weights
 from torch import nn
 
