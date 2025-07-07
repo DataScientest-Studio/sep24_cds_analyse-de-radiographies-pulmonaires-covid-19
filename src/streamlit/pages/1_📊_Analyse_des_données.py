@@ -45,10 +45,10 @@ if selection == "Jeu de données":
 elif selection == "Inspection Visuelle":
     st.write("#### Exploration visuelle des images")
     st.write("""
-    - Radios dans l’ensemble de très bonne qualité
+    - Radios dans l’ensemble de bonne qualité
     - Présence de matériel médical visible sur certaines radios
     - Annotations également souvent (L, R, ORTHO...)  
-    - Quelques clichés râtés (sur/sous exposition, pb de cadrage, floues)
+    - Quelques clichés râtés (sur/sous exposition, problème de cadrage, floues)
     """)
     st.write("Voici quelques exemples de radios (1 par classe) :")
     file_names = ["COVID-13.png", "Lung_Opacity-13.png", "Normal-13.png", "Viral Pneumonia-13.png"]
@@ -155,11 +155,13 @@ elif selection == "Analyse statistique":
 
 st.subheader("Détection d'anomalies")
 
+st.write("L’élimination d’outliers vise à retirer dans le jeu de données les images qui s’écartent fortement du comportement général des autres observations. Elle permet d'améliorer la qualité du jeu de donnée, d'augmenter la précision et d'éviter le surapprentissage du modèle sur des cas non représentatifs")
+
 DESCRIPTIONS = {
     'Statistique (2D)' : "Il s'agit de la méthode statistique classique basée sur l'Intervalle InterQuartile : les éléments situés hors de la plage Q1 - 1,5*IQR / Q3 + 1,5*IQR sont considérés comme des anomalies. Elle a été appliquée ici à l'intensité moyenne des pixels et à l'écart-type de l'internsité.",
-    'Statistique (3D)' : "Cette méthode fondamentale transforme chaque image en caractéristiques numériques (moyenne, contraste, entropie). Le score d'anomalie est basé sur la distance d'une image à la distribution normale. Idéal pour trouver des anomalies grossières comme des images très sombres ou vides.",
-    'Isolation Forest': "Cette approche utilise un réseau expert (VGG16) pour extraire des caractéristiques complexes. L'algorithme Isolation Forest isole ensuite les images qui sont sémantiquement différentes des autres. Efficace pour trouver des textures ou des formes inhabituelles.",
-    'Auto-encoder': "Un réseau de neurones est entraîné à compresser puis reconstruire les images du dataset. Il devient expert des radiographies 'typiques'. Une image qu'il peine à reconstruire (erreur élevée) est considérée comme anormale. C'est l'approche la plus sensible aux anomalies subtiles."
+    'Statistique (3D)' : "La méthode statistique peut être appliquée à trois dimensions en transformation chaque en image en trois caractéristiques (moyenne, contraste, entropie) puis en appliquant la méthode IQR pour chaque dimension. Cette méthode permet de trouver des anomalies grossières comme des images très sombres ou vides.",
+    'Isolation Forest': "Cette approche utilise un réseau expert (VGG16) pour extraire des caractéristiques complexes. L'algorithme Isolation Forest isole ensuite les images qui sont sémantiquement différentes des autres. Cette technique permet de trouver des textures ou des formes inhabituelles.",
+    'Auto-encoder': "Un réseau de neurones est entraîné à compresser puis reconstruire les images du dataset. Il devient expert des radiographies 'typiques'. Une image qu'il peine à reconstruire (erreur élevée) est considérée comme anormale. Une visualisation est possible après réduction de dimension (ici PCA). C'est l'approche la plus sensible aux anomalies subtiles."
 }
 
 options = ["Statistique (2D)", "Statistique (3D)", "Isolation Forest", "Auto-encoder"]
