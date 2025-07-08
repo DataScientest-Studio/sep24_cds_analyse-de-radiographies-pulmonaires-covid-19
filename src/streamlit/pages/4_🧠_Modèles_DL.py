@@ -124,64 +124,15 @@ st.markdown("---")
 st.subheader("🧪 Essai avec une radiographie")
 uploaded_file = st.file_uploader("Chargez une radiographie", type=["jpg", "jpeg", "png"])
 
-@st.cache_resource
-def load_model():
-    return tf.keras.models.load_model("src/models/efficientnet_optimized.h5")
-
-#model = load_model()
-
-#class_names = ["COVID", "Normal", "Viral Pneumonia"]
-
-def preprocess_image(image_pil):
-    image_resized = image_pil.convert("RGB").resize((240, 240))
-    img_array = np.array(image_resized) 
-    img_array_preprocessed = preprocess_input(img_array)
-    input_tensor = np.expand_dims(img_array_preprocessed, axis=0)    
-    return input_tensor
-
-def preprocess_image(image):
-    image = image.convert("RGB").resize((240, 240))
-    img_array = np.array(image)
-    img_array = preprocess_input(img_array)  
-    return np.expand_dims(img_array, axis=0)
-
-
-def predict_image(image_path, model, class_names, device="cpu"):
-    model.to(device)
-    model.eval()
-
-    transform = transforms.Compose([
-        transforms.Resize((240, 240)),
-        transforms.ToTensor(),
-        transforms.Normalize([0.485, 0.456, 0.406],
-                             [0.229, 0.224, 0.225])
-    ])
-
-    image = image_path.convert("RGB")
-    input_tensor = transform(image).unsqueeze(0).to(device)  
-
-    with torch.no_grad():
-        outputs = model(input_tensor)
-        probs = torch.nn.functional.softmax(outputs[0], dim=0)
-        predicted_idx = torch.argmax(probs).item()
-        predicted_class = class_names[predicted_idx]
-        confidence = probs[predicted_idx].item() * 100
-
-    #print(f"Prédiction : {predicted_class} ({confidence*100:.2f}%)")
-    return predicted_class, confidence, probs
 
 class EfficientNetClassifierOptimized(nn.Module):
     def __init__(self, num_classes=4, fine_tune=False):
         super(EfficientNetClassifierOptimized, self).__init__()
-
         weights = EfficientNet_B0_Weights.IMAGENET1K_V1
         self.base_model = efficientnet_b0(weights=weights)
-
         for param in self.base_model.parameters():
             param.requires_grad = fine_tune
-
         in_features = self.base_model.classifier[1].in_features
-
         self.classifier = nn.Sequential(
             nn.BatchNorm1d(in_features),
             nn.Linear(in_features, 3072),
@@ -192,69 +143,100 @@ class EfficientNetClassifierOptimized(nn.Module):
             nn.Dropout(0.5),
             nn.Linear(768, num_classes)
         )
-
         self.base_model.classifier = nn.Identity()
 
     def forward(self, x):
         x = self.base_model(x)
         x = self.classifier(x)
         return x
-    
-model = EfficientNetClassifierOptimized(num_classes=4)
-model.load_state_dict(torch.load("models/efficentnetB0.pth", map_location="cpu"))
-model.eval()    
 
-class_names = ['COVID', 'Lung_Opacity', 'Normal', 'Viral Pneumonia']
+@st.cache_resource
+def load_pytorch_model(model_path, num_classes):
+    """Charge le modèle PyTorch et le met en mode évaluation."""
+    model = EfficientNetClassifierOptimized(num_classes=num_classes)
+    # map_location="cpu" assure que le modèle se charge même sans GPU
+    model.load_state_dict(torch.load(model_path, map_location="cpu"))
+    model.eval()
+    return model
+
+def predict_image(image_pil, model, class_names, device="cpu"):
+    """Prétraite l'image et retourne la prédiction, la confiance et les probabilités."""
+    model.to(device)
+    
+    transform = transforms.Compose([
+        transforms.Resize((240, 240)),
+        transforms.ToTensor(),
+        transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+    ])
+
+    image = image_pil.convert("RGB")
+    input_tensor = transform(image).unsqueeze(0).to(device)
+
+    with torch.no_grad():
+        outputs = model(input_tensor)
+        probs = torch.nn.functional.softmax(outputs[0], dim=0)
+        predicted_idx = torch.argmax(probs).item()
+        predicted_class = class_names[predicted_idx]
+        confidence = probs[predicted_idx].item() * 100
+
+    return predicted_class, confidence, probs
+
+
+st.set_page_config(layout="wide") 
+st.title("🩺 Analyse d'images médicales pulmonaires")
+st.write("Chargez une image de radio pulmonaire pour la classifier parmi les catégories : COVID, Opacité Pulmonaire, Normal, ou Pneumonie Virale.")
+
+MODEL_PATH = "models/efficentnetB0.pth"
+CLASS_NAMES = ['COVID', 'Lung_Opacity', 'Normal', 'Viral Pneumonia']
+model = load_pytorch_model(MODEL_PATH, num_classes=len(CLASS_NAMES))
+
+uploaded_file = st.file_uploader(
+    "Choisissez une image...", 
+    type=["jpg", "jpeg", "png"]
+)
 
 if uploaded_file is not None:
-    image = Image.open(uploaded_file)
-    st.image(image, caption="Image chargée")
+    image = Image.open(uploaded_file)    
+    col1, col2 = st.columns(2)
+    with col1:
+        st.header("Image Chargée")
+        st.image(image, caption="Image fournie par l'utilisateur", use_column_width=True)
+    with col2:
+        st.header("Résultats de l'Analyse")        
+        with st.spinner("Prédiction en cours..."):
+            tracker = EmissionsTracker(project_name="streamlit_inference", log_level="error")
+            tracker.start()            
+            predicted_class, confidence, predictions = predict_image(image, model, CLASS_NAMES)            
+            emissions = tracker.stop()
 
-    # Initialisation du tracker
-    tracker = EmissionsTracker(project_name="streamlit_inference")
-    tracker.start()
+        st.success(f"**Classe prédite :** `{predicted_class}`")
+        st.info(f"**Confiance :** `{confidence:.2f}%`")
+        
+        st.markdown("---")
+        
+        st.subheader("Répartition des probabilités")
+        df_probs = pd.DataFrame({
+            'Classe': CLASS_NAMES,
+            'Probabilité (%)': [p * 100 for p in predictions.cpu().numpy()]
+        })
 
-    with st.spinner("Prédiction en cours..."):
-        #input_tensor = preprocess_image(image)
-        #predictions = model.predict(input_tensor)[0]
-        predicted_class, confidence, predictions =  predict_image(image, model, class_names)
-        #st.markdown(predictions)
-        #predicted_class = class_names[np.argmax(predictions)]
-        #confidence = 100 * np.max(predictions)
-
-    st.markdown(f"**Classe prédite :** `{predicted_class}`")
-    st.markdown(f"**Confiance :** `{confidence:.2f}%`")
-    #st.bar_chart(dict(zip(class_names, predictions)))
-    st.markdown("### Répartition des probabilités")    
-    #predictions = predictions.cpu().numpy()
-    #df_probs = pd.DataFrame({
-    #    "Classe": class_names,
-    #    "Probabilité (%)": [round(p * 100, 2) for p in predictions]
-    #}).set_index('Classe')
-    #st.bar_chart(df_probs)
-
-    df = pd.DataFrame({
-        'Classe': class_names,
-        'Probabilité (%)': [round(p * 100, 2) for p in predictions.cpu().numpy()]
-    })
-
-    fig = px.bar(df, x='Classe', y='Probabilité (%)', text='Probabilité (%)')
-    # Formatage du texte : 2 décimales
-    fig.update_traces(
-        texttemplate='%{text:.2f}',  # <- C'est ici qu'on force le format à 2 décimales
-        textposition='outside'
-    )
-    # Inclinaison des labels à 45°
-    fig.update_layout(
-        xaxis_tickangle=-45,
-        title="Répartition des probabilités",
-        yaxis_title="Probabilité (%)",
-        xaxis_title="Classe"
-    )
-
-    # Affichage dans Streamlit
-    st.plotly_chart(fig, use_container_width=True)
-
-    # Arrêt du tracker et affichage des émissions
-    tracker.stop()
-    st.write(f"Émissions estimées lors de l'inférence : {tracker.final_emissions*1000000:.2f} mg CO₂ (Estimation Code Carbone - à comparer avec 1 recharge de smartphone ~ 5g)")
+        fig = px.bar(
+            df_probs, 
+            x='Classe', 
+            y='Probabilité (%)', 
+            text='Probabilité (%)',
+            color='Classe'
+        )
+        fig.update_traces(texttemplate='%{text:.2f}%', textposition='outside')
+        fig.update_layout(
+            xaxis_tickangle=-45,
+            yaxis_title="Probabilité (%)",
+            xaxis_title="Classe",
+            uniformtext_minsize=8, 
+            uniformtext_mode='hide'
+        )
+        st.plotly_chart(fig, use_container_width=True)
+        
+        if emissions:
+            st.write(f"Émissions estimées lors de l'inférence : {emissions*1000000:.2f} mg CO₂ (Estimation Code Carbone - à comparer avec 1 recharge de smartphone ~ 5g)")
+            st.caption("Estimation via le package CodeCarbon.")
