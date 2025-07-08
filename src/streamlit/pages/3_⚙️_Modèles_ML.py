@@ -264,7 +264,8 @@ if "test_samples" not in st.session_state or st.session_state["test_samples"] is
         if matches:
             image = random.choice(matches)
             st.session_state["selected_images"] = image
-            selected_images.append(os.path.join(image_dir, selected))
+            selected_images.append(os.path.join(image_dir, image))
+    st.session_state["selected_images"] = selected_images
     st.session_state["test_samples"] = False
 
 # Chargement des échantillons sélectionnés
@@ -273,7 +274,7 @@ test_samples = st.session_state["test_samples"]
 cols = st.columns(4)
 for i, path in enumerate(st.session_state["selected_images"]):
     with cols[i]:
-        st.markdown(f"### {classes[i][:-1]}")
+        st.markdown(f"### {CLASS_NAMES[i]}")
         image = Image.open(path)
         st.image(image, caption="Image originale", use_container_width=True)
 
