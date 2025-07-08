@@ -272,34 +272,33 @@ test_samples = st.session_state["test_samples"]
 
 cols = st.columns(4)
 for i, path in enumerate(st.session_state["selected_images"]):
-    st.markdown(f"###{classes[i][:-1]}")
-    image = Image.open(path)
-    st.image(image, caption="Image originale", use_container_width=True)
+    with cols[i]:
+        st.markdown(f"### {classes[i][:-1]}")
+        image = Image.open(path)
+        st.image(image, caption="Image originale", use_container_width=True)
 
-    features, gray_img = extract_features(image)
+        features, gray_img = extract_features(image)
 
-    prediction = model.predict([features])[0]
-    proba = model.predict_proba([features])[0]
+        prediction = model.predict([features])[0]
+        proba = model.predict_proba([features])[0]
 
-    hog_buf = get_hog_image(gray_img)
-    st.image(hog_buf, caption="HOG", use_container_width=True)
+        hog_buf = get_hog_image(gray_img)
+        st.image(hog_buf, caption="HOG", use_container_width=True)
 
-    st.markdown(f"**Prédiction :** `{CLASS_NAMES[prediction]}`")
-    st.markdown("**Probabilités :**")
-    st.bar_chart(dict(zip(CLASS_NAMES, proba)))
+        st.markdown(f"**Prédiction :** `{CLASS_NAMES[prediction]}`")
+        st.markdown("**Probabilités :**")
+        st.bar_chart(dict(zip(CLASS_NAMES, proba)))
 
-    st.markdown("**Contributions des features**")
-    importances = model.feature_importances_
-    top_indices = np.argsort(importances)[-10:][::-1]
+        st.markdown("**Contributions des features**")
+        importances = model.feature_importances_
+        top_indices = np.argsort(importances)[-10:][::-1]
 
-    top_features = pd.DataFrame({
-        "Feature": [f"HOG {i}" for i in top_indices],
-        "Importance": importances[top_indices]
-    })
+        top_features = pd.DataFrame({
+            "Feature": [f"HOG {i}" for i in top_indices],
+            "Importance": importances[top_indices]
+        })
 
-    st.dataframe(top_features, use_container_width=True)
-
-
+        st.dataframe(top_features, use_container_width=True)
 
 
 st.markdown("""
