@@ -189,7 +189,7 @@ if uploaded_file is not None:
     image = Image.open(uploaded_file)    
     col1, col2 = st.columns(2)
     with col1:
-        st.image(image, caption="Image fournie par l'utilisateur", use_container_width=True)
+        st.image(image, use_container_width=True)
     with col2:
         with st.spinner("Prédiction en cours..."):
             tracker = EmissionsTracker(project_name="streamlit_inference", log_level="error")
@@ -197,8 +197,16 @@ if uploaded_file is not None:
             predicted_class, confidence, predictions = predict_image(image, model, CLASS_NAMES)            
             emissions = tracker.stop()
 
-        st.success(f"**Classe prédite :** `{predicted_class}` avec une confiance de `{confidence:.2f}%`")        
+        st.success(f"**Classe prédite :** `{predicted_class}` avec une confiance de `{confidence:.2f}%`")  
         
+        custom_color_map = {
+            'Normal': 'green',
+            'Lung_Opacity': 'orange',  
+            'COVID': 'red',        
+            'Viral Pneumonia': 'blue'  
+        }
+
+        st.subheader("Répartition des probabilités")
         df_probs = pd.DataFrame({
             'Classe': CLASS_NAMES,
             'Probabilité (%)': [p * 100 for p in predictions.cpu().numpy()]
@@ -209,18 +217,20 @@ if uploaded_file is not None:
             x='Classe', 
             y='Probabilité (%)', 
             text='Probabilité (%)',
-            color='Classe'
+            color='Classe',
+            color_discrete_map=custom_color_map
         )
+        
         fig.update_traces(texttemplate='%{text:.2f}%', textposition='outside')
         fig.update_layout(
             xaxis_tickangle=-45,
             yaxis_title="Probabilité (%)",
             xaxis_title="Classe",
             uniformtext_minsize=8, 
-            uniformtext_mode='hide'
+            uniformtext_mode='hide',
+            showlegend=False 
         )
         st.plotly_chart(fig, use_container_width=True)
         
         if emissions:
             st.write(f"Émissions estimées lors de l'inférence : {emissions*1000000:.2f} mg CO₂ (Estimation Code Carbone - à comparer avec 1 recharge de smartphone ~ 5g)")
-            st.caption("Estimation via le package CodeCarbon.")
