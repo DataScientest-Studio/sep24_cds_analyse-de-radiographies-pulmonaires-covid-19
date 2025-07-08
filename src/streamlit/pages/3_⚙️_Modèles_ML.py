@@ -117,6 +117,7 @@ for cls_prefix in classes:
             selected_images.append(os.path.join(image_dir, f))
             break
 
+st.markdown(selected_images)
 fig, axs = plt.subplots(2, 4, figsize=(16, 8))
 fig.suptitle("Images originales et leurs HOG", fontsize=16)
 
