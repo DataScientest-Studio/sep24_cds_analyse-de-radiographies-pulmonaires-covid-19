@@ -246,6 +246,64 @@ test_samples = {
 
 class_names = ["Normal", "Covid", "Pneumonie", "Opacité pulmonaire"]
 
+CLASS_PREFIXES = {
+    "COVID": "COVID-",
+    "Opacité pulmonaire": "Lung_Opacity-",
+    "Normal": "Normal-",
+    "Pneumonie": "Viral Pneumonia-"
+}
+CLASS_NAMES = list(CLASS_PREFIXES.keys())
+
+if st.button("🔄 Rafraîchir les échantillons"):
+    st.session_state["test_samples"] = None
+
+if st.session_state["test_samples"]:
+    selected_images = []
+    for cls_prefix in classes:
+        matches = [f for f in os.listdir(image_dir) if f.startswith(cls_prefix)]
+        if matches:
+            selected = random.choice(matches)
+            selected_images.append(os.path.join(image_dir, selected))
+    st.session_state["test_samples"] = False
+
+# Chargement des échantillons sélectionnés
+test_samples = st.session_state["test_samples"]    
+
+cols = st.columns(4)
+for idx, (label, filepath) in enumerate(test_samples.items()):
+    with cols[idx]:
+        st.markdown(f"### {label}")
+        image = Image.open(filepath)
+        st.image(image, caption="Image originale", use_container_width=True)
+
+        # 📐 Extraction HOG + features
+        features, gray_img = extract_features(image)
+
+        # 🔮 Prédiction
+        prediction = model.predict([features])[0]
+        proba = model.predict_proba([features])[0]
+
+        # 🧠 Image HOG
+        hog_buf = get_hog_image(gray_img)
+        st.image(hog_buf, caption="HOG", use_container_width=True)
+
+        # Résultats
+        st.markdown(f"**Prédiction :** `{CLASS_NAMES[prediction]}`")
+        st.markdown("**Probabilités :**")
+        st.bar_chart(dict(zip(CLASS_NAMES, proba)))
+
+        # 🧩 Importances des features
+        st.markdown("**Contributions des features**")
+        importances = model.feature_importances_
+        top_indices = np.argsort(importances)[-10:][::-1]
+
+        top_features = pd.DataFrame({
+            "Feature": [f"HOG {i}" for i in top_indices],
+            "Importance": importances[top_indices]
+        })
+
+        st.dataframe(top_features, use_container_width=True)
+
 cols = st.columns(3)
 
 for idx, (label, filepath) in enumerate(test_samples.items()):
