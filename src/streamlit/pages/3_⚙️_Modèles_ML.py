@@ -141,18 +141,7 @@ st.markdown("""
 | SVM              | ✅         | Performant et stable |
 | XGBoost          | ⭐         | Meilleur compromis |
 | MLP / Voting     | 🟡         | OK mais sans gain |
-            
-### Focus : XGBoost
-
-- Algorithme de **boosting** très efficace
-- Corrige les erreurs au fur et à mesure
-- Bon compromis entre performance, rapidité, et simplicité
-
-- Entraîné sur HOG, pas besoin de normalisation
-- ~88 % de F1-score
-- Rapide à entraîner, prédire
-- Stable sur toutes les classes
-                 
+                             
 """)
 
 st.dataframe(df_ml.style.format({
@@ -226,7 +215,19 @@ fig_combo.update_layout(
 
 st.plotly_chart(fig_combo, use_container_width=True)
 
-       
+### Focus : XGBoost
+
+st.markdown("""
+            
+- Algorithme de **boosting** très efficace
+- Corrige les erreurs au fur et à mesure
+- Bon compromis entre performance, rapidité, et simplicité
+
+- Entraîné sur HOG, pas besoin de normalisation
+- ~88 % de F1-score
+- Rapide à entraîner, prédire
+- Stable sur toutes les classes
+""")       
 
 
 st.image("src/images/xgboost_matrice.png")
