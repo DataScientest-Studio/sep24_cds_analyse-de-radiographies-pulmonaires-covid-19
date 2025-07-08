@@ -218,6 +218,7 @@ st.plotly_chart(fig_combo, use_container_width=True)
 ### Focus : XGBoost
 
 st.markdown("""
+### Focus sur XGBoost
             
 - Algorithme de **boosting** très efficace
 - Corrige les erreurs au fur et à mesure
