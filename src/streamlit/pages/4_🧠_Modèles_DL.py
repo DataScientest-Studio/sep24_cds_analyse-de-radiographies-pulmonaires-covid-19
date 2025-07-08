@@ -198,7 +198,9 @@ if uploaded_file is not None:
             emissions = tracker.stop()
 
         st.success(f"**Classe prédite :** `{predicted_class}` avec une confiance de `{confidence:.2f}%`")  
-        
+
+        desired_order = ['Normal', 'Lung_Opacity', 'COVID', 'Viral Pneumonia']
+            
         custom_color_map = {
             'Normal': 'green',
             'Lung_Opacity': 'orange',  
@@ -206,7 +208,6 @@ if uploaded_file is not None:
             'Viral Pneumonia': 'blue'  
         }
 
-        st.subheader("Répartition des probabilités")
         df_probs = pd.DataFrame({
             'Classe': CLASS_NAMES,
             'Probabilité (%)': [p * 100 for p in predictions.cpu().numpy()]
@@ -218,7 +219,9 @@ if uploaded_file is not None:
             y='Probabilité (%)', 
             text='Probabilité (%)',
             color='Classe',
-            color_discrete_map=custom_color_map
+            color_discrete_map=custom_color_map,
+            category_orders={'Classe': desired_order} 
+
         )
         
         fig.update_traces(texttemplate='%{text:.2f}%', textposition='outside')
