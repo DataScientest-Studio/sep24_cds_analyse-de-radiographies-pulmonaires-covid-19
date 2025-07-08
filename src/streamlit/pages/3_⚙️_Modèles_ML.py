@@ -263,7 +263,7 @@ if "test_samples" not in st.session_state or st.session_state["test_samples"] is
         matches = [f for f in os.listdir(image_dir) if f.startswith(cls_prefix)]
         if matches:
             image = random.choice(matches)
-            st.session_state["selected_images"] = image
+            st.session_state["selected_samples"] = image
             selected_images.append(os.path.join(image_dir, image))
     st.session_state["selected_samples"] = selected_images
     st.session_state["test_samples"] = False
