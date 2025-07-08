@@ -91,7 +91,7 @@ st.image("src/images/MLP_standard.png", width=700)
 fig = px.bar(df, x="Class", y="F1-Score", color="Dataset", barmode="group",
              title="MLP Classifier - F1-Score by Class & Dataset (Reconstruction)")
 
-fig.show()
+st.plotly_chart(fig, use_container_width=True)
 
 
 st.markdown("- **HOG** : (Histogramme de gradient orienté) Extraction de caractéristiques visuelles (bords, textures)")
