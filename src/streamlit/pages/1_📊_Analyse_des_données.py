@@ -158,7 +158,7 @@ st.subheader("Détection d'anomalies")
 st.write("L’élimination d’outliers vise à retirer dans le jeu de données les images qui s’écartent fortement du comportement général des autres observations. Elle permet d'améliorer la qualité du jeu de donnée, d'augmenter la précision et d'éviter le surapprentissage du modèle sur des cas non représentatifs")
 
 DESCRIPTIONS = {
-    'Statistique (2D)' : "Il s'agit de la méthode statistique classique basée sur l'Intervalle InterQuartile : les éléments situés hors de la plage Q1 - 1,5*IQR / Q3 + 1,5*IQR sont considérés comme des anomalies. Elle a été appliquée ici à l'intensité moyenne des pixels et à l'écart-type de l'internsité.",
+    'Statistique (2D)' : "Il s'agit de la méthode statistique classique basée sur l'Intervalle InterQuartile : les éléments situés hors de la plage [Q1 - 1,5 x IQR ; Q3 + 1,5 x IQR] sont considérés comme des anomalies. Elle a été appliquée ici à l'intensité moyenne des pixels et à l'écart-type de l'internsité.",
     'Statistique (3D)' : "La méthode statistique peut être appliquée à trois dimensions en transformation chaque en image en trois caractéristiques (moyenne, contraste, entropie) puis en appliquant la méthode IQR pour chaque dimension. Cette méthode permet de trouver des anomalies grossières comme des images très sombres ou vides.",
     'Isolation Forest': "Cette approche utilise un réseau expert (VGG16) pour extraire des caractéristiques complexes. L'algorithme Isolation Forest isole ensuite les images qui sont sémantiquement différentes des autres. Cette technique permet de trouver des textures ou des formes inhabituelles.",
     'Auto-encoder': "Un réseau de neurones est entraîné à compresser puis reconstruire les images du dataset. Il devient expert des radiographies 'typiques'. Une image qu'il peine à reconstruire (erreur élevée) est considérée comme anormale. Une visualisation est possible après réduction de dimension (ici PCA). C'est l'approche la plus sensible aux anomalies subtiles."
@@ -378,7 +378,7 @@ elif selection == "Isolation Forest":
     fig.update_layout(margin=dict(l=0, r=0, b=0, t=40))
     st.plotly_chart(fig, use_container_width=True)
 
-    st.write("Voici les 15 images avec les score d'anomalie les plus importantes :")
+    st.write("Voici les 15 images avec les scores d'anomalie les plus importantes :")
 
     method_key = selection.lower().replace(' ', '_')
     for i in range(3):
@@ -415,7 +415,7 @@ elif selection == "Auto-encoder":
     fig.update_layout(margin=dict(l=0, r=0, b=0, t=40))
     st.plotly_chart(fig, use_container_width=True)
 
-    st.write("Voici les 15 images avec les score d'anomalie les plus importantes :")
+    st.write("Voici les 15 images avec les scores d'anomalie les plus importantes :")
     
     method_key = selection.lower().replace(' ', '_').replace('-', '')
     for i in range(3):
