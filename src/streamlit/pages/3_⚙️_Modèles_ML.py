@@ -64,7 +64,7 @@ data_ml = [
 df_ml = pd.DataFrame(data_ml)
 
 data = {
-    "Class": ["Normal", "Covid", "Viral pneumonia", "Lung opacity", "macro avg", "weighted avg"],
+    "Classe": ["Normal", "Covid", "Viral pneumonia", "Lung opacity", "macro avg", "weighted avg"],
     "32": [0.81, 0.80, 0.91, 0.75, 0.82, 0.83],
     "64": [0.84, 0.83, 0.93, 0.79, 0.85, 0.86],
     "128": [0.85, 0.85, 0.95, 0.80, 0.86, 0.87],
