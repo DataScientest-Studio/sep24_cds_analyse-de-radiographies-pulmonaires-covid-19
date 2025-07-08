@@ -262,8 +262,8 @@ if "test_samples" not in st.session_state or st.session_state["test_samples"] is
     for cls_prefix in classes:
         matches = [f for f in os.listdir(image_dir) if f.startswith(cls_prefix)]
         if matches:
-            selected_images = random.choice(matches)
-            st.session_state["selected_images"] = selected_images
+            image = random.choice(matches)
+            st.session_state["selected_images"] = image
             selected_images.append(os.path.join(image_dir, selected))
     st.session_state["test_samples"] = False
 
