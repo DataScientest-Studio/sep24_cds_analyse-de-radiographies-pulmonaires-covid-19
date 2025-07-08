@@ -262,7 +262,8 @@ if "test_samples" not in st.session_state or st.session_state["test_samples"] is
     for cls_prefix in classes:
         matches = [f for f in os.listdir(image_dir) if f.startswith(cls_prefix)]
         if matches:
-            selected = random.choice(matches)
+            selected_images = random.choice(matches)
+            st.session_state["selected_images"] = selected_images
             selected_images.append(os.path.join(image_dir, selected))
     st.session_state["test_samples"] = False
 
@@ -301,36 +302,35 @@ for idx, (label, filepath) in enumerate(test_samples.items()):
 
 cols = st.columns(3)
 
-for idx, (label, filepath) in enumerate(test_samples.items()):
-    with cols[idx]:
-        st.markdown(f"### {label}")
-        image = Image.open(filepath)
-        st.image(image, caption="Image originale", use_container_width=True)
+for i, path in enumerate(st.session_state["selected_images"]):
+    st.markdown(f"### {label}")
+    image = Image.open(filepath)
+    st.image(image, caption="Image originale", use_container_width=True)
 
-        # Feature extraction
-        features, gray_img = extract_features(image)
-        prediction = model.predict([features])[0] 
-        proba = model.predict_proba([features])[0] 
+    # Feature extraction
+    features, gray_img = extract_features(image)
+    prediction = model.predict([features])[0] 
+    proba = model.predict_proba([features])[0] 
 
-        # HOG image
-        hog_buf = get_hog_image(gray_img)
-        st.image(hog_buf, caption="HOG", use_container_width=True)
+    # HOG image
+    hog_buf = get_hog_image(gray_img)
+    st.image(hog_buf, caption="HOG", use_container_width=True)
 
-        # Prédiction
-        st.markdown(f"**Prédiction :** `{class_names[prediction]}`")
-        st.markdown("**Probabilités :**")
-        st.bar_chart(dict(zip(class_names, proba)))
+    # Prédiction
+    st.markdown(f"**Prédiction :** `{class_names[prediction]}`")
+    st.markdown("**Probabilités :**")
+    st.bar_chart(dict(zip(class_names, proba)))
 
-        st.markdown("**Contributions des features**")
+    st.markdown("**Contributions des features**")
 
-        # Bar chart  (contributions les + importantes)
-        importances = model.feature_importances_
-        top_indices = np.argsort(importances)[-10:][::-1]
+    # Bar chart  (contributions les + importantes)
+    importances = model.feature_importances_
+    top_indices = np.argsort(importances)[-10:][::-1]
 
-        top_features = pd.DataFrame({
-            "Feature": [f"HOG {i}" for i in top_indices],
-            "Importance": importances[top_indices]
-        })
+    top_features = pd.DataFrame({
+        "Feature": [f"HOG {i}" for i in top_indices],
+        "Importance": importances[top_indices]
+    })
 
 
 
