@@ -197,7 +197,7 @@ if uploaded_file is not None:
             predicted_class, confidence, predictions = predict_image(image, model, CLASS_NAMES)            
             emissions = tracker.stop()
 
-        st.success(f"**Classe prédite :** `{predicted_class}` avec une confiance de `{confidence:.2f}%`")  
+        st.success(f"Classe prédite : **{predicted_class}** avec une confiance de **{confidence:.2f}%**")  
 
         desired_order = ['Normal', 'Lung_Opacity', 'COVID', 'Viral Pneumonia']
             
