@@ -26,7 +26,7 @@ st.markdown("""
 - **Test d'un CNN de référence (LeNet)** puis de plusieurs modèles représentatifs d'évolutions successives.  
 Pour chacun de ces modèles, la logique suivante a été appliquée :  
 - **Transfer learning** sur la base de modèles pré-entraînés ImageNet
-- **Optimisation d'hyper-paramètres** par keras-tuner ou optuna (couches de classification en particulier : nb de couches/neurones)
+- **Optimisation d'hyper-paramètres** par keras-tuner ou optuna (learning-rate et paramètres des couches de classification en particulier : nb de couches, nb de neurones, taux de dropout)
 - **Fine‑tuning** via dégel des dernières couches de convolution des modèles pré-entraînés
 - **Suppression de la classe 'Opacité pulmonaire'** → uniquement Covid, Normal, Pneumonie virale.  
         La classe d’opacité pulmonaire est définie comme regroupant des cas d’infections pulmonaires non liées au COVID-19, une définition large et peu spécifique.
