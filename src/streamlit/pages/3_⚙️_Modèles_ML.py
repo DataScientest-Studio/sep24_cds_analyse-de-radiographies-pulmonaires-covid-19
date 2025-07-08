@@ -74,7 +74,7 @@ data = {
     "robust": [0.83, 0.84, 0.94, 0.78, 0.85, 0.86],
 }
 df = pd.DataFrame(data)
-df = df.melt(id_vars=["Classe"], var_name="Classe", value_name="F1-Score")
+df = df.melt(id_vars=["Classe"], var_name="Dataset", value_name="F1-Score")
 
 st.markdown("""
 ### Objectif 
@@ -87,7 +87,7 @@ Utiliser des **modèles de Machine Learning classiques** pour détecter automati
 - **Taille des images** : tests en 32×32, 64×64, 128×128
 - **Standardisation** : Mise à l’échelle des données pour éviter les biais
 """)
-fig = px.bar(df, x="Classe", y="F1-Score", color="Classe", barmode="group",
+fig = px.bar(df, x="Classe", y="F1-Score", color="Dataset", barmode="group",
              title="MLP Classifier - F1-Score par classe")
 
 st.plotly_chart(fig, use_container_width=True)
