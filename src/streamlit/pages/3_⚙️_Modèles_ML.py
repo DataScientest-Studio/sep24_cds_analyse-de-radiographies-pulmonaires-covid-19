@@ -101,6 +101,16 @@ image_dir = "src/streamlit/images"
 classes = ["COVID-", "Lung_Opacity-", "Normal-", "Viral Pneumonia-"]
 selected_images = []
 
+def compute_hog_array(gray_img):
+    _, hog_image = hog(
+        gray_img,
+        pixels_per_cell=(8, 8),
+        cells_per_block=(2, 2),
+        visualize=True,
+        feature_vector=True
+    )
+    return hog_image
+
 for cls_prefix in classes:
     for f in os.listdir(image_dir):
         if f.startswith(cls_prefix):
@@ -116,7 +126,7 @@ for i, path in enumerate(selected_images):
     gray = rgb2gray(img) if img.ndim == 3 else img
 
     # HOG
-    hog_img = get_hog_image(gray)
+    hog_img = compute_hog_array(gray)
 
     # Colonne image originale
     axs[i // 2, (i % 2) * 2].imshow(gray, cmap='gray')
