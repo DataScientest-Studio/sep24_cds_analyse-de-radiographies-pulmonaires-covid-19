@@ -74,7 +74,7 @@ data = {
     "robust": [0.83, 0.84, 0.94, 0.78, 0.85, 0.86],
 }
 df = pd.DataFrame(data)
-df = df.melt(id_vars=["Classe"], var_name="Type", value_name="F1-Score")
+df = df.melt(id_vars=["Classe"], var_name="Classe", value_name="F1-Score")
 
 st.markdown("""
 ### Objectif 
