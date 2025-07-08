@@ -44,7 +44,7 @@ def get_hog_image(gray_img):
         feature_vector=True
     )
     # Convertir en image Streamlit-friendly
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(4, 4))
     ax.axis('off')
     ax.imshow(hog_image, cmap='gray')
     buf = io.BytesIO()
@@ -122,8 +122,10 @@ for i in range(0, len(selected_images), 2):
         gray = rgb2gray(img) if img.ndim == 3 else img
 
         # Original
+        gray_uint8 = (gray * 255).astype(np.uint8)
         pil_img = Image.fromarray((gray * 255).astype("uint8"))
-        cols[j * 2].image(pil_img, caption=f"{classes[idx]} originale", use_container_width =True)
+        #cols[j * 2].image(pil_img, caption=f"{classes[idx]} originale", use_container_width =True)
+        cols[j * 2].image(img, caption=f"{classes[idx]} originale", use_container_width =True)
 
         # HOG
         hog_buf = get_hog_image(gray)
