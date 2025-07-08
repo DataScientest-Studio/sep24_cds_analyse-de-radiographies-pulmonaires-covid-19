@@ -120,11 +120,6 @@ st.markdown("""
 - Utile pour les déploiements contraints en ressources (cloud limité, mobilité...).
 """)
 
-st.markdown("---")
-st.subheader("🧪 Essai avec une radiographie")
-uploaded_file = st.file_uploader("Chargez une radiographie", type=["jpg", "jpeg", "png"])
-
-
 class EfficientNetClassifierOptimized(nn.Module):
     def __init__(self, num_classes=4, fine_tune=False):
         super(EfficientNetClassifierOptimized, self).__init__()
@@ -182,39 +177,28 @@ def predict_image(image_pil, model, class_names, device="cpu"):
     return predicted_class, confidence, probs
 
 
-st.set_page_config(layout="wide") 
-st.title("🩺 Analyse d'images médicales pulmonaires")
-st.write("Chargez une image de radio pulmonaire pour la classifier parmi les catégories : COVID, Opacité Pulmonaire, Normal, ou Pneumonie Virale.")
+st.markdown("---")
+st.subheader("🧪 Essai avec une radiographie")
+uploaded_file = st.file_uploader("Chargez une radiographie", type=["jpg", "jpeg", "png"])
 
 MODEL_PATH = "models/efficentnetB0.pth"
 CLASS_NAMES = ['COVID', 'Lung_Opacity', 'Normal', 'Viral Pneumonia']
 model = load_pytorch_model(MODEL_PATH, num_classes=len(CLASS_NAMES))
 
-uploaded_file = st.file_uploader(
-    "Choisissez une image...", 
-    type=["jpg", "jpeg", "png"]
-)
-
 if uploaded_file is not None:
     image = Image.open(uploaded_file)    
     col1, col2 = st.columns(2)
     with col1:
-        st.header("Image Chargée")
         st.image(image, caption="Image fournie par l'utilisateur", use_column_width=True)
     with col2:
-        st.header("Résultats de l'Analyse")        
         with st.spinner("Prédiction en cours..."):
             tracker = EmissionsTracker(project_name="streamlit_inference", log_level="error")
             tracker.start()            
             predicted_class, confidence, predictions = predict_image(image, model, CLASS_NAMES)            
             emissions = tracker.stop()
 
-        st.success(f"**Classe prédite :** `{predicted_class}`")
-        st.info(f"**Confiance :** `{confidence:.2f}%`")
+        st.success(f"**Classe prédite :** `{predicted_class}` avec une confiance de `{confidence:.2f}%`")        
         
-        st.markdown("---")
-        
-        st.subheader("Répartition des probabilités")
         df_probs = pd.DataFrame({
             'Classe': CLASS_NAMES,
             'Probabilité (%)': [p * 100 for p in predictions.cpu().numpy()]
