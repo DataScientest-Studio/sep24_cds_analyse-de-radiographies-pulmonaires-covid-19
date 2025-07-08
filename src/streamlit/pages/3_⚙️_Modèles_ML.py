@@ -178,25 +178,6 @@ fig_combo.update_layout(
 
 st.plotly_chart(fig_combo, use_container_width=True)
 
-melted = df_ml.melt(id_vars="Modèle", value_vars=["Accuracy (%)", "F1-score (%)"],
-                    var_name="Métrique", value_name="Score (%)")
-
-fig_complexity = px.scatter(
-    df_ml,
-    x="Params",
-    y="Temps (s)",
-    size="F1-score (%)",
-    color="Modèle",
-    labels={
-        "Params": "Nombre de paramètres",
-        "Temps (s)": "Temps d'entraînement (s)"
-    },
-    hover_name="Modèle"
-)
-
-fig_complexity.update_layout(title="Complexité vs Temps d'entraînement", title_x=0.3)
-st.plotly_chart(fig_complexity, use_container_width=True)
-
            
 ### Résumé des performances
 st.markdown(""" 
@@ -267,16 +248,6 @@ for idx, (label, filepath) in enumerate(test_samples.items()):
             "Importance": importances[top_indices]
         })
 
-
-        fig = px.bar(
-            top_features,
-            x="Feature",
-            y="Importance",
-            title="Top 10 des HOG features les plus importantes",
-            labels={"Importance": "Score d'importance"}
-           
-        )
-        st.plotly_chart(fig, use_container_width=True, key=f"plot_{label}_{idx}")
 
 
 st.markdown("""
