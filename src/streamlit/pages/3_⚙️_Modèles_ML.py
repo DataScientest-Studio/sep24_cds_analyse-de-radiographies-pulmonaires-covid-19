@@ -236,7 +236,7 @@ st.markdown("""
 st.image("src/images/xgboost_matrice.png")
 
 st.markdown("---")
-st.subheader("Tester une image avec XGBoost")
+st.subheader("🧪 Tester une image avec XGBoost")
 
 test_samples = {
     "Normal": "src/streamlit/images/xgb-normal.png",
@@ -246,51 +246,31 @@ test_samples = {
 
 class_names = ["Normal", "Covid", "Pneumonie", "Opacité pulmonaire"]
 
-CLASS_PREFIXES = {
-    "COVID": "COVID-",
-    "Opacité pulmonaire": "Lung_Opacity-",
-    "Normal": "Normal-",
-    "Pneumonie": "Viral Pneumonia-"
-}
-CLASS_NAMES = list(CLASS_PREFIXES.keys())
+cols = st.columns(3)
 
-if st.button("Rafraîchir les échantillons"):
-    st.session_state["test_samples"] = None
-
-if "test_samples" not in st.session_state or st.session_state["test_samples"] is None:
-    selected_images = []
-    for cls_prefix in classes:
-        matches = [f for f in os.listdir(image_dir) if f.startswith(cls_prefix)]
-        if matches:
-            image = random.choice(matches)
-            st.session_state["selected_samples"] = image
-            selected_images.append(os.path.join(image_dir, image))
-    st.session_state["selected_samples"] = selected_images
-    st.session_state["test_samples"] = False
-
-# Chargement des échantillons sélectionnés
-test_samples = st.session_state["test_samples"]    
-
-cols = st.columns(4)
-for i, path in enumerate(st.session_state["selected_samples"]):
-    with cols[i]:
-        st.markdown(f"### {CLASS_NAMES[i]}")
-        image = Image.open(path)
+for idx, (label, filepath) in enumerate(test_samples.items()):
+    with cols[idx]:
+        st.markdown(f"### {label}")
+        image = Image.open(filepath)
         st.image(image, caption="Image originale", use_container_width=True)
 
+        # Feature extraction
         features, gray_img = extract_features(image)
+        prediction = model.predict([features])[0] 
+        proba = model.predict_proba([features])[0] 
 
-        prediction = model.predict([features])[0]
-        proba = model.predict_proba([features])[0]
-
+        # HOG image
         hog_buf = get_hog_image(gray_img)
         st.image(hog_buf, caption="HOG", use_container_width=True)
 
-        st.markdown(f"**Prédiction :** `{CLASS_NAMES[prediction]}`")
+        # Prédiction
+        st.markdown(f"**Prédiction :** `{class_names[prediction]}`")
         st.markdown("**Probabilités :**")
-        st.bar_chart(dict(zip(CLASS_NAMES, proba)))
+        st.bar_chart(dict(zip(class_names, proba)))
 
         st.markdown("**Contributions des features**")
+
+        # Bar chart  (contributions les + importantes)
         importances = model.feature_importances_
         top_indices = np.argsort(importances)[-10:][::-1]
 
@@ -299,7 +279,6 @@ for i, path in enumerate(st.session_state["selected_samples"]):
             "Importance": importances[top_indices]
         })
 
-        st.dataframe(top_features, use_container_width=True)
 
 
 st.markdown("""
