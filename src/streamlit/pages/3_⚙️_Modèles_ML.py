@@ -134,21 +134,25 @@ for i in range(0, len(selected_images), 2):
 st.markdown("""
             
 ---
-### Modèles testés – Performances contrastées
-
-- **KNN** et **Random Forest** : peu efficaces sur nos données
-    - Trop sensibles à la complexité des images
-    - Faible généralisation
-
-- **SVM** et **XGBoost** : bien mieux adaptés
-    - Meilleure robustesse aux variations
-    - Plus stable et performant après tuning      
-    - SVM avec RBF est légérement plus performant que XGBoost mais beaucoup plus lent
-
-- **MLPClassifier** et **Classfication par vote** :
-    - Resultats meilleurs que knn et RF mais moins bons que SVM ou XGBoost
+| Modèle           | Pertinence | Commentaire rapide |
+|------------------|------------|---------------------|
+| KNN              | ❌         | Ne gère pas bien les images |
+| Random Forest    | ❌         | Surfit / peu discriminant |
+| SVM              | ✅         | Performant et stable |
+| XGBoost          | ⭐         | Meilleur compromis |
+| MLP / Voting     | 🟡         | OK mais sans gain |
             
----
+### Focus : XGBoost
+
+- Algorithme de **boosting** très efficace
+- Corrige les erreurs au fur et à mesure
+- Bon compromis entre performance, rapidité, et simplicité
+
+- Entraîné sur HOG, pas besoin de normalisation
+- ~88 % de F1-score
+- Rapide à entraîner, prédire
+- Stable sur toutes les classes
+                 
 """)
 
 st.dataframe(df_ml.style.format({
@@ -222,29 +226,8 @@ fig_combo.update_layout(
 
 st.plotly_chart(fig_combo, use_container_width=True)
 
-           
-### Résumé des performances
-st.markdown(""" 
-| Modèle           | Pertinence | Commentaire rapide |
-|------------------|------------|---------------------|
-| KNN              | ❌         | Ne gère pas bien les images |
-| Random Forest    | ❌         | Surfit / peu discriminant |
-| SVM              | ✅         | Performant et stable |
-| XGBoost          | ⭐         | Meilleur compromis |
-| MLP / Voting     | 🟡         | OK mais sans gain |
-            
-### Focus : XGBoost
+       
 
-- Algorithme de **boosting** très efficace
-- Corrige les erreurs au fur et à mesure
-- Bon compromis entre performance, rapidité, et simplicité
-
-- Entraîné sur HOG, pas besoin de normalisation
-- ~88 % de F1-score
-- Rapide à entraîner, prédire
-- Stable sur toutes les classes
-                 
-""")
 
 st.image("src/images/xgboost_matrice.png")
 
