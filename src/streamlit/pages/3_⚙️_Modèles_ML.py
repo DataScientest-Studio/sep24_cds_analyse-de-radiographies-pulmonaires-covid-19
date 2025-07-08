@@ -123,11 +123,11 @@ for i in range(0, len(selected_images), 2):
 
         # Original
         pil_img = Image.fromarray((gray * 255).astype("uint8"))
-        cols[j * 2].image(pil_img, caption=f"{classes[idx]} originale", use_column_width=True)
+        cols[j * 2].image(pil_img, caption=f"{classes[idx]} originale", use_container_width =True)
 
         # HOG
         hog_buf = get_hog_image(gray)
-        cols[j * 2 + 1].image(hog_buf, caption=f"{classes[idx]} (HOG)", use_column_width=True)
+        cols[j * 2 + 1].image(hog_buf, caption=f"{classes[idx]} (HOG)", use_container_width =True)
 
 st.markdown("""
             
