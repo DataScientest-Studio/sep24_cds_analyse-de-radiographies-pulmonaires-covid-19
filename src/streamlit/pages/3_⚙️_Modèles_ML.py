@@ -101,47 +101,33 @@ image_dir = "src/streamlit/images"
 classes = ["COVID-", "Lung_Opacity-", "Normal-", "Viral Pneumonia-"]
 selected_images = []
 
-def compute_hog_array(gray_img):
-    _, hog_image = hog(
-        gray_img,
-        pixels_per_cell=(8, 8),
-        cells_per_block=(2, 2),
-        visualize=True,
-        feature_vector=True
-    )
-    return hog_image
-
 for cls_prefix in classes:
     for f in os.listdir(image_dir):
         if f.startswith(cls_prefix):
             selected_images.append(os.path.join(image_dir, f))
             break
 
-st.markdown(selected_images)
 fig, axs = plt.subplots(2, 4, figsize=(16, 8))
 fig.suptitle("Images originales et leurs HOG", fontsize=16)
 
-for i, path in enumerate(selected_images):
-    # Charger image
-    img = imread(path)
-    gray = rgb2gray(img) if img.ndim == 3 else img
+for i in range(0, len(selected_images), 2):
+    cols = st.columns(4)
+    for j in range(2):
+        idx = i + j
+        if idx >= len(selected_images):
+            continue
 
-    # HOG
-    hog_img = compute_hog_array(gray)
+        path = selected_images[idx]
+        img = imread(path)
+        gray = rgb2gray(img) if img.ndim == 3 else img
 
-    # Colonne image originale
-    axs[i // 2, (i % 2) * 2].imshow(gray, cmap='gray')
-    axs[i // 2, (i % 2) * 2].axis('off')
-    axs[i // 2, (i % 2) * 2].set_title(f"Classe: {classes[i].rstrip('-')}")
+        # Original
+        pil_img = Image.fromarray((gray * 255).astype("uint8"))
+        cols[j * 2].image(pil_img, caption=f"{classes[idx]} originale", use_column_width=True)
 
-    # Colonne HOG
-    axs[i // 2, (i % 2) * 2 + 1].imshow(hog_img, cmap='gray')
-    axs[i // 2, (i % 2) * 2 + 1].axis('off')
-    axs[i // 2, (i % 2) * 2 + 1].set_title("HOG")
-
-plt.tight_layout()
-plt.subplots_adjust(top=0.88)
-plt.show()
+        # HOG
+        hog_buf = get_hog_image(gray)
+        cols[j * 2 + 1].image(hog_buf, caption=f"{classes[idx]} (HOG)", use_column_width=True)
 
 st.markdown("""
             
