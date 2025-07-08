@@ -1,5 +1,6 @@
 import streamlit as st
 from utils import interactive_image  # Si nécessaire pour la démo
+import random
 from PIL import Image
 import joblib
 import io
@@ -98,38 +99,39 @@ st.plotly_chart(fig, use_container_width=True)
 st.markdown("- **HOG** : (Histogramme de gradient orienté) Extraction de caractéristiques visuelles (bords, textures)")
 image_dir = "src/streamlit/images"
 
-classes = ["COVID-", "Lung_Opacity-", "Normal-", "Viral Pneumonia-"]
-selected_images = []
+if st.button("🔀 Changer les images"):
+    st.session_state["refresh_images"] = True
 
-for cls_prefix in classes:
-    for f in os.listdir(image_dir):
-        if f.startswith(cls_prefix):
-            selected_images.append(os.path.join(image_dir, f))
-            break
+if "refresh_images" not in st.session_state:
+    st.session_state["refresh_images"] = True    
+
+classes = ["COVID-", "Lung_Opacity-", "Normal-", "Viral Pneumonia-"]
+
+if st.session_state["refresh_images"]:
+    selected_images = []
+    for cls_prefix in classes:
+        matches = [f for f in os.listdir(image_dir) if f.startswith(cls_prefix)]
+        if matches:
+            selected = random.choice(matches)
+            selected_images.append(os.path.join(image_dir, selected))
+    st.session_state["selected_images"] = selected_images
+    st.session_state["refresh_images"] = False
 
 fig, axs = plt.subplots(2, 4, figsize=(16, 8))
 fig.suptitle("Images originales et leurs HOG", fontsize=16)
 
-for i in range(0, len(selected_images), 2):
-    cols = st.columns(4)
-    for j in range(2):
-        idx = i + j
-        if idx >= len(selected_images):
-            continue
+# Affichage
+cols = st.columns(4)
+for i, path in enumerate(st.session_state["selected_images"]):
+    img = imread(path)
+    gray = rgb2gray(img) if img.ndim == 3 else img
 
-        path = selected_images[idx]
-        img = imread(path)
-        gray = rgb2gray(img) if img.ndim == 3 else img
+    # Image originale
+    cols[i].image(img, caption=f"{classes[i][:-1]} - originale", use_container_width=True)
 
-        # Original
-        gray_uint8 = (gray * 255).astype(np.uint8)
-        pil_img = Image.fromarray((gray * 255).astype("uint8"))
-        #cols[j * 2].image(pil_img, caption=f"{classes[idx]} originale", use_container_width =True)
-        cols[j * 2].image(img, caption=f"{classes[idx]} originale", use_container_width =True)
-
-        # HOG
-        hog_buf = get_hog_image(gray)
-        cols[j * 2 + 1].image(hog_buf, caption=f"{classes[idx]} (HOG)", use_container_width =True)
+    # HOG
+    hog_buf = get_hog_image(gray)
+    cols[i].image(hog_buf, caption=f"{classes[i][:-1]} - HOG", use_container_width=True)
 
 st.markdown("""
             
