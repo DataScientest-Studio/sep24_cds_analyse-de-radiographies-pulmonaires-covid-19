@@ -3,6 +3,7 @@ from utils import interactive_image  # Si nécessaire pour la démo
 from PIL import Image
 import joblib
 import io
+import os
 
 import pandas as pd
 import plotly.express as px
@@ -10,6 +11,7 @@ import plotly.graph_objects as go
 
 from skimage.feature import hog
 from skimage.color import rgb2gray
+from skimage.io import imread
 import numpy as np
 import matplotlib.pyplot as plt
 import xgboost as xgb
@@ -94,14 +96,41 @@ st.plotly_chart(fig, use_container_width=True)
 
 
 st.markdown("- **HOG** : (Histogramme de gradient orienté) Extraction de caractéristiques visuelles (bords, textures)")
-col1, col2 = st.columns(2)
-with col1:
-    st.markdown("**Image originale**")
-    st.image("src/images/xray_original.png", use_container_width = True)
+image_dir = "src/streamlit/images"
 
-with col2:
-    st.markdown("**HOG appliqué**")
-    st.image("src/images/xray_hog.png", use_container_width = True)
+classes = ["COVID-", "Lung_Opacity-", "Normal-", "Viral Pneumonia-"]
+selected_images = []
+
+for cls_prefix in classes:
+    for f in os.listdir(image_dir):
+        if f.startswith(cls_prefix):
+            selected_images.append(os.path.join(image_dir, f))
+            break
+
+fig, axs = plt.subplots(2, 4, figsize=(16, 8))
+fig.suptitle("Images originales et leurs HOG", fontsize=16)
+
+for i, path in enumerate(selected_images):
+    # Charger image
+    img = imread(path)
+    gray = rgb2gray(img) if img.ndim == 3 else img
+
+    # HOG
+    hog_img = get_hog_image(gray)
+
+    # Colonne image originale
+    axs[i // 2, (i % 2) * 2].imshow(gray, cmap='gray')
+    axs[i // 2, (i % 2) * 2].axis('off')
+    axs[i // 2, (i % 2) * 2].set_title(f"Classe: {classes[i].rstrip('-')}")
+
+    # Colonne HOG
+    axs[i // 2, (i % 2) * 2 + 1].imshow(hog_img, cmap='gray')
+    axs[i // 2, (i % 2) * 2 + 1].axis('off')
+    axs[i // 2, (i % 2) * 2 + 1].set_title("HOG")
+
+plt.tight_layout()
+plt.subplots_adjust(top=0.88)
+plt.show()
 
 st.markdown("""
             
